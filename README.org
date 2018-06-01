@@ -1,0 +1,19 @@
+** Initial Description
+
+This project is based on the Balance 12 layout as designed by Sasha Viminitz (see the initial conception [[https://mathematicalmulticore.wordpress.com/the-keyboard-layout-project/#comment-4976][on the MTGAP page]]).
+
+I have added layers for numbers/symbols and punctuation, and customized it for the [[https://www.kinesis-ergo.com/shop/advantage2/][Kinesis Advantage2]] that I type on. Both leader key behavior and modifier key behavior are supported for the layers.
+
+This repository will be very rough for a while. I am rebuilding my old AutoHotkey script from scratch with a better, more maintainable design. The old design was approximately 4,000 lines of code lumped together by hotkey, but I am now using AHK labels and subroutines to group code more logically. At least that is the plan.
+
+My implementation makes heavy use of the [[https://github.com/lydell/dual][Dual library]] for layers, handling rollover, Space-FN behavior, and so forth.
+
+I very much suggest people with the requisite knowledge and experience implement the ideas here using firmware like [[https://github.com/tmk/tmk_keyboard][TMK]], [[https://github.com/qmk/qmk_firmware/][QMK]], or [[https://github.com/ahtn/keyplus][keyplus]]. I am planning on putting most of this layout's behavior in firmware once I learn enough soldering and design to build a [[https://github.com/adereth/dactyl-keyboard][Dactyl Keyboard]], and enough embedded programming to grok the firmware options competently.
+
+In the meantime, I am implementing it here for the experience, and so that I can learn how to type with the fully-autospaced layout even before I get an ideal keyboard setup.
+
+** Design choices
+
+Sometime in the future I plan one explaining in excruciating detail why my layout is what it is. I have been tinkering with keyboard layouts for something like 3 years now, and have thought about it a lot. I don't consider myself an expert by any means (there are people far smarter than me working on these things too), but I do "have reasons" for designing the layout how I did.
+
+This explanation will probably go up on my website, but I'll make sure to link it here when I get around to posting it.
