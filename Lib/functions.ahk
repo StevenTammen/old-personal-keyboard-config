@@ -10,9 +10,21 @@
 }
 
 
+DealWithSubscriptAndSuperscriptPassThrough()
+{
+	subscript_PassThroughCap := false
+	IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
+		
+	superscript_PassThroughCap := false
+	IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap
+}
+
+
+; -----------------------------------------------------------------------------------------------------------
+
 WriteNestLevelIfApplicable_Opening(nestLevel)
 {	
-	actuallyNeedToWrite := (GetKeyState("VK88") or GetKeyState("VK8C"))
+	actuallyNeedToWrite := (GetKeyState(numLeader) or GetKeyState(numModifier))
 	
 	if(actuallyNeedToWrite)
 	{
@@ -24,7 +36,7 @@ WriteNestLevelIfApplicable_Opening(nestLevel)
 
 WriteNestLevelIfApplicable_Closing(nestLevel)
 {	
-	actuallyNeedToWrite := (GetKeyState("VK88") or GetKeyState("VK8C"))
+	actuallyNeedToWrite := (GetKeyState(numLeader) or GetKeyState(numModifier))
 	
 	if(actuallyNeedToWrite)
 	{
@@ -33,263 +45,263 @@ WriteNestLevelIfApplicable_Closing(nestLevel)
 }
 
 
-VK88Keys_Number(num, lastRealKeyDown)
+numLeaderKeys_Number(num, lastRealKeyDown)
 {
-	VK88Keys := GetSpecialCaseKeys(lastRealKeyDown)
+	numLeaderKeys := GetSpecialCaseKeys(lastRealKeyDown)
 
-	if(GetKeyState("VK97"))
+	if(GetKeyState(rawState))
 	{
-		VK88Keys := [num, "VK88 Up"]
+		numLeaderKeys := [num, numLeaderUp]
 	}
-	else if(GetKeyState("VK98"))
+	else if(GetKeyState(regSpacing))
 	{			
-		VK88Keys.Push(num, "Space", "VK88 Up")
+		numLeaderKeys.Push(num, "Space", numLeaderUp)
 	}
-	else if(GetKeyState("VK99"))
+	else if(GetKeyState(capSpacing))
 	{
-		VK88Keys.Push(num, "Space", "VK98 Down", "VK99 Up", "VK88 Up")
+		numLeaderKeys.Push(num, "Space", regSpacingDn, capSpacingUp, numLeaderUp)
 	}
 	else
 	{
-		VK88Keys.Push("Space", num, "Space", "VK98 Down", "VK88 Up")
+		numLeaderKeys.Push("Space", num, "Space", regSpacingDn, numLeaderUp)
 	}
 
-	return VK88Keys
+	return numLeaderKeys
 }
 
 
-VK88Keys_Opening_PassThroughCap(openingChar, closingChar)
+numLeaderKeys_Opening_PassThroughCap(openingChar, closingChar)
 {
-	if(GetKeyState("VK97"))
+	if(GetKeyState(rawState))
 	{
-		VK88Keys := [openingChar, "VK88 Up"]
+		numLeaderKeys := [openingChar, numLeaderUp]
 	}
 	else
 	{
-		if(GetKeyState("VKD8"))
+		if(GetKeyState(nestedPunctuation))
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK88Keys := [openingChar, ClosingChar, "Left", "VK88 Up"]
+				numLeaderKeys := [openingChar, ClosingChar, "Left", numLeaderUp]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK88Keys := [openingChar, closingChar, "Left", "VK88 Up"]
+				numLeaderKeys := [openingChar, closingChar, "Left", numLeaderUp]
 			}
 			else
 			{
-				VK88Keys := ["Space", openingChar, closingChar, "Left", "VK98 Down", "VK88 Up"]
+				numLeaderKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, numLeaderUp]
 			}
 		}
 		else
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK88Keys := [openingChar, ClosingChar, "Left", "VKD8 Down", "VK88 Up"]
+				numLeaderKeys := [openingChar, ClosingChar, "Left", nestedPunctuationDn, numLeaderUp]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK88Keys := [openingChar, closingChar, "Left", "VKD8 Down", "VK88 Up"]
+				numLeaderKeys := [openingChar, closingChar, "Left", nestedPunctuationDn, numLeaderUp]
 			}
 			else
 			{
-				VK88Keys := ["Space", openingChar, closingChar, "Left", "VK98 Down", "VKD8 Down", "VK88 Up"]
+				numLeaderKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, numLeaderUp]
 			}
 		}
 	}
 	
-	return VK88Keys
+	return numLeaderKeys
 }
 
 
-VK88Keys_Opening_NoCap(openingChar, closingChar)
+numLeaderKeys_Opening_NoCap(openingChar, closingChar)
 {
-	if(GetKeyState("VK97"))
+	if(GetKeyState(rawState))
 	{
-		VK88Keys := [openingChar, "VK88 Up"]
+		numLeaderKeys := [openingChar, numLeaderUp]
 	}
 	else
 	{
-		if(GetKeyState("VKD8"))
+		if(GetKeyState(nestedPunctuation))
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK88Keys := [openingChar, closingChar, "Left", "VK88 Up"]
+				numLeaderKeys := [openingChar, closingChar, "Left", numLeaderUp]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK88Keys := [openingChar, closingChar, "Left", "VK98 Down", "VK88 Up", "VK99 Up"]
+				numLeaderKeys := [openingChar, closingChar, "Left", regSpacingDn, numLeaderUp, capSpacingUp]
 			}
 			else
 			{
-				VK88Keys := ["Space", openingChar, closingChar, "Left", "VK98 Down", "VK88 Up"]
+				numLeaderKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, numLeaderUp]
 			}
 		}
 		else
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK88Keys := [openingChar, closingChar, "Left", "VKD8 Down", "VK88 Up"]
+				numLeaderKeys := [openingChar, closingChar, "Left", nestedPunctuationDn, numLeaderUp]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK88Keys := [openingChar, closingChar, "Left", "VK98 Down", "VKD8 Down", "VK88 Up", "VK99 Up"]
+				numLeaderKeys := [openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, numLeaderUp, capSpacingUp]
 			}
 			else
 			{
-				VK88Keys := ["Space", openingChar, closingChar, "Left", "VK98 Down", "VKD8 Down", "VK88 Up"]
+				numLeaderKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, numLeaderUp]
 			}
 		}
 	}
 
-	return VK88Keys
+	return numLeaderKeys
 }
 
 
-VK88Keys_Closing(closingChar, nestLevel)
+numLeaderKeys_Closing(closingChar, nestLevel)
 {
-	if(GetKeyState("VKD8"))
+	if(GetKeyState(nestedPunctuation))
 	{
 		if(nestLevel > 0)
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK88Keys := ["Backspace", "Right", "Space", "VK88 Up"]
+				numLeaderKeys := ["Backspace", "Right", "Space", numLeaderUp]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK88Keys := ["Backspace", "Right", "Space", "VK88 Up"]
+				numLeaderKeys := ["Backspace", "Right", "Space", numLeaderUp]
 			}
 			else
 			{
-				VK88Keys := ["Right", "Space", "VK98 Down", "VK88 Up"]
+				numLeaderKeys := ["Right", "Space", regSpacingDn, numLeaderUp]
 			}
 		}
 		else
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK88Keys := ["Backspace", "Right", "Space", "VKD8 Up", "VK88 Up"]
+				numLeaderKeys := ["Backspace", "Right", "Space", nestedPunctuationUp, numLeaderUp]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK88Keys := ["Backspace", "Right", "Space", "VKD8 Up", "VK88 Up"]
+				numLeaderKeys := ["Backspace", "Right", "Space", nestedPunctuationUp, numLeaderUp]
 			}
 			else
 			{
-				VK88Keys := ["Right", "Space", "VK98 Down", "VKD8 Up", "VK88 Up"]
+				numLeaderKeys := ["Right", "Space", regSpacingDn, nestedPunctuationUp, numLeaderUp]
 			}
 		}
 	}
 	else
 	{
-		VK88Keys := [closingChar, "VK88 Up"]
+		numLeaderKeys := [closingChar, numLeaderUp]
 	}
 
-	return VK88Keys
+	return numLeaderKeys
 }
 
 
-VK88Keys_PuncCombinator(defaultKeys, VK98Keys, VK99Keys)
+numLeaderKeys_PuncCombinator(defaultKeys, regSpacingKeys, capSpacingKeys)
 {
-	VK88Keys := []
+	numLeaderKeys := []
 
-	if(GetKeyState("VK97"))
+	if(GetKeyState(rawState))
 	{
 		Loop % defaultKeys.Length()
 		{
-	    		VK88Keys.Push(defaultKeys[A_Index])
+	    		numLeaderKeys.Push(defaultKeys[A_Index])
 		}
 
-		VK88Keys.Push("VK88 Up")
+		numLeaderKeys.Push(numLeaderUp)
 	}
-	else if(GetKeyState("VK98"))
+	else if(GetKeyState(regSpacing))
 	{		
-		Loop % VK98Keys.Length()
+		Loop % regSpacingKeys.Length()
 		{
-	    		VK88Keys.Push(VK98Keys[A_Index])
+	    		numLeaderKeys.Push(regSpacingKeys[A_Index])
 		}
 
-		VK88Keys.Push("VK88 Up")
+		numLeaderKeys.Push(numLeaderUp)
 	}
-	else if(GetKeyState("VK99"))
+	else if(GetKeyState(capSpacing))
 	{
-		Loop % VK99Keys.Length()
+		Loop % capSpacingKeys.Length()
 		{
-	    		VK88Keys.Push(VK99Keys[A_Index])
+	    		numLeaderKeys.Push(capSpacingKeys[A_Index])
 		}
 
-		VK88Keys.Push("VK88 Up")
+		numLeaderKeys.Push(numLeaderUp)
 	}
 	else
 	{
 		Loop % defaultKeys.Length()
 		{
-	    		VK88Keys.Push(defaultKeys[A_Index])
+	    		numLeaderKeys.Push(defaultKeys[A_Index])
 		}
 
-		VK88Keys.Push("VK88 Up")
+		numLeaderKeys.Push(numLeaderUp)
 	}
 
-	return VK88Keys
+	return numLeaderKeys
 }
 
 
-VK89Keys_Letter(letter)
+shiftLeaderKeys_Letter(letter)
 {
-	if(GetKeyState("VK98"))
+	if(GetKeyState(regSpacing))
 	{			
-		VK89Keys := [letter, "VK98 Up", "VK89 Up"]
+		shiftLeaderKeys := [letter, regSpacingUp, shiftLeaderUp]
 	}
-	else if(GetKeyState("VK99"))
+	else if(GetKeyState(capSpacing))
 	{
-		VK89Keys := [letter, "VK99 Up", "VK89 Up"]
+		shiftLeaderKeys := [letter, capSpacingUp, shiftLeaderUp]
 	}
 	else
 	{
-		VK89Keys := [letter, "VK89 Up"]
+		shiftLeaderKeys := [letter, shiftLeaderUp]
 	}
 
-	return VK89Keys
+	return shiftLeaderKeys
 }
 
 
 VK8BKeys_Opening_PassThroughCap(openingChar, closingChar)
 {
-	if(GetKeyState("VK97"))
+	if(GetKeyState(rawState))
 	{
 		VK8BKeys := [openingChar]
 	}
 	else
 	{
-		if(GetKeyState("VKD8"))
+		if(GetKeyState(nestedPunctuation))
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
 				VK8BKeys := [openingChar, ClosingChar, "Left"]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
 				VK8BKeys := [openingChar, closingChar, "Left"]
 			}
 			else
 			{
-				VK8BKeys := ["Space", openingChar, closingChar, "Left", "VK98 Down"]
+				VK8BKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
 			}
 		}
 		else
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK8BKeys := [openingChar, ClosingChar, "Left", "VKD8 Down"]
+				VK8BKeys := [openingChar, ClosingChar, "Left", nestedPunctuationDn]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK8BKeys := [openingChar, closingChar, "Left", "VKD8 Down"]
+				VK8BKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
 			}
 			else
 			{
-				VK8BKeys := ["Space", openingChar, closingChar, "Left", "VK98 Down", "VKD8 Down"]
+				VK8BKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
 			}
 		}
 	}
@@ -300,40 +312,40 @@ VK8BKeys_Opening_PassThroughCap(openingChar, closingChar)
 
 VK8BKeys_Opening_NoCap(openingChar, closingChar)
 {
-	if(GetKeyState("VK97"))
+	if(GetKeyState(rawState))
 	{
 		VK8BKeys := [openingChar]
 	}
 	else
 	{
-		if(GetKeyState("VKD8"))
+		if(GetKeyState(nestedPunctuation))
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
 				VK8BKeys := [openingChar, closingChar, "Left"]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK8BKeys := [openingChar, closingChar, "Left", "VK98 Down", "VK99 Up"]
+				VK8BKeys := [openingChar, closingChar, "Left", regSpacingDn, capSpacingUp]
 			}
 			else
 			{
-				VK8BKeys := ["Space", openingChar, closingChar, "Left", "VK98 Down"]
+				VK8BKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
 			}
 		}
 		else
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK8BKeys := [openingChar, closingChar, "Left", "VKD8 Down"]
+				VK8BKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK8BKeys := [openingChar, closingChar, "Left", "VK98 Down", "VKD8 Down", "VK99 Up"]
+				VK8BKeys := [openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, capSpacingUp]
 			}
 			else
 			{
-				VK8BKeys := ["Space", openingChar, closingChar, "Left", "VK98 Down", "VKD8 Down"]
+				VK8BKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
 			}
 		}
 	}
@@ -342,180 +354,180 @@ VK8BKeys_Opening_NoCap(openingChar, closingChar)
 }
 
 
-VK8CKeys_Number(num, lastRealKeyDown)
+numModifierKeys_Number(num, lastRealKeyDown)
 {
-	VK8CKeys := GetSpecialCaseKeys(lastRealKeyDown)
+	numModifierKeys := GetSpecialCaseKeys(lastRealKeyDown)
 
-	if(GetKeyState("VK97"))
+	if(GetKeyState(rawState))
 	{
-		VK8CKeys := num
+		numModifierKeys := num
 	}
-	else if(GetKeyState("VK98"))
+	else if(GetKeyState(regSpacing))
 	{			
-		VK8CKeys.Push(num, "Space")
+		numModifierKeys.Push(num, "Space")
 	}
-	else if(GetKeyState("VK99"))
+	else if(GetKeyState(capSpacing))
 	{
-		VK8CKeys.Push(num, "Space", "VK98 Down", "VK99 Up")
+		numModifierKeys.Push(num, "Space", regSpacingDn, capSpacingUp)
 	}
 	else
 	{
-		VK8CKeys.Push("Space", num, "Space", "VK98 Down")
+		numModifierKeys.Push("Space", num, "Space", regSpacingDn)
 	}
 
-	return VK8CKeys
+	return numModifierKeys
 }
 
 
-VK8CKeys_Opening_PassThroughCap(openingChar, closingChar)
+numModifierKeys_Opening_PassThroughCap(openingChar, closingChar)
 {
-	if(GetKeyState("VK97"))
+	if(GetKeyState(rawState))
 	{
-		VK8CKeys := openingChar
+		numModifierKeys := openingChar
 	}
 	else
 	{
-		if(GetKeyState("VKD8"))
+		if(GetKeyState(nestedPunctuation))
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK8CKeys := [openingChar, ClosingChar, "Left"]
+				numModifierKeys := [openingChar, ClosingChar, "Left"]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK8CKeys := [openingChar, closingChar, "Left"]
+				numModifierKeys := [openingChar, closingChar, "Left"]
 			}
 			else
 			{
-				VK8CKeys := ["Space", openingChar, closingChar, "Left", "VK98 Down"]
+				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
 			}
 		}
 		else
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK8CKeys := [openingChar, ClosingChar, "Left", "VKD8 Down"]
+				numModifierKeys := [openingChar, ClosingChar, "Left", nestedPunctuationDn]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK8CKeys := [openingChar, closingChar, "Left", "VKD8 Down"]
+				numModifierKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
 			}
 			else
 			{
-				VK8CKeys := ["Space", openingChar, closingChar, "Left", "VK98 Down", "VKD8 Down"]
+				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
 			}
 		}
 	}
 
-	return VK8CKeys
+	return numModifierKeys
 }
 
 
-VK8CKeys_Opening_NoCap(openingChar, closingChar)
+numModifierKeys_Opening_NoCap(openingChar, closingChar)
 {
-	if(GetKeyState("VK97"))
+	if(GetKeyState(rawState))
 	{
-		VK8CKeys := openingChar
+		numModifierKeys := openingChar
 	}
 	else
 	{
-		if(GetKeyState("VKD8"))
+		if(GetKeyState(nestedPunctuation))
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK8CKeys := [openingChar, closingChar, "Left"]
+				numModifierKeys := [openingChar, closingChar, "Left"]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK8CKeys := [openingChar, closingChar, "Left", "VK98 Down", "VK99 Up"]
+				numModifierKeys := [openingChar, closingChar, "Left", regSpacingDn, capSpacingUp]
 			}
 			else
 			{
-				VK8CKeys := ["Space", openingChar, closingChar, "Left", "VK98 Down"]
+				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
 			}
 
 		}
 		else
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK8CKeys := [openingChar, closingChar, "Left", "VKD8 Down"]
+				numModifierKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK8CKeys := [openingChar, closingChar, "Left", "VK98 Down", "VKD8 Down", "VK99 Up"]
+				numModifierKeys := [openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, capSpacingUp]
 			}
 			else
 			{
-				VK8CKeys := ["Space", openingChar, closingChar, "Left", "VK98 Down", "VKD8 Down"]
+				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
 			}
 		}
 	}
 
-	return VK8CKeys
+	return numModifierKeys
 }
 
 
-VK8CKeys_Closing(closingChar, nestLevel)
+numModifierKeys_Closing(closingChar, nestLevel)
 {
-	if(GetKeyState("VKD8"))
+	if(GetKeyState(nestedPunctuation))
 	{
 		if(nestLevel > 0)
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK8CKeys := ["Backspace", "Right", "Space"]
+				numModifierKeys := ["Backspace", "Right", "Space"]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK8CKeys := ["Backspace", "Right", "Space"]
+				numModifierKeys := ["Backspace", "Right", "Space"]
 			}
 			else
 			{
-				VK8CKeys := ["Right", "Space", "VK98 Down"]
+				numModifierKeys := ["Right", "Space", regSpacingDn]
 			}
 		}
 		else
 		{
-			if(GetKeyState("VK98"))
+			if(GetKeyState(regSpacing))
 			{			
-				VK8CKeys := ["Backspace", "Right", "Space", "VKD8 Up"]
+				numModifierKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
 			}
-			else if(GetKeyState("VK99"))
+			else if(GetKeyState(capSpacing))
 			{
-				VK8CKeys := ["Backspace", "Right", "Space", "VKD8 Up"]
+				numModifierKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
 			}
 			else
 			{
-				VK8CKeys := ["Right", "Space", "VK98 Down", "VKD8 Up"]
+				numModifierKeys := ["Right", "Space", regSpacingDn, nestedPunctuationUp]
 			}
 		}
 	}
 	else
 	{
-		VK8CKeys := closingChar
+		numModifierKeys := closingChar
 	}
 
-	return VK8CKeys
+	return numModifierKeys
 }
 
 
-VK8DKeys_Letter(letter)
+shiftModifierKeys_Letter(letter)
 {
-	if(GetKeyState("VK98"))
+	if(GetKeyState(regSpacing))
 	{			
-		VK8DKeys := [letter, "VK98 Up"]
+		shiftModifierKeys := [letter, regSpacingUp]
 	}
-	else if(GetKeyState("VK99"))
+	else if(GetKeyState(capSpacing))
 	{
-		VK8DKeys := [letter, "VK99 Up"]
+		shiftModifierKeys := [letter, capSpacingUp]
 	}
 	else
 	{
-		VK8DKeys := letter
+		shiftModifierKeys := letter
 	}
 
-	return VK8DKeys
+	return shiftModifierKeys
 }
 
 
@@ -532,12 +544,12 @@ GetSpecialCaseKeys(lastRealKeyDown)
 		lastKey := Dual.cleanKey(lastKey)
 	}
 
-	VK98IsDown := GetKeyState("VK98")
+	regSpacingIsDown := GetKeyState(regSpacing)
 
 
 	specialCaseKeys := []
 
-	if((lastKey = "c") and VK98IsDown)
+	if((lastKey = "c") and regSpacingIsDown)
 	{
 		specialCaseKeys.Push("Backspace", "–")   ; replace hyphens with en dashes between numbers
 	}
@@ -545,7 +557,7 @@ GetSpecialCaseKeys(lastRealKeyDown)
 	{
 		for i, value in ["h", "i", "e", "a", "w", "m", "t", "s", "r", "n", "2"]
 		{
-			if((lastKey = value) and VK98IsDown) ; The keys above will only be a number if VK98 is down. We don't want a leading space for these
+			if((lastKey = value) and regSpacingIsDown) ; The keys above will only be a number if regSpacing is down. We don't want a leading space for these
 			{
 				specialCaseKeys.Push("Backspace")
 			}
@@ -553,40 +565,6 @@ GetSpecialCaseKeys(lastRealKeyDown)
 	}
 	
 	return specialCaseKeys
-}
-
-
-DealWithSubscriptAndSuperscriptPassThrough_Tab()
-{
-	IniRead, subscript_PassThroughCap, Status.ini, nestVars, subscript_PassThroughCap
-	if(subscript_PassThroughCap)
-	{
-		subscript_PassThroughCap := false
-		IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
-		
-		; Add space to deal with the {Backspace} if VK99 down in expand.ahk
-		SendInput {Space}{VK99 Down}
-	}
-
-	IniRead, superscript_PassThroughCap, Status.ini, nestVars, superscript_PassThroughCap
-	if(superscript_PassThroughCap)
-	{
-		superscript_PassThroughCap := false
-		IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap
-
-		; Add space to deal with the {Backspace} if VK99 down in expand.ahk
-		SendInput {Space}{VK99 Down}
-	}
-}
-
-
-DealWithSubscriptAndSuperscriptPassThrough()
-{
-	subscript_PassThroughCap := false
-	IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
-		
-	superscript_PassThroughCap := false
-	IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap
 }
 
 
@@ -625,16 +603,16 @@ EndCommandMode()
 	IniRead, command_PassThroughAutospacing, Status.ini, commandVars, command_PassThroughAutospacing
 	IniRead, inTextBox, Status.ini, commandVars, inTextBox
 
-	if(command_PassThroughAutospacing = "VK98")
+	if(command_PassThroughAutospacing = regSpacing)
 	{
-		SendInput {VK98 Down}
+		SendInput {regSpacing Down}
 	}
-	else if(command_PassThroughAutospacing = "VK99")
+	else if(command_PassThroughAutospacing = capSpacing)
 	{
-		SendInput {VK99 Down}
+		SendInput {capSpacing Down}
 	}
 	
-	SendInput {VK8F Up}
+	SendInput {rawLeader Up}
 
 	if(!inTextBox)
 	{
