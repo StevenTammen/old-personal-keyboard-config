@@ -1,54 +1,54 @@
 ; Number Row
 ;-------------------------------------------------
 
-l11_numLeader() {
-	numLeader_keys = ""
+l11_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l12_numLeader() {
-	numLeader_keys = ""
+l12_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l13_numLeader() {
-	numLeader_keys = ""
+l13_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l14_numLeader() {
-	numLeader_keys = ""
+l14_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l15_numLeader() {
-	numLeader_keys = ""
+l15_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l16_numLeader() {
-	numLeader_keys = ""
+l16_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
 
 
-r11_numLeader() {
-	numLeader_keys = ""
+r11_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r12_numLeader() {
-	numLeader_keys = ""
+r12_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r13_numLeader() {
-	numLeader_keys = ""
+r13_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r14_numLeader() {
-	numLeader_keys = ""
+r14_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r15_numLeader() {
-	numLeader_keys = ""
+r15_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r16_numLeader() {
-	numLeader_keys = ""
+r16_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
 
@@ -57,54 +57,54 @@ r16_numLeader() {
 ; Top Row
 ;-------------------------------------------------
 
-l21_numLeader() {
-	numLeader_keys = ""
+l21_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l22_numLeader() {
-	numLeader_keys = ""
+l22_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l23_numLeader() {
-	numLeader_keys = ""
+l23_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l24_numLeader() {
-	numLeader_keys = ""
+l24_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l25_numLeader() {
-	numLeader_keys = ""
+l25_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l26_numLeader() {
-	numLeader_keys = ""
+l26_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
 
 
-r21_numLeader() {
-	numLeader_keys = ""
+r21_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r22_numLeader() {
-	numLeader_keys = ""
+r22_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r23_numLeader() {
-	numLeader_keys = ""
+r23_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r24_numLeader() {
-	numLeader_keys = ""
+r24_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r25_numLeader() {
-	numLeader_keys = ""
+r25_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r26_numLeader() {
-	numLeader_keys = ""
+r26_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
 
@@ -113,54 +113,54 @@ r26_numLeader() {
 ; Home Row
 ;-------------------------------------------------
 
-l31_numLeader() {
-	numLeader_keys = ""
+l31_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l32_numLeader() {
-	numLeader_keys = ""
+l32_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l33_numLeader() {
-	numLeader_keys = ""
+l33_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l34_numLeader() {
-	numLeader_keys = ""
+l34_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l35_numLeader() {
-	numLeader_keys = ""
+l35_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l36_numLeader() {
-	numLeader_keys = ""
+l36_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
 
 
-r31_numLeader() {
-	numLeader_keys = ""
+r31_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r32_numLeader() {
-	numLeader_keys = ""
+r32_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r33_numLeader() {
-	numLeader_keys = ""
+r33_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r34_numLeader() {
-	numLeader_keys = ""
+r34_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r35_numLeader() {
-	numLeader_keys = ""
+r35_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r36_numLeader() {
-	numLeader_keys = ""
+r36_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
 
@@ -169,54 +169,54 @@ r36_numLeader() {
 ; Bottom Row
 ;-------------------------------------------------
 
-l41_numLeader() {
-	numLeader_keys = ""
+l41_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l42_numLeader() {
-	numLeader_keys = ""
+l42_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l43_numLeader() {
-	numLeader_keys = ""
+l43_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l44_numLeader() {
-	numLeader_keys = ""
+l44_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l45_numLeader() {
-	numLeader_keys = ""
+l45_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l46_numLeader() {
-	numLeader_keys = ""
+l46_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
 
 
-r41_numLeader() {
-	numLeader_keys = ""
+r41_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r42_numLeader() {
-	numLeader_keys = ""
+r42_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r43_numLeader() {
-	numLeader_keys = ""
+r43_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r44_numLeader() {
-	numLeader_keys = ""
+r44_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r45_numLeader() {
-	numLeader_keys = ""
+r45_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r46_numLeader() {
-	numLeader_keys = ""
+r46_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
 
@@ -225,38 +225,38 @@ r46_numLeader() {
 ; Extra Row
 ;-------------------------------------------------
 
-l52_numLeader() {
-	numLeader_keys = ""
+l52_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l53_numLeader() {
-	numLeader_keys = ""
+l53_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l54_numLeader() {
-	numLeader_keys = ""
+l54_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-l55_numLeader() {
-	numLeader_keys = ""
+l55_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
 
 
-r52_numLeader() {
-	numLeader_keys = ""
+r52_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r53_numLeader() {
-	numLeader_keys = ""
+r53_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r54_numLeader() {
-	numLeader_keys = ""
+r54_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-r55_numLeader() {
-	numLeader_keys = ""
+r55_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
 
@@ -265,53 +265,53 @@ r55_numLeader() {
 ; Thumbs
 ;-------------------------------------------------
 
-lt1_numLeader() {
-	numLeader_keys = ""
+lt1_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-lt2_numLeader() {
-	numLeader_keys = ""
+lt2_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-lt3_numLeader() {
-	numLeader_keys = ""
+lt3_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-lt4_numLeader() {
-	numLeader_keys = ""
+lt4_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-lt5_numLeader() {
-	numLeader_keys = ""
+lt5_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-lt6_numLeader() {
-	numLeader_keys = ""
+lt6_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
 
 
-rt1_numLeader() {
-	numLeader_keys = ""
+rt1_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-rt2_numLeader() {
-	numLeader_keys = ""
+rt2_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-rt3_numLeader() {
-	numLeader_keys = ""
+rt3_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-rt4_numLeader() {
-	numLeader_keys = ""
+rt4_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-rt5_numLeader() {
-	numLeader_keys = ""
+rt5_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }
-rt6_numLeader() {
-	numLeader_keys = ""
+rt6_numLeader(numModifier_keys) {
+	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
 	return numLeader_keys
 }

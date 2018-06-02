@@ -1,54 +1,54 @@
 ; Number Row
 ;-------------------------------------------------
 
-l11_shiftLeader() {
-	shiftLeader_keys = ""
+l11_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l12_shiftLeader() {
-	shiftLeader_keys = ""
+l12_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l13_shiftLeader() {
-	shiftLeader_keys = ""
+l13_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l14_shiftLeader() {
-	shiftLeader_keys = ""
+l14_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l15_shiftLeader() {
-	shiftLeader_keys = ""
+l15_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l16_shiftLeader() {
-	shiftLeader_keys = ""
+l16_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
 
 
-r11_shiftLeader() {
-	shiftLeader_keys = ""
+r11_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r12_shiftLeader() {
-	shiftLeader_keys = ""
+r12_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r13_shiftLeader() {
-	shiftLeader_keys = ""
+r13_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r14_shiftLeader() {
-	shiftLeader_keys = ""
+r14_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r15_shiftLeader() {
-	shiftLeader_keys = ""
+r15_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r16_shiftLeader() {
-	shiftLeader_keys = ""
+r16_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
 
@@ -57,54 +57,54 @@ r16_shiftLeader() {
 ; Top Row
 ;-------------------------------------------------
 
-l21_shiftLeader() {
-	shiftLeader_keys = ""
+l21_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l22_shiftLeader() {
-	shiftLeader_keys = ""
+l22_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l23_shiftLeader() {
-	shiftLeader_keys = ""
+l23_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l24_shiftLeader() {
-	shiftLeader_keys = ""
+l24_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l25_shiftLeader() {
-	shiftLeader_keys = ""
+l25_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l26_shiftLeader() {
-	shiftLeader_keys = ""
+l26_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
 
 
-r21_shiftLeader() {
-	shiftLeader_keys = ""
+r21_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r22_shiftLeader() {
-	shiftLeader_keys = ""
+r22_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r23_shiftLeader() {
-	shiftLeader_keys = ""
+r23_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r24_shiftLeader() {
-	shiftLeader_keys = ""
+r24_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r25_shiftLeader() {
-	shiftLeader_keys = ""
+r25_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r26_shiftLeader() {
-	shiftLeader_keys = ""
+r26_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
 
@@ -113,54 +113,54 @@ r26_shiftLeader() {
 ; Home Row
 ;-------------------------------------------------
 
-l31_shiftLeader() {
-	shiftLeader_keys = ""
+l31_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l32_shiftLeader() {
-	shiftLeader_keys = ""
+l32_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l33_shiftLeader() {
-	shiftLeader_keys = ""
+l33_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l34_shiftLeader() {
-	shiftLeader_keys = ""
+l34_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l35_shiftLeader() {
-	shiftLeader_keys = ""
+l35_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l36_shiftLeader() {
-	shiftLeader_keys = ""
+l36_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
 
 
-r31_shiftLeader() {
-	shiftLeader_keys = ""
+r31_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r32_shiftLeader() {
-	shiftLeader_keys = ""
+r32_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r33_shiftLeader() {
-	shiftLeader_keys = ""
+r33_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r34_shiftLeader() {
-	shiftLeader_keys = ""
+r34_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r35_shiftLeader() {
-	shiftLeader_keys = ""
+r35_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r36_shiftLeader() {
-	shiftLeader_keys = ""
+r36_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
 
@@ -169,54 +169,54 @@ r36_shiftLeader() {
 ; Bottom Row
 ;-------------------------------------------------
 
-l41_shiftLeader() {
-	shiftLeader_keys = ""
+l41_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l42_shiftLeader() {
-	shiftLeader_keys = ""
+l42_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l43_shiftLeader() {
-	shiftLeader_keys = ""
+l43_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l44_shiftLeader() {
-	shiftLeader_keys = ""
+l44_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l45_shiftLeader() {
-	shiftLeader_keys = ""
+l45_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l46_shiftLeader() {
-	shiftLeader_keys = ""
+l46_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
 
 
-r41_shiftLeader() {
-	shiftLeader_keys = ""
+r41_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r42_shiftLeader() {
-	shiftLeader_keys = ""
+r42_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r43_shiftLeader() {
-	shiftLeader_keys = ""
+r43_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r44_shiftLeader() {
-	shiftLeader_keys = ""
+r44_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r45_shiftLeader() {
-	shiftLeader_keys = ""
+r45_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r46_shiftLeader() {
-	shiftLeader_keys = ""
+r46_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
 
@@ -225,38 +225,38 @@ r46_shiftLeader() {
 ; Extra Row
 ;-------------------------------------------------
 
-l52_shiftLeader() {
-	shiftLeader_keys = ""
+l52_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l53_shiftLeader() {
-	shiftLeader_keys = ""
+l53_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l54_shiftLeader() {
-	shiftLeader_keys = ""
+l54_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l55_shiftLeader() {
-	shiftLeader_keys = ""
+l55_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
 
 
-r52_shiftLeader() {
-	shiftLeader_keys = ""
+r52_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r53_shiftLeader() {
-	shiftLeader_keys = ""
+r53_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r54_shiftLeader() {
-	shiftLeader_keys = ""
+r54_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-r55_shiftLeader() {
-	shiftLeader_keys = ""
+r55_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
 
@@ -265,53 +265,53 @@ r55_shiftLeader() {
 ; Thumbs
 ;-------------------------------------------------
 
-lt1_shiftLeader() {
-	shiftLeader_keys = ""
+lt1_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-lt2_shiftLeader() {
-	shiftLeader_keys = ""
+lt2_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-lt3_shiftLeader() {
-	shiftLeader_keys = ""
+lt3_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-lt4_shiftLeader() {
-	shiftLeader_keys = ""
+lt4_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-lt5_shiftLeader() {
-	shiftLeader_keys = ""
+lt5_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-lt6_shiftLeader() {
-	shiftLeader_keys = ""
+lt6_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
 
 
-rt1_shiftLeader() {
-	shiftLeader_keys = ""
+rt1_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-rt2_shiftLeader() {
-	shiftLeader_keys = ""
+rt2_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-rt3_shiftLeader() {
-	shiftLeader_keys = ""
+rt3_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-rt4_shiftLeader() {
-	shiftLeader_keys = ""
+rt4_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-rt5_shiftLeader() {
-	shiftLeader_keys = ""
+rt5_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-rt6_shiftLeader() {
-	shiftLeader_keys = ""
+rt6_shiftLeader(shiftModifier_keys) {
+	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }

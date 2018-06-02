@@ -1,4 +1,16 @@
-﻿WriteNestLevelIfApplicable_Opening(nestLevel)
+﻿AddKeyUp(keys, keyUp) 
+{
+	newKeys := []
+	Loop % keys.Length()
+	{
+	    	newKeys.Push(keys[A_Index])
+	}
+	newKeys.Push(keyUp)
+	return newKeys
+}
+
+
+WriteNestLevelIfApplicable_Opening(nestLevel)
 {	
 	actuallyNeedToWrite := (GetKeyState("VK88") or GetKeyState("VK8C"))
 	
