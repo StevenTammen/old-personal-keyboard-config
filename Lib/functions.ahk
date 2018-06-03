@@ -39,7 +39,181 @@ shiftModifierKeys_Letter(letter)
 }
 
 
-; -----------------------------------------------------------------------------------------------------------
+numModifierKeys_Number(num, lastRealKeyDown)
+{
+	numModifierKeys := GetSpecialCaseKeys(lastRealKeyDown)
+
+	if(GetKeyState(rawState))
+	{
+		numModifierKeys := [num]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifierKeys.Push(num, "Space")
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifierKeys.Push(num, "Space", regSpacingDn, capSpacingUp)
+	}
+	else
+	{
+		numModifierKeys.Push("Space", num, "Space", regSpacingDn)
+	}
+
+	return numModifierKeys
+}
+
+
+numModifierKeys_Opening_PassThroughCap(openingChar, closingChar)
+{
+	if(GetKeyState(rawState))
+	{
+		numModifierKeys := [openingChar]
+	}
+	else
+	{
+		if(GetKeyState(nestedPunctuation))
+		{
+			if(GetKeyState(regSpacing))
+			{			
+				numModifierKeys := [openingChar, ClosingChar, "Left"]
+			}
+			else if(GetKeyState(capSpacing))
+			{
+				numModifierKeys := [openingChar, closingChar, "Left"]
+			}
+			else
+			{
+				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
+			}
+		}
+		else
+		{
+			if(GetKeyState(regSpacing))
+			{			
+				numModifierKeys := [openingChar, ClosingChar, "Left", nestedPunctuationDn]
+			}
+			else if(GetKeyState(capSpacing))
+			{
+				numModifierKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
+			}
+			else
+			{
+				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
+			}
+		}
+	}
+
+	return numModifierKeys
+}
+
+
+numModifierKeys_Opening_NoCap(openingChar, closingChar)
+{
+	if(GetKeyState(rawState))
+	{
+		numModifierKeys := [openingChar]
+	}
+	else
+	{
+		if(GetKeyState(nestedPunctuation))
+		{
+			if(GetKeyState(regSpacing))
+			{			
+				numModifierKeys := [openingChar, closingChar, "Left"]
+			}
+			else if(GetKeyState(capSpacing))
+			{
+				numModifierKeys := [openingChar, closingChar, "Left", regSpacingDn, capSpacingUp]
+			}
+			else
+			{
+				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
+			}
+
+		}
+		else
+		{
+			if(GetKeyState(regSpacing))
+			{			
+				numModifierKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
+			}
+			else if(GetKeyState(capSpacing))
+			{
+				numModifierKeys := [openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, capSpacingUp]
+			}
+			else
+			{
+				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
+			}
+		}
+	}
+
+	return numModifierKeys
+}
+
+
+numModifierKeys_Closing(closingChar, nestLevel)
+{
+	if(GetKeyState(nestedPunctuation))
+	{
+		if(nestLevel > 0)
+		{
+			if(GetKeyState(regSpacing))
+			{			
+				numModifierKeys := ["Backspace", "Right", "Space"]
+			}
+			else if(GetKeyState(capSpacing))
+			{
+				numModifierKeys := ["Backspace", "Right", "Space"]
+			}
+			else
+			{
+				numModifierKeys := ["Right", "Space", regSpacingDn]
+			}
+		}
+		else
+		{
+			if(GetKeyState(regSpacing))
+			{			
+				numModifierKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
+			}
+			else if(GetKeyState(capSpacing))
+			{
+				numModifierKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
+			}
+			else
+			{
+				numModifierKeys := ["Right", "Space", regSpacingDn, nestedPunctuationUp]
+			}
+		}
+	}
+	else
+	{
+		numModifierKeys := [closingChar]
+	}
+
+	return numModifierKeys
+}
+
+
+numModifierKeys_PuncCombinator(defaultKeys, regSpacingKeys, capSpacingKeys)
+{
+	if(GetKeyState(regSpacing))
+	{			
+		numModifierKeys := regSpacingKeys
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifierKeys := capSpacingKeys
+	}
+	else
+	{
+		numModifierKeys := defaultKeys
+	}
+	return numModifierKeys
+}
+
 
 WriteNestLevelIfApplicable_Opening(nestLevel)
 {	
@@ -62,6 +236,44 @@ WriteNestLevelIfApplicable_Closing(nestLevel)
 		IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
 	}
 }
+
+
+GetSpecialCaseKeys(lastRealKeyDown)
+{
+	lastKey := A_PriorHotkey
+
+	if((lastKey = "*3") or (lastKey = "*3 Up"))
+	{
+		lastKey := lastRealKeyDown
+	}
+	else
+	{
+		lastKey := Dual.cleanKey(lastKey)
+	}
+
+	regSpacingIsDown := GetKeyState(regSpacing)
+
+
+	specialCaseKeys := []
+
+	if((lastKey = "c") and regSpacingIsDown)
+	{
+		specialCaseKeys.Push("Backspace", "–")   ; replace hyphens with en dashes between numbers
+	}
+	else
+	{
+		for i, value in ["h", "i", "e", "a", "w", "m", "t", "s", "r", "n", "Space"]
+		{
+			if((lastKey = value) and regSpacingIsDown) ; The keys above will only be a number if regSpacing is down. We don't want a leading space for these
+			{
+				specialCaseKeys.Push("Backspace")
+			}
+		}
+	}
+	return specialCaseKeys
+}
+
+; -----------------------------------------------------------------------------------------------------------
 
 
 numLeaderKeys_Number(num, lastRealKeyDown)
@@ -370,200 +582,6 @@ VK8BKeys_Opening_NoCap(openingChar, closingChar)
 	}
 
 	return VK8BKeys
-}
-
-
-numModifierKeys_Number(num, lastRealKeyDown)
-{
-	numModifierKeys := GetSpecialCaseKeys(lastRealKeyDown)
-
-	if(GetKeyState(rawState))
-	{
-		numModifierKeys := num
-	}
-	else if(GetKeyState(regSpacing))
-	{			
-		numModifierKeys.Push(num, "Space")
-	}
-	else if(GetKeyState(capSpacing))
-	{
-		numModifierKeys.Push(num, "Space", regSpacingDn, capSpacingUp)
-	}
-	else
-	{
-		numModifierKeys.Push("Space", num, "Space", regSpacingDn)
-	}
-
-	return numModifierKeys
-}
-
-
-numModifierKeys_Opening_PassThroughCap(openingChar, closingChar)
-{
-	if(GetKeyState(rawState))
-	{
-		numModifierKeys := openingChar
-	}
-	else
-	{
-		if(GetKeyState(nestedPunctuation))
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := [openingChar, ClosingChar, "Left"]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numModifierKeys := [openingChar, closingChar, "Left"]
-			}
-			else
-			{
-				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
-			}
-		}
-		else
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := [openingChar, ClosingChar, "Left", nestedPunctuationDn]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numModifierKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
-			}
-			else
-			{
-				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
-			}
-		}
-	}
-
-	return numModifierKeys
-}
-
-
-numModifierKeys_Opening_NoCap(openingChar, closingChar)
-{
-	if(GetKeyState(rawState))
-	{
-		numModifierKeys := openingChar
-	}
-	else
-	{
-		if(GetKeyState(nestedPunctuation))
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := [openingChar, closingChar, "Left"]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numModifierKeys := [openingChar, closingChar, "Left", regSpacingDn, capSpacingUp]
-			}
-			else
-			{
-				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
-			}
-
-		}
-		else
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numModifierKeys := [openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, capSpacingUp]
-			}
-			else
-			{
-				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
-			}
-		}
-	}
-
-	return numModifierKeys
-}
-
-
-numModifierKeys_Closing(closingChar, nestLevel)
-{
-	if(GetKeyState(nestedPunctuation))
-	{
-		if(nestLevel > 0)
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := ["Backspace", "Right", "Space"]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numModifierKeys := ["Backspace", "Right", "Space"]
-			}
-			else
-			{
-				numModifierKeys := ["Right", "Space", regSpacingDn]
-			}
-		}
-		else
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numModifierKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
-			}
-			else
-			{
-				numModifierKeys := ["Right", "Space", regSpacingDn, nestedPunctuationUp]
-			}
-		}
-	}
-	else
-	{
-		numModifierKeys := closingChar
-	}
-
-	return numModifierKeys
-}
-
-GetSpecialCaseKeys(lastRealKeyDown)
-{
-	lastKey := A_PriorHotkey
-
-	if((lastKey = "*1") or (lastKey = "*1 Up"))
-	{
-		lastKey := lastRealKeyDown
-	}
-	else
-	{
-		lastKey := Dual.cleanKey(lastKey)
-	}
-
-	regSpacingIsDown := GetKeyState(regSpacing)
-
-
-	specialCaseKeys := []
-
-	if((lastKey = "c") and regSpacingIsDown)
-	{
-		specialCaseKeys.Push("Backspace", "–")   ; replace hyphens with en dashes between numbers
-	}
-	else
-	{
-		for i, value in ["h", "i", "e", "a", "w", "m", "t", "s", "r", "n", "2"]
-		{
-			if((lastKey = value) and regSpacingIsDown) ; The keys above will only be a number if regSpacing is down. We don't want a leading space for these
-			{
-				specialCaseKeys.Push("Backspace")
-			}
-		}
-	}
-	
-	return specialCaseKeys
 }
 
 

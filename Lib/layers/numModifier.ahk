@@ -62,49 +62,91 @@ l21_numModifier() {
 	return numModifier_keys
 }
 l22_numModifier() {
-	numModifier_keys := [""]
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestLevelIfApplicable_Opening(nestLevel)
+	numModifier_keys := numModifierKeys_Opening_NoCap("{", "}")
 	return numModifier_keys
 }
 l23_numModifier() {
-	numModifier_keys := [""]
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestLevelIfApplicable_Opening(nestLevel)
+	numModifier_keys := numModifierKeys_Opening_PassThroughCap("[", "]")
 	return numModifier_keys
 }
 l24_numModifier() {
-	numModifier_keys := [""]
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel - 1
+	WriteNestLevelIfApplicable_Closing(nestLevel)
+	numModifier_keys := numModifierKeys_Closing("]", nestLevel)
 	return numModifier_keys
 }
 l25_numModifier() {
-	numModifier_keys := [""]
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel - 1
+	WriteNestLevelIfApplicable_Closing(nestLevel)
+	numModifier_keys := numModifierKeys_Closing("}", nestLevel)
 	return numModifier_keys
 }
 l26_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Opening_PassThroughCap("'", "'")
 	return numModifier_keys
 }
 
 
 r21_numModifier() {
-	numModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := "%"
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifier_keys := ["Backspace", "%", "Space"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["Backspace", "%", "Space", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := ["%", "Space", regSpacingDn]
+	}
 	return numModifier_keys
 }
 r22_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Opening_PassThroughCap("/", "/")
 	return numModifier_keys
 }
 r23_numModifier() {
-	numModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := "-"
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifier_keys := ["Backspace", "-"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["Backspace", "-", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := ["-", regSpacingDn]
+	}
 	return numModifier_keys
 }
 r24_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Opening_PassThroughCap("*", "*")
 	return numModifier_keys
 }
 r25_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Opening_PassThroughCap("+", "+")
 	return numModifier_keys
 }
 r26_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Opening_PassThroughCap("^", "^")
 	return numModifier_keys
 }
 
@@ -118,49 +160,79 @@ l31_numModifier() {
 	return numModifier_keys
 }
 l32_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Number("2", lastRealKeyDown)
 	return numModifier_keys
 }
 l33_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Number("3", lastRealKeyDown)
 	return numModifier_keys
 }
 l34_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Number("5", lastRealKeyDown)
 	return numModifier_keys
 }
 l35_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Number("7", lastRealKeyDown)
 	return numModifier_keys
 }
 l36_numModifier() {
-	numModifier_keys := [""]
+if(GetKeyState(rawState))
+	{
+		numModifier_keys := ["."]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifier_keys := ["Backspace", "."]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["Backspace", ".", capSpacingUp, regSpacingDn]
+	}
+	else
+	{
+		numModifier_keys := [".", regSpacingDn]
+	}
 	return numModifier_keys
 }
 
 
 r31_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Number("8", lastRealKeyDown)
 	return numModifier_keys
 }
 r32_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Number("0", lastRealKeyDown)
 	return numModifier_keys
 }
 r33_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Number("6", lastRealKeyDown)
 	return numModifier_keys
 }
 r34_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Number("4", lastRealKeyDown)
 	return numModifier_keys
 }
 r35_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Number("1", lastRealKeyDown)
 	return numModifier_keys
 }
 r36_numModifier() {
-	numModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := "|"
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifier_keys := ["|", "Space"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["|", "Space", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := ["Space", "|", "Space", regSpacingDn]
+	}
 	return numModifier_keys
 }
 
@@ -174,21 +246,40 @@ l41_numModifier() {
 	return numModifier_keys
 }
 l42_numModifier() {
-	numModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := "$"
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifier_keys := "$"
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["$", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := ["Space", "$", regSpacingDn]
+	}
 	return numModifier_keys
 }
+; Not used intentionally; using quote default behavior instead in remap.ahk
 l43_numModifier() {
 	numModifier_keys := [""]
 	return numModifier_keys
 }
+; Not used intentionally; using close paren default behavior instead in remap.ahk
 l44_numModifier() {
 	numModifier_keys := [""]
 	return numModifier_keys
 }
+; Not used intentionally; using comma default behavior instead in remap.ahk
 l45_numModifier() {
 	numModifier_keys := [""]
 	return numModifier_keys
 }
+; Not used intentionally; using open paren default behavior instead in remap.ahk
 l46_numModifier() {
 	numModifier_keys := [""]
 	return numModifier_keys
@@ -196,23 +287,41 @@ l46_numModifier() {
 
 
 r41_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Number("9", lastRealKeyDown)
 	return numModifier_keys
 }
 r42_numModifier() {
-	numModifier_keys := [""]
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestLevelIfApplicable_Opening(nestLevel)
+	numModifier_keys := numModifierKeys_Opening_NoCap("=", "=")
 	return numModifier_keys
 }
 r43_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Opening_NoCap("<", ">")
 	return numModifier_keys
 }
 r44_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := numModifierKeys_Closing(">", nestLevel)
 	return numModifier_keys
 }
 r45_numModifier() {
-	numModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := "&"
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifier_keys := "&"
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["&", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := ["Space", "&", regSpacingDn]
+	}
 	return numModifier_keys
 }
 r46_numModifier() {
@@ -266,11 +375,41 @@ r55_numModifier() {
 ;-------------------------------------------------
 
 lt1_numModifier() {
-	numModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := [":"]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifier_keys := ["Backspace", ":", "Space"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["Backspace", ":", "Space", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := [":", "Space", regSpacingDn]
+	}
 	return numModifier_keys
 }
 lt2_numModifier() {
-	numModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := [";"]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifier_keys := ["Backspace", ";", "Space"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["Backspace", ";", "Space", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := [";", "Space", regSpacingDn]
+	}
 	return numModifier_keys
 }
 lt3_numModifier() {
