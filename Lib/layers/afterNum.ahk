@@ -2,54 +2,78 @@
 ;-------------------------------------------------
 
 l11_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l12_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l13_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l14_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l15_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l16_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 
 
 r11_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r12_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r13_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r14_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r15_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r16_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 
 
@@ -58,54 +82,78 @@ r16_afterNum() {
 ;-------------------------------------------------
 
 l21_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l22_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l23_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l24_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l25_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l26_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 
 
 r21_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r22_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r23_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r24_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r25_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r26_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 
 
@@ -114,54 +162,78 @@ r26_afterNum() {
 ;-------------------------------------------------
 
 l31_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l32_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l33_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l34_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l35_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l36_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 
 
 r31_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r32_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r33_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r34_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r35_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r36_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 
 
@@ -170,54 +242,91 @@ r36_afterNum() {
 ;-------------------------------------------------
 
 l41_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l42_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l43_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l44_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l45_afterNum() {
-	afterNum_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		afterNum_keys := ["—", afterNumUp]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		afterNum_keys := ["Backspace", "—", afterNumUp]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		afterNum_keys := ["Backspace", "—", regSpacingDn, capSpacingUp, afterNumUp]
+	}
+	else
+	{
+		afterNum_keys := ["—", regSpacingDn, afterNumUp]
+	}
 	return afterNum_keys
 }
 l46_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 
 
 r41_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r42_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r43_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r44_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r45_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r46_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 
 
@@ -226,38 +335,54 @@ r46_afterNum() {
 ;-------------------------------------------------
 
 l52_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l53_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l54_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 l55_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 
 
 r52_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r53_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r54_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 r55_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 
 
@@ -266,52 +391,76 @@ r55_afterNum() {
 ;-------------------------------------------------
 
 lt1_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 lt2_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 lt3_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 lt4_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 lt5_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 lt6_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 
 
 rt1_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 rt2_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 rt3_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 rt4_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 rt5_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
 rt6_afterNum() {
-	afterNum_keys := [""]
-	return afterNum_keys
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+	{
+		SendInput {%afterNumUp%}
+	}
 }
