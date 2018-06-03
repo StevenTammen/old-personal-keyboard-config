@@ -134,7 +134,10 @@ l35_expdModifier() {
 	return expdModifier_keys
 }
 l36_expdModifier() {
-	expdModifier_keys := ["~"]
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestLevelIfApplicable_Opening(nestLevel)
+	expdModifier_keys := numModifierKeys_Opening_NoCap("~", "~")
 	return expdModifier_keys
 }
 

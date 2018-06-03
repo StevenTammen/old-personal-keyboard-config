@@ -90,6 +90,9 @@ l25_numModifier() {
 	return numModifier_keys
 }
 l26_numModifier() {
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestLevelIfApplicable_Opening(nestLevel)
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("'", "'")
 	return numModifier_keys
 }
@@ -115,6 +118,9 @@ r21_numModifier() {
 	return numModifier_keys
 }
 r22_numModifier() {
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestLevelIfApplicable_Opening(nestLevel)
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("/", "/")
 	return numModifier_keys
 }
@@ -138,14 +144,23 @@ r23_numModifier() {
 	return numModifier_keys
 }
 r24_numModifier() {
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestLevelIfApplicable_Opening(nestLevel)
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("*", "*")
 	return numModifier_keys
 }
 r25_numModifier() {
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestLevelIfApplicable_Opening(nestLevel)
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("+", "+")
 	return numModifier_keys
 }
 r26_numModifier() {
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestLevelIfApplicable_Opening(nestLevel)
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("^", "^")
 	return numModifier_keys
 }
