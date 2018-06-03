@@ -1,4 +1,4 @@
-; Number Row
+﻿; Number Row
 ;-------------------------------------------------
 
 l11_shiftLeader(shiftModifier_keys) {
@@ -185,8 +185,23 @@ l44_shiftLeader(shiftModifier_keys) {
 	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l45_shiftLeader(shiftModifier_keys) {
-	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
+l45_shiftLeader() {
+	if(GetKeyState(rawState))
+	{
+		shiftLeader_keys := ["—", shiftLeaderUp]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		shiftLeader_keys := ["Backspace", "—", shiftLeaderUp]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		shiftLeader_keys := ["Backspace", "—", regSpacingDn, capSpacingUp, shiftLeaderUp]
+	}
+	else
+	{
+		shiftLeader_keys := ["—", regSpacingDn, shiftLeaderUp]
+	}
 	return shiftLeader_keys
 }
 l46_shiftLeader(shiftModifier_keys) {

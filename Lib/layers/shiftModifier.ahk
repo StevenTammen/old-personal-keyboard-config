@@ -1,4 +1,4 @@
-; Number Row
+﻿; Number Row
 ;-------------------------------------------------
 
 l11_shiftModifier() {
@@ -62,49 +62,49 @@ l21_shiftModifier() {
 	return shiftModifier_keys
 }
 l22_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("B")
 	return shiftModifier_keys
 }
 l23_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("Y")
 	return shiftModifier_keys
 }
 l24_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("O")
 	return shiftModifier_keys
 }
 l25_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("U")
 	return shiftModifier_keys
 }
 l26_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := ["``"]
 	return shiftModifier_keys
 }
 
 
 r21_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("K")
 	return shiftModifier_keys
 }
 r22_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("D")
 	return shiftModifier_keys
 }
 r23_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("C")
 	return shiftModifier_keys
 }
 r24_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("L")
 	return shiftModifier_keys
 }
 r25_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("P")
 	return shiftModifier_keys
 }
 r26_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("Q")
 	return shiftModifier_keys
 }
 
@@ -118,49 +118,49 @@ l31_shiftModifier() {
 	return shiftModifier_keys
 }
 l32_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("H")
 	return shiftModifier_keys
 }
 l33_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("I")
 	return shiftModifier_keys
 }
 l34_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("E")
 	return shiftModifier_keys
 }
 l35_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("A")
 	return shiftModifier_keys
 }
 l36_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := ["."]
 	return shiftModifier_keys
 }
 
 
 r31_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("M")
 	return shiftModifier_keys
 }
 r32_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("T")
 	return shiftModifier_keys
 }
 r33_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("S")
 	return shiftModifier_keys
 }
 r34_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("R")
 	return shiftModifier_keys
 }
 r35_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("N")
 	return shiftModifier_keys
 }
 r36_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("V")
 	return shiftModifier_keys
 }
 
@@ -174,45 +174,124 @@ l41_shiftModifier() {
 	return shiftModifier_keys
 }
 l42_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("X")
 	return shiftModifier_keys
 }
 l43_shiftModifier() {
-	shiftModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		shiftModifier_keys := ["?"]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		shiftModifier_keys := ["Backspace", "?", "Space", capSpacingDn, regSpacingUp]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		shiftModifier_keys := ["Backspace", "?", "Space"]
+	}
+	else
+	{
+		shiftModifier_keys := ["?", "Space", capSpacingDn]
+	}
 	return shiftModifier_keys
 }
 l44_shiftModifier() {
-	shiftModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		shiftModifier_keys := ["_"]
+	}
+	else
+	{
+			IniRead, nestLevel, Status.ini, nestVars, nestLevel
+			nestLevel := nestLevel + 1
+			
+			actuallyNeedToWrite := GetKeyState(shiftLeader) or GetKeyState(shiftModifier) or (GetKeyState(numAfter) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+
+			if(actuallyNeedToWrite)
+			{
+				IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+				lastOpenPairDown := A_TickCount
+				IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown
+			}
+			
+		if(GetKeyState(nestedPunctuation))
+		{
+			if(GetKeyState(regSpacing))
+			{			
+				shiftModifier_keys := ["_", "_", "Left"]
+			}
+			else if(GetKeyState(capSpacing))
+			{
+				shiftModifier_keys := ["_", "_", "Left"]
+			}
+			else
+			{
+				shiftModifier_keys := ["Space", "_", "_", "Left", regSpacingDn]
+			}
+		}
+		else
+		{
+			if(GetKeyState(regSpacing))
+			{			
+				shiftModifier_keys := ["_", "_", "Left", nestedPunctuationDn]
+			}
+			else if(GetKeyState(capSpacing))
+			{
+				shiftModifier_keys := ["_", "_", "Left", nestedPunctuationDn]
+			}
+			else
+			{
+				shiftModifier_keys := ["Space", "_", "_", "Left", regSpacingDn, nestedPunctuationDn]
+			}
+		}
+	}
 	return shiftModifier_keys
 }
+; Not used intentionally; using comma default behavior instead in remap.ahk
 l45_shiftModifier() {
 	shiftModifier_keys := [""]
 	return shiftModifier_keys
 }
 l46_shiftModifier() {
-	shiftModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		shiftModifier_keys := ["!"]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		shiftModifier_keys := ["Backspace", "!", "Space", capSpacingDn, regSpacingUp]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		shiftModifier_keys := ["Backspace", "!", "Space"]
+	}
+	else
+	{
+		shiftModifier_keys := ["!", "Space", capSpacingDn]
+	}
 	return shiftModifier_keys
 }
 
 
 r41_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("W")
 	return shiftModifier_keys
 }
 r42_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("G")
 	return shiftModifier_keys
 }
 r43_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("F")
 	return shiftModifier_keys
 }
 r44_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("J")
 	return shiftModifier_keys
 }
 r45_shiftModifier() {
-	shiftModifier_keys := [""]
+	shiftModifier_keys := shiftModifierKeys_Letter("Z")
 	return shiftModifier_keys
 }
 r46_shiftModifier() {

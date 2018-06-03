@@ -189,4 +189,148 @@ global nestedPunctuationUp := "VKD8 Up"
 
 	return
 	
+:*?b0: 2/::
+
+	IniRead, inQuote, Status.ini, nestVars, inQuote
+	if(inQuote)
+	{
+		inQuote := false
+		IniWrite, %inQuote%, Status.ini, nestVars, inQuote
+	}
+
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel - 1
+	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+
+	DealWithSubscriptAndSuperscriptPassThrough()
+
+	if(nestLevel > 0)
+	{
+		if(GetKeyState(regSpacing))
+		{			
+			SendInput {Backspace 3}{Right}?{Space}{%capSpacingDn%}{%regSpacingUp%}
+		}
+		else if(GetKeyState(capSpacing))
+		{
+			SendInput {Backspace 3}{Right}?{Space}
+		}
+		else
+		{
+			SendInput {Backspace 3}{Right}?{Space}{%capSpacingDn%}
+		}
+	}
+	else
+	{
+		if(GetKeyState(regSpacing))
+		{			
+			SendInput {Backspace 3}{Right}?{Space}{%capSpacingDn%}{%regSpacingUp%}{%nestedPunctuationUp%}
+		}
+		else if(GetKeyState(capSpacing))
+		{
+			SendInput {Backspace 3}{Right}?{Space}{%nestedPunctuationUp%}
+		}
+		else
+		{
+			SendInput {Backspace 3}{Right}?{Space}{%capSpacingDn%}{%nestedPunctuationUp%}
+		}
+	}
+
+	return
+	
+:*?b0: 2,::
+
+	IniRead, inQuote, Status.ini, nestVars, inQuote
+	if(inQuote)
+	{
+		inQuote := false
+		IniWrite, %inQuote%, Status.ini, nestVars, inQuote
+	}
+
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel - 1
+	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+
+	DealWithSubscriptAndSuperscriptPassThrough()
+
+	if(nestLevel > 0)
+	{
+		if(GetKeyState(regSpacing))
+		{			
+			SendInput {Backspace 2}{Right}—
+		}
+		else if(GetKeyState(capSpacing))
+		{
+			SendInput {Backspace 2}{Right}—{%regSpacingDn%}{%capSpacingUp%}
+		}
+		else
+		{
+			SendInput {Backspace 2}{Right}—{%regSpacingDn%}
+		}
+	}
+	else
+	{
+		if(GetKeyState(regSpacing))
+		{			
+			SendInput {Backspace 2}{Right}—{%nestedPunctuationUp%}
+		}
+		else if(GetKeyState(capSpacing))
+		{
+			SendInput {Backspace 2}{Right}—{%regSpacingDn%}{%capSpacingUp%}{%nestedPunctuationUp%}
+		}
+		else
+		{
+			SendInput {Backspace 2}{Right}—{%regSpacingDn%}{%nestedPunctuationUp%}
+		}
+	}
+
+	return
+	
+:*?b0: 2``::
+
+	IniRead, inQuote, Status.ini, nestVars, inQuote
+	if(inQuote)
+	{
+		inQuote := false
+		IniWrite, %inQuote%, Status.ini, nestVars, inQuote
+	}
+
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel - 1
+	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+
+	DealWithSubscriptAndSuperscriptPassThrough()
+
+	if(nestLevel > 0)
+	{
+		if(GetKeyState(regSpacing))
+		{			
+			SendInput {Backspace 3}{Right}{!}{Space}{%capSpacingDn%}{%regSpacingUp%}
+		}
+		else if(GetKeyState(capSpacing))
+		{
+			SendInput {Backspace 3}{Right}{!}{Space}
+		}
+		else
+		{
+			SendInput {Backspace 3}{Right}{!}{Space}{%capSpacingDn%}
+		}
+	}
+	else
+	{
+		if(GetKeyState(regSpacing))
+		{			
+			SendInput {Backspace 3}{Right}{!}{Space}{%capSpacingDn%}{%regSpacingUp%}{%nestedPunctuationUp%}
+		}
+		else if(GetKeyState(capSpacing))
+		{
+			SendInput {Backspace 3}{Right}{!}{Space}{%nestedPunctuationUp%}
+		}
+		else
+		{
+			SendInput {Backspace 3}{Right}{!}{Space}{%capSpacingDn%}{%nestedPunctuationUp%}
+		}
+	}
+
+	return
+	
 #If

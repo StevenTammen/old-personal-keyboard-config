@@ -20,6 +20,25 @@ DealWithSubscriptAndSuperscriptPassThrough()
 }
 
 
+shiftModifierKeys_Letter(letter)
+{
+	if(GetKeyState(regSpacing))
+	{			
+		shiftModifierKeys := [letter, regSpacingUp]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		shiftModifierKeys := [letter, capSpacingUp]
+	}
+	else
+	{
+		shiftModifierKeys := [letter]
+	}
+
+	return shiftModifierKeys
+}
+
+
 ; -----------------------------------------------------------------------------------------------------------
 
 WriteNestLevelIfApplicable_Opening(nestLevel)
@@ -510,26 +529,6 @@ numModifierKeys_Closing(closingChar, nestLevel)
 
 	return numModifierKeys
 }
-
-
-shiftModifierKeys_Letter(letter)
-{
-	if(GetKeyState(regSpacing))
-	{			
-		shiftModifierKeys := [letter, regSpacingUp]
-	}
-	else if(GetKeyState(capSpacing))
-	{
-		shiftModifierKeys := [letter, capSpacingUp]
-	}
-	else
-	{
-		shiftModifierKeys := letter
-	}
-
-	return shiftModifierKeys
-}
-
 
 GetSpecialCaseKeys(lastRealKeyDown)
 {
