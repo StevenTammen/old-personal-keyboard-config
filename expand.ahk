@@ -55,7 +55,11 @@ global rawLeader := "VK8F"
 global rawState := "VK97"
 global regSpacing := "VK98"
 global capSpacing := "VK99"
-global nestedPunctuation := "VKD8"
+global nestedPunctuation := "VK9A"
+
+global ctrl := "VK3A"
+global alt := "VK3B"
+global win := "VK3C"
 
 ; Explicit down and up variables are defined for ease of use: using expression syntax and straight key definitions,
 ; you would need concatenation like ~keyVar . " Down"~ and ~keyVar . " Up"~, which is a bit verbose.
@@ -72,7 +76,12 @@ global rawLeaderDn := "VK8F Down"
 global rawStateDn := "VK97 Down"
 global regSpacingDn := "VK98 Down"
 global capSpacingDn := "VK99 Down"
-global nestedPunctuationDn := "VKD8 Down"
+global nestedPunctuationDn := "VK9A Down"
+
+global ctrlDn := "VK3A Down"
+global altDn := "VK3B Down"
+global winDn := "VK3C Down"
+
 
 global numLeaderUp := "VK88 Up"
 global numModifierUp := "VK89 Up"
@@ -85,7 +94,11 @@ global rawLeaderUp := "VK8F Up"
 global rawStateUp := "VK97 Up"
 global regSpacingUp := "VK98 Up"
 global capSpacingUp := "VK99 Up"
-global nestedPunctuationUp := "VKD8 Up"
+global nestedPunctuationUp := "VK9A Up"
+
+global ctrlUp := "VK3A Up"
+global altUp := "VK3B Up"
+global winUp := "VK3C Up"
 
 
 

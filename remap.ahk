@@ -10,13 +10,28 @@
 #Include <dual/dual>
 #Include <functions>
 
-#Include <layers/expdLeader>
-#Include <layers/expdModifier>
 #Include <layers/numLeader>
 #Include <layers/numModifier>
 #Include <layers/shiftLeader>
 #Include <layers/shiftModifier>
+#Include <layers/expdLeader>
+#Include <layers/expdModifier>
 #Include <layers/afterNum>
+
+#Include <layers/modifiers/Alt>
+#Include <layers/modifiers/AltShift>
+#Include <layers/modifiers/AltShiftWin>
+#Include <layers/modifiers/AltWin>
+#Include <layers/modifiers/Ctrl>
+#Include <layers/modifiers/CtrlAlt>
+#Include <layers/modifiers/CtrlAltShift>
+#Include <layers/modifiers/CtrlAltShiftWin>
+#Include <layers/modifiers/CtrlAltWin>
+#Include <layers/modifiers/CtrlShift>
+#Include <layers/modifiers/CtrlShiftWin>
+#Include <layers/modifiers/CtrlWin>
+#Include <layers/modifiers/ShiftWin>
+#Include <layers/modifiers/Win>
 
 
 
@@ -79,7 +94,11 @@ global rawLeader := "VK8F"
 global rawState := "VK97"
 global regSpacing := "VK98"
 global capSpacing := "VK99"
-global nestedPunctuation := "VKD8"
+global nestedPunctuation := "VK9A"
+
+global ctrl := "VK3A"
+global alt := "VK3B"
+global win := "VK3C"
 
 ; Explicit down and up variables are defined for ease of use: using expression syntax and straight key definitions,
 ; you would need concatenation like ~keyVar . " Down"~ and ~keyVar . " Up"~, which is a bit verbose.
@@ -96,7 +115,12 @@ global rawLeaderDn := "VK8F Down"
 global rawStateDn := "VK97 Down"
 global regSpacingDn := "VK98 Down"
 global capSpacingDn := "VK99 Down"
-global nestedPunctuationDn := "VKD8 Down"
+global nestedPunctuationDn := "VK9A Down"
+
+global ctrlDn := "VK3A Down"
+global altDn := "VK3B Down"
+global winDn := "VK3C Down"
+
 
 global numLeaderUp := "VK88 Up"
 global numModifierUp := "VK89 Up"
@@ -109,7 +133,11 @@ global rawLeaderUp := "VK8F Up"
 global rawStateUp := "VK97 Up"
 global regSpacingUp := "VK98 Up"
 global capSpacingUp := "VK99 Up"
-global nestedPunctuationUp := "VKD8 Up"
+global nestedPunctuationUp := "VK9A Up"
+
+global ctrlUp := "VK3A Up"
+global altUp := "VK3B Up"
+global winUp := "VK3C Up"
 
 
 
@@ -126,7 +154,7 @@ global nestedPunctuationUp := "VKD8 Up"
 	l11_afterNum()
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	return
-*RShift:
+*LShift:
 	numModifier_keys := l12_numModifier()
 	shiftModifier_keys := l12_shiftModifier()
 	expdModifier_keys := l12_expdModifier()
@@ -136,7 +164,7 @@ global nestedPunctuationUp := "VKD8 Up"
 	l12_afterNum()
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	return
-*RCtrl::
+*RShift::
 	numModifier_keys := l13_numModifier()
 	shiftModifier_keys := l13_shiftModifier()
 	expdModifier_keys := l13_expdModifier()
@@ -250,6 +278,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey("Tab")
 	return
 *b::
+	if(Modifiers("l22", "b", "{"))
+	{
+		return
+	}
 	numModifier_keys := l22_numModifier()
 	shiftModifier_keys := l22_shiftModifier()
 	expdModifier_keys := l22_expdModifier()
@@ -260,6 +292,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["b", regSpacingUp], (capSpacing): ["B", capSpacingUp], (regSpacing): ["b", regSpacingUp], (capSpacing): ["B", capSpacingUp]})
 	return
 *y::
+	if(Modifiers("l23", "y", "["))
+	{
+		return
+	}
 	numModifier_keys := l23_numModifier()
 	shiftModifier_keys := l23_shiftModifier()
 	expdModifier_keys := l23_expdModifier()
@@ -270,6 +306,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["y", regSpacingUp], (capSpacing): ["Y", capSpacingUp], (regSpacing): ["y", regSpacingUp], (capSpacing): ["Y", capSpacingUp]})
 	return
 *o::
+	if(Modifiers("l24", "o", "]"))
+	{
+		return
+	}
 	numModifier_keys := l24_numModifier()
 	shiftModifier_keys := l24_shiftModifier()
 	expdModifier_keys := l24_expdModifier()
@@ -280,6 +320,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["o", regSpacingUp], (capSpacing): ["O", capSpacingUp], (regSpacing): ["o", regSpacingUp], (capSpacing): ["O", capSpacingUp]})
 	return
 *u::
+	if(Modifiers("l25", "u", "}"))
+	{
+		return
+	}
 	numModifier_keys := l25_numModifier()
 	shiftModifier_keys := l25_shiftModifier()
 	expdModifier_keys := l25_expdModifier()
@@ -290,6 +334,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["u", regSpacingUp], (capSpacing): ["U", capSpacingUp], (regSpacing): ["u", regSpacingUp], (capSpacing): ["U", capSpacingUp]})
 	return
 *'::
+	if(Modifiers("l26", "'", "'"))
+	{
+		return
+	}
 	numModifier_keys := l26_numModifier()
 	shiftModifier_keys := l26_shiftModifier()
 	expdModifier_keys := l26_expdModifier()
@@ -302,6 +350,10 @@ global nestedPunctuationUp := "VKD8 Up"
 
 
 *k::
+	if(Modifiers("r21", "k", "%"))
+	{
+		return
+	}
 	numModifier_keys := r21_numModifier()
 	shiftModifier_keys := r21_shiftModifier()
 	expdModifier_keys := r21_expdModifier()
@@ -312,6 +364,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["k", regSpacingUp], (capSpacing): ["K", capSpacingUp], (regSpacing): ["k", regSpacingUp], (capSpacing): ["K", capSpacingUp]})
 	return
 *d::
+	if(Modifiers("r22", "d", "/"))
+	{
+		return
+	}
 	numModifier_keys := r22_numModifier()
 	shiftModifier_keys := r22_shiftModifier()
 	expdModifier_keys := r22_expdModifier()
@@ -322,6 +378,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["d", regSpacingUp], (capSpacing): ["D", capSpacingUp], (regSpacing): ["d", regSpacingUp], (capSpacing): ["D", capSpacingUp]})
 	return
 *c::
+	if(Modifiers("r23", "c", "-"))
+	{
+		return
+	}
 	numModifier_keys := r23_numModifier()
 	shiftModifier_keys := r23_shiftModifier()
 	expdModifier_keys := r23_expdModifier()
@@ -332,6 +392,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["c", regSpacingUp], (capSpacing): ["C", capSpacingUp], (regSpacing): ["c", regSpacingUp], (capSpacing): ["C", capSpacingUp]})
 	return
 *l::
+	if(Modifiers("r24", "l", "*"))
+	{
+		return
+	}
 	numModifier_keys := r24_numModifier()
 	shiftModifier_keys := r24_shiftModifier()
 	expdModifier_keys := r24_expdModifier()
@@ -342,6 +406,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["l", regSpacingUp], (capSpacing): ["L", capSpacingUp], (regSpacing): ["l", regSpacingUp], (capSpacing): ["L", capSpacingUp]})
 	return
 *p::
+	if(Modifiers("r25", "p", "+"))
+	{
+		return
+	}
 	numModifier_keys := r25_numModifier()
 	shiftModifier_keys := r25_shiftModifier()
 	expdModifier_keys := r25_expdModifier()
@@ -352,6 +420,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["p", regSpacingUp], (capSpacing): ["P", capSpacingUp], (regSpacing): ["p", regSpacingUp], (capSpacing): ["P", capSpacingUp]})
 	return
 *q::
+	if(Modifiers("r26", "q", "^"))
+	{
+		return
+	}
 	numModifier_keys := r26_numModifier()
 	shiftModifier_keys := r26_shiftModifier()
 	expdModifier_keys := r26_expdModifier()
@@ -395,6 +467,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(regSpacing): ["Backspace", "Backspace", regSpacingUp], (capSpacing): ["Backspace", "Backspace", capSpacingUp]})
 	return
 *h::
+	if(Modifiers("l32", "h", "2"))
+	{
+		return
+	}
 	numModifier_keys := l32_numModifier()
 	shiftModifier_keys := l32_shiftModifier()
 	expdModifier_keys := l32_expdModifier()
@@ -405,6 +481,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["h", regSpacingUp], (capSpacing): ["H", capSpacingUp]})
 	return
 *i::
+	if(Modifiers("l33", "i", "3"))
+	{
+		return
+	}
 	numModifier_keys := l33_numModifier()
 	shiftModifier_keys := l33_shiftModifier()
 	expdModifier_keys := l33_expdModifier()
@@ -415,6 +495,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["i", regSpacingUp], (capSpacing): ["I", capSpacingUp], (regSpacing): ["i", regSpacingUp], (capSpacing): ["I", capSpacingUp]})
 	return
 *e::
+	if(Modifiers("l34", "e", "5"))
+	{
+		return
+	}
 	numModifier_keys := l34_numModifier()
 	shiftModifier_keys := l34_shiftModifier()
 	expdModifier_keys := l34_expdModifier()
@@ -425,6 +509,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["e", regSpacingUp], (capSpacing): ["E", capSpacingUp], (regSpacing): ["e", regSpacingUp], (capSpacing): ["E", capSpacingUp]})
 	return
 *a::
+	if(Modifiers("l35", "a", "7"))
+	{
+		return
+	}
 	numModifier_keys := l35_numModifier()
 	shiftModifier_keys := l35_shiftModifier()
 	expdModifier_keys := l35_expdModifier()
@@ -435,6 +523,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["a", regSpacingUp], (capSpacing): ["A", capSpacingUp], (regSpacing): ["a", regSpacingUp], (capSpacing): ["A", capSpacingUp]})
 	return
 *.::
+	if(Modifiers("l36", ".", "."))
+	{
+		return
+	}
 	if(GetKeyState(rawState))
 	{
 		defaultKeys := ["."]
@@ -461,6 +553,10 @@ global nestedPunctuationUp := "VKD8 Up"
 
 
 *m::
+	if(Modifiers("r31", "m", "8"))
+	{
+		return
+	}
 	numModifier_keys := r31_numModifier()
 	shiftModifier_keys := r31_shiftModifier()
 	expdModifier_keys := r31_expdModifier()
@@ -471,6 +567,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["m", regSpacingUp], (capSpacing): ["M", capSpacingUp], (regSpacing): ["m", regSpacingUp], (capSpacing): ["M", capSpacingUp]})
 	return
 *t::
+	if(Modifiers("r32", "t", "0"))
+	{
+		return
+	}
 	numModifier_keys := r32_numModifier()
 	shiftModifier_keys := r32_shiftModifier()
 	expdModifier_keys := r32_expdModifier()
@@ -481,6 +581,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["t", regSpacingUp], (capSpacing): ["T", capSpacingUp], (regSpacing): ["t", regSpacingUp], (capSpacing): ["T", capSpacingUp]})
 	return
 *s::
+	if(Modifiers("r33", "s", "6"))
+	{
+		return
+	}
 	numModifier_keys := r33_numModifier()
 	shiftModifier_keys := r33_shiftModifier()
 	expdModifier_keys := r33_expdModifier()
@@ -491,6 +595,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["s", regSpacingUp], (capSpacing): ["S", capSpacingUp], (regSpacing): ["s", regSpacingUp], (capSpacing): ["S", capSpacingUp]})
 	return
 *r::
+	if(Modifiers("r34", "r", "4"))
+	{
+		return
+	}
 	numModifier_keys := r34_numModifier()
 	shiftModifier_keys := r34_shiftModifier()
 	expdModifier_keys := r34_expdModifier()
@@ -501,6 +609,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["r", regSpacingUp], (capSpacing): ["R", capSpacingUp], (regSpacing): ["r", regSpacingUp], (capSpacing): ["R", capSpacingUp]})
 	return
 *n::
+	if(Modifiers("r35", "n", "1"))
+	{
+		return
+	}
 	numModifier_keys := r35_numModifier()
 	shiftModifier_keys := r35_shiftModifier()
 	expdModifier_keys := r35_expdModifier()
@@ -511,6 +623,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["n", regSpacingUp], (capSpacing): ["N", capSpacingUp], (regSpacing): ["n", regSpacingUp], (capSpacing): ["N", capSpacingUp]})
 	return
 *v::
+	if(Modifiers("r36", "v", "|"))
+	{
+		return
+	}
 	numModifier_keys := r36_numModifier()
 	shiftModifier_keys := r36_shiftModifier()
 	expdModifier_keys := r36_expdModifier()
@@ -532,6 +648,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey("Esc")
 	return
 *x::
+	if(Modifiers("l42", "x", "$"))
+	{
+		return
+	}
 	numModifier_keys := l42_numModifier()
 	shiftModifier_keys := l42_shiftModifier()
 	expdModifier_keys := l42_expdModifier()
@@ -542,6 +662,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["x", regSpacingUp], (capSpacing): ["X", capSpacingUp]})
 	return
 */::
+	if(Modifiers("l43", """", """"))
+	{
+		return
+	}
 	if(GetKeyState(rawState))
 	{
 		defaultKeys := [""""]
@@ -620,6 +744,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *;::
+	if(Modifiers("l44", ")", ")"))
+	{
+		return
+	}
 	if(GetKeyState(nestedPunctuation))
 	{
 		IniRead, nestLevel, Status.ini, nestVars, nestLevel
@@ -664,6 +792,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *,::
+	if(Modifiers("l45", ",", ","))
+	{
+		return
+	}
 	if(GetKeyState(rawState))
 	{
 		defaultKeys := [","]
@@ -691,6 +823,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *`::
+	if(Modifiers("l46", "(", "("))
+	{
+		return
+	}
 	if(GetKeyState(rawState))
 	{
 		defaultKeys := ["("]
@@ -738,6 +874,10 @@ global nestedPunctuationUp := "VKD8 Up"
 
 
 *w::
+	if(Modifiers("r41", "w", "9"))
+	{
+		return
+	}
 	numModifier_keys := r41_numModifier()
 	shiftModifier_keys := r41_shiftModifier()
 	expdModifier_keys := r41_expdModifier()
@@ -748,6 +888,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["w", regSpacingUp], (capSpacing): ["W", capSpacingUp], (regSpacing): ["w", regSpacingUp], (capSpacing): ["W", capSpacingUp]})
 	return
 *g::
+	if(Modifiers("r42", "g", "="))
+	{
+		return
+	}
 	numModifier_keys := r42_numModifier()
 	shiftModifier_keys := r42_shiftModifier()
 	expdModifier_keys := r42_expdModifier()
@@ -758,6 +902,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["g", regSpacingUp], (capSpacing): ["G", capSpacingUp], (regSpacing): ["g", regSpacingUp], (capSpacing): ["G", capSpacingUp]})
 	return
 *f::
+	if(Modifiers("r43", "f", "<"))
+	{
+		return
+	}
 	numModifier_keys := r43_numModifier()
 	shiftModifier_keys := r43_shiftModifier()
 	expdModifier_keys := r43_expdModifier()
@@ -768,6 +916,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["f", regSpacingUp], (capSpacing): ["F", capSpacingUp], (regSpacing): ["f", regSpacingUp], (capSpacing): ["F", capSpacingUp]})
 	return
 *j::
+	if(Modifiers("r44", "j", ">"))
+	{
+		return
+	}
 	numModifier_keys := r44_numModifier()
 	shiftModifier_keys := r44_shiftModifier()
 	expdModifier_keys := r44_expdModifier()
@@ -778,6 +930,10 @@ global nestedPunctuationUp := "VKD8 Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): ["j", regSpacingUp], (capSpacing): ["J", capSpacingUp], (regSpacing): ["j", regSpacingUp], (capSpacing): ["J", capSpacingUp]})
 	return
 *z::
+	if(Modifiers("r45", "z", "&"))
+	{
+		return
+	}
 	numModifier_keys := r45_numModifier()
 	shiftModifier_keys := r45_shiftModifier()
 	expdModifier_keys := r45_expdModifier()
@@ -805,87 +961,59 @@ global nestedPunctuationUp := "VKD8 Up"
 ; Extra Row
 ;-------------------------------------------------
 
-*LShift::
-	numModifier_keys := l52_numModifier()
-	shiftModifier_keys := l52_shiftModifier()
-	expdModifier_keys := l52_expdModifier()
-	numLeader_keys := l52_numLeader(numModifier_keys)
-	shiftLeader_keys := l52_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l52_expdLeader(expdModifier_keys)
-	l52_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
-	return
-*CapsLock::
-	numModifier_keys := l53_numModifier()
-	shiftModifier_keys := l53_shiftModifier()
-	expdModifier_keys := l53_expdModifier()
-	numLeader_keys := l53_numLeader(numModifier_keys)
-	shiftLeader_keys := l53_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l53_expdLeader(expdModifier_keys)
-	l53_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
-	return
-*Left::
-	numModifier_keys := l54_numModifier()
-	shiftModifier_keys := l54_shiftModifier()
-	expdModifier_keys := l54_expdModifier()
-	numLeader_keys := l54_numLeader(numModifier_keys)
-	shiftLeader_keys := l54_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l54_expdLeader(expdModifier_keys)
-	l54_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
-	return
-*Right::
-	numModifier_keys := l55_numModifier()
-	shiftModifier_keys := l55_shiftModifier()
-	expdModifier_keys := l55_expdModifier()
-	numLeader_keys := l55_numLeader(numModifier_keys)
-	shiftLeader_keys := l55_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l55_expdLeader(expdModifier_keys)
-	l55_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
-	return
-
-
-*Up::
-	numModifier_keys := r52_numModifier()
-	shiftModifier_keys := r52_shiftModifier()
-	expdModifier_keys := r52_expdModifier()
-	numLeader_keys := r52_numLeader(numModifier_keys)
-	shiftLeader_keys := r52_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r52_expdLeader(expdModifier_keys)
-	r52_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
-	return
-*Down::
-	numModifier_keys := r53_numModifier()
-	shiftModifier_keys := r53_shiftModifier()
-	expdModifier_keys := r53_expdModifier()
-	numLeader_keys := r53_numLeader(numModifier_keys)
-	shiftLeader_keys := r53_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r53_expdLeader(expdModifier_keys)
-	r53_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
-	return
+; Custom behavior, want it consistent across layers
 *[::
-	numModifier_keys := r54_numModifier()
-	shiftModifier_keys := r54_shiftModifier()
-	expdModifier_keys := r54_expdModifier()
-	numLeader_keys := r54_numLeader(numModifier_keys)
-	shiftLeader_keys := r54_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r54_expdLeader(expdModifier_keys)
-	r54_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey()
 	return
+; Custom behavior, want it consistent across layers
+*RWin::
+	dual.comboKey(winDn, {(win): winUp})
+	return
+; Custom behavior, want it consistent across layers
+*LAlt::
+	dual.comboKey(altDn, {(alt): altUp})
+	return
+; Custom behavior, want it consistent across layers
+*LCtrl::
+	dual.comboKey(ctrlDn, {(ctrl): ctrlUp})
+	return
+
+; Mirrored Ctrl key: not needed twice	
+;*LCtrl::
+;	numModifier_keys := r52_numModifier()
+;	shiftModifier_keys := r52_shiftModifier()
+;	expdModifier_keys := r52_expdModifier()
+;	numLeader_keys := r52_numLeader(numModifier_keys)
+;	shiftLeader_keys := r52_shiftLeader(shiftModifier_keys)
+;	expdLeader_keys := r52_expdLeader(expdModifier_keys)
+;	r52_afterNum()
+;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+;	return
+; Mirrored Alt key: not needed twice
+;*LAlt::
+;	numModifier_keys := r53_numModifier()
+;	shiftModifier_keys := r53_shiftModifier()
+;	expdModifier_keys := r53_expdModifier()
+;	numLeader_keys := r53_numLeader(numModifier_keys)
+;	shiftLeader_keys := r53_shiftLeader(shiftModifier_keys)
+;	expdLeader_keys := r53_expdLeader(expdModifier_keys)
+;	r53_afterNum()
+;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+;	return
+; Mirrored Win key: not needed twice
+;*RWin::
+;	numModifier_keys := r54_numModifier()
+;	shiftModifier_keys := r54_shiftModifier()
+;	expdModifier_keys := r54_expdModifier()
+;	numLeader_keys := r54_numLeader(numModifier_keys)
+;	shiftLeader_keys := r54_shiftLeader(shiftModifier_keys)
+;	expdLeader_keys := r54_expdLeader(expdModifier_keys)
+;	r54_afterNum()
+;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+;	return
+; Custom behavior, want it consistent across layers
 *]::
-	numModifier_keys := r55_numModifier()
-	shiftModifier_keys := r55_shiftModifier()
-	expdModifier_keys := r55_expdModifier()
-	numLeader_keys := r55_numLeader(numModifier_keys)
-	shiftLeader_keys := r55_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r55_expdLeader(expdModifier_keys)
-	r55_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey()
 	return
 
 
@@ -945,7 +1073,7 @@ global nestedPunctuationUp := "VKD8 Up"
 *Home::
 	dual.comboKey(rawStateDn, {(rawState): rawStateUp})
 	return
-*LAlt::
+*Left::
 	numModifier_keys := lt6_numModifier()
 	shiftModifier_keys := lt6_shiftModifier()
 	expdModifier_keys := lt6_expdModifier()
@@ -1021,7 +1149,7 @@ global nestedPunctuationUp := "VKD8 Up"
 *PgUp::
 	dual.comboKey()
 	return
-*RWin::
+*Right::
 	numModifier_keys := rt6_numModifier()
 	shiftModifier_keys := rt6_shiftModifier()
 	expdModifier_keys := rt6_expdModifier()

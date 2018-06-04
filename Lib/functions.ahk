@@ -1,4 +1,66 @@
-﻿AddKeyUp(keys, keyUp) 
+﻿Modifiers(position, regKey, numKey)
+{
+	
+	; Always arrange modifiers in the order of Ctrl > Alt > Shift > Win
+	; Will allow for a dynamic function call below
+	
+	mods := ""
+	
+	if(GetKeyState(ctrl))
+	{
+		mods := mods . "Ctrl"
+		SendInput {%ctrlUp%}
+	}
+	
+	if(GetKeyState(alt))
+	{
+		mods := mods . "Alt"
+		SendInput {%altUp%}
+	}
+	
+	if(GetKeyState(shiftLeader))
+	{
+		mods := mods . "Shift"
+		SendInput {%shiftLeaderUp%}
+	}
+	
+	if(GetKeyState(win))
+	{
+		mods := mods . "Win"
+		SendInput {%winUp%}
+	}
+	
+	; This function should not do things if shift is the only modifier. Only when shift is combined
+	; with other modifiers, or when other modifiers are used without shift. We need to put
+	; the shiftLeader key back down if we get here and realize that only shift is down.
+	if(mods = "Shift")
+	{
+		SendInput {%shiftLeaderDn%}
+		return false
+	}
+	else if(mods = "")
+	{
+		return false
+	}
+	else
+	{
+		if(GetKeyState(numLeader))
+		{
+			key := numKey
+			SendInput {%numLeaderUp%}		
+		}
+		else
+		{
+			key := regKey
+		}
+		
+		%position%_%mods%(key)
+		return true
+	}
+}
+
+
+AddKeyUp(keys, keyUp) 
 {
 	newKeys := []
 	Loop % keys.Length()
