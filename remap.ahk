@@ -245,15 +245,9 @@ global nestedPunctuationUp := "VKD8 Up"
 ; Top Row
 ;-------------------------------------------------
 
+; Custom behavior, want it consistent across layers
 *Tab::
-	numModifier_keys := l21_numModifier()
-	shiftModifier_keys := l21_shiftModifier()
-	expdModifier_keys := l21_expdModifier()
-	numLeader_keys := l21_numLeader(numModifier_keys)
-	shiftLeader_keys := l21_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l21_expdLeader(expdModifier_keys)
-	l21_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey("Tab")
 	return
 *b::
 	numModifier_keys := l22_numModifier()
@@ -374,15 +368,31 @@ global nestedPunctuationUp := "VKD8 Up"
 ; Home Row
 ;-------------------------------------------------
 
+; Custom behavior, want it consistent across layers
 *Backspace::
-	numModifier_keys := l31_numModifier()
-	shiftModifier_keys := l31_shiftModifier()
-	expdModifier_keys := l31_expdModifier()
-	numLeader_keys := l31_numLeader(numModifier_keys)
-	shiftLeader_keys := l31_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l31_expdLeader(expdModifier_keys)
-	l31_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+
+	IniRead, lastOpenPairDown, Status.ini, nestVars, lastOpenPairDown
+	timeOfLastHotkey := A_TickCount - A_TimeSincePriorHotkey
+	
+	if((timeOfLastHotKey - lastOpenPairDown) < 50)
+	{
+		IniRead, nestLevel, Status.ini, nestVars, nestLevel
+		nestLevel := nestLevel - 1
+		IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+		
+		if(nestLevel > 0)
+		{
+			SendInput {Backspace}{Delete}
+		}
+		else
+		{
+			SendInput {Backspace}{Delete}{%nestedPunctuationUp%}
+		}
+	
+		return
+	}
+
+	dual.comboKey({(regSpacing): ["Backspace", "Backspace", regSpacingUp], (capSpacing): ["Backspace", "Backspace", capSpacingUp]})
 	return
 *h::
 	numModifier_keys := l32_numModifier()
@@ -517,15 +527,9 @@ global nestedPunctuationUp := "VKD8 Up"
 ; Bottom Row
 ;-------------------------------------------------
 
+; Custom behavior, want it consistent across layers
 *Esc::
-	numModifier_keys := l41_numModifier()
-	shiftModifier_keys := l41_shiftModifier()
-	expdModifier_keys := l41_expdModifier()
-	numLeader_keys := l41_numLeader(numModifier_keys)
-	shiftLeader_keys := l41_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l41_expdLeader(expdModifier_keys)
-	l41_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey("Esc")
 	return
 *x::
 	numModifier_keys := l42_numModifier()
@@ -911,36 +915,35 @@ global nestedPunctuationUp := "VKD8 Up"
 	lt2_afterNum()
 	dual.combine(expdModifier, expdLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	return
-*LCtrl::
-	numModifier_keys := lt3_numModifier()
-	shiftModifier_keys := lt3_shiftModifier()
-	expdModifier_keys := lt3_expdModifier()
-	numLeader_keys := lt3_numLeader(numModifier_keys)
-	shiftLeader_keys := lt3_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := lt3_expdLeader(expdModifier_keys)
-	lt3_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+; Custom behavior, want it consistent across layers
+*Enter::
+	currentEnterDown := A_TickCount
+	if((currentEnterDown - lastEnterDown) < 1000)
+	{
+		dual.comboKey()
+	}
+	else
+	{
+		regSpacingKeys := ["Backspace", "Enter", capSpacingDn, regSpacingUp]
+		capSpacingKeys := ["Backspace", "Enter"]
+		
+		; ######## Backslash Escape ########
+		if(GetKeyState(rawLeader))
+		{
+			regSpacingKeys := ["Backspace", "Enter"]
+			capSpacingKeys := ["Backspace", "Enter"]
+		}
+		dual.comboKey(["Enter", capSpacingDn], {(rawState): "Enter", (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	}
+	lastEnterDown := currentEnterDown
 	return
+; Custom behavior, want it consistent across layers
 *\::
-	numModifier_keys := lt4_numModifier()
-	shiftModifier_keys := lt4_shiftModifier()
-	expdModifier_keys := lt4_expdModifier()
-	numLeader_keys := lt4_numLeader(numModifier_keys)
-	shiftLeader_keys := lt4_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := lt4_expdLeader(expdModifier_keys)
-	lt4_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey("\")
 	return
+; Custom behavior, want it consistent across layers
 *Home::
-	numModifier_keys := lt5_numModifier()
-	shiftModifier_keys := lt5_shiftModifier()
-	expdModifier_keys := lt5_expdModifier()
-	numLeader_keys := lt5_numLeader(numModifier_keys)
-	shiftLeader_keys := lt5_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := lt5_expdLeader(expdModifier_keys)
-	lt5_afterNum()
-	; Handle toggle for autospacing
-	dual.comboKey(rawStateDn, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawState): rawStateUp})
+	dual.comboKey(rawStateDn, {(rawState): rawStateUp})
 	return
 *LAlt::
 	numModifier_keys := lt6_numModifier()
@@ -999,35 +1002,24 @@ global nestedPunctuationUp := "VKD8 Up"
 	rt2_afterNum()
 	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	return
-*Enter::
-	numModifier_keys := rt3_numModifier()
-	shiftModifier_keys := rt3_shiftModifier()
-	expdModifier_keys := rt3_expdModifier()
-	numLeader_keys := rt3_numLeader(numModifier_keys)
-	shiftLeader_keys := rt3_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := rt3_expdLeader(expdModifier_keys)
-	rt3_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
-	return
+; Mirrored Enter key: not needed twice	
+;*Enter::
+;	numModifier_keys := lt3_numModifier()
+;	shiftModifier_keys := lt3_shiftModifier()
+;	expdModifier_keys := lt3_expdModifier()
+;	numLeader_keys := lt3_numLeader(numModifier_keys)
+;	shiftLeader_keys := lt3_shiftLeader(shiftModifier_keys)
+;	expdLeader_keys := lt3_expdLeader(expdModifier_keys)
+;	lt3_afterNum()
+;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+;	return
+; Custom behavior, want it consistent across layers
 *PgDn::
-	numModifier_keys := rt4_numModifier()
-	shiftModifier_keys := rt4_shiftModifier()
-	expdModifier_keys := rt4_expdModifier()
-	numLeader_keys := rt4_numLeader(numModifier_keys)
-	shiftLeader_keys := rt4_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := rt4_expdLeader(expdModifier_keys)
-	rt4_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey()
 	return
+; Custom behavior, want it consistent across layers
 *PgUp::
-	numModifier_keys := rt5_numModifier()
-	shiftModifier_keys := rt5_shiftModifier()
-	expdModifier_keys := rt5_expdModifier()
-	numLeader_keys := rt5_numLeader(numModifier_keys)
-	shiftLeader_keys := rt5_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := rt5_expdLeader(expdModifier_keys)
-	rt5_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey()
 	return
 *RWin::
 	numModifier_keys := rt6_numModifier()
