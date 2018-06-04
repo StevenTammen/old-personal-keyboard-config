@@ -1,4 +1,4 @@
-﻿#If (GetKeyState(nestedPunctuation))
+﻿#If (!GetKeyState(rawState))
 
 ; ------------------- Base Layer -------------------
 
