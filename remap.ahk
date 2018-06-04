@@ -939,7 +939,8 @@ global nestedPunctuationUp := "VKD8 Up"
 	shiftLeader_keys := lt5_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := lt5_expdLeader(expdModifier_keys)
 	lt5_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	; Handle toggle for autospacing
+	dual.comboKey(rawStateDn, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawState): rawStateUp})
 	return
 *LAlt::
 	numModifier_keys := lt6_numModifier()
