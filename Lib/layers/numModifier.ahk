@@ -175,19 +175,19 @@ l31_numModifier() {
 	return numModifier_keys
 }
 l32_numModifier() {
-	numModifier_keys := numModifierKeys_Number("2", lastRealKeyDown)
+	numModifier_keys := numModifierKeys_Number("2")
 	return numModifier_keys
 }
 l33_numModifier() {
-	numModifier_keys := numModifierKeys_Number("3", lastRealKeyDown)
+	numModifier_keys := numModifierKeys_Number("3")
 	return numModifier_keys
 }
 l34_numModifier() {
-	numModifier_keys := numModifierKeys_Number("5", lastRealKeyDown)
+	numModifier_keys := numModifierKeys_Number("5")
 	return numModifier_keys
 }
 l35_numModifier() {
-	numModifier_keys := numModifierKeys_Number("7", lastRealKeyDown)
+	numModifier_keys := numModifierKeys_Number("7")
 	return numModifier_keys
 }
 l36_numModifier() {
@@ -212,23 +212,23 @@ if(GetKeyState(rawState))
 
 
 r31_numModifier() {
-	numModifier_keys := numModifierKeys_Number("8", lastRealKeyDown)
+	numModifier_keys := numModifierKeys_Number("8")
 	return numModifier_keys
 }
 r32_numModifier() {
-	numModifier_keys := numModifierKeys_Number("0", lastRealKeyDown)
+	numModifier_keys := numModifierKeys_Number("0")
 	return numModifier_keys
 }
 r33_numModifier() {
-	numModifier_keys := numModifierKeys_Number("6", lastRealKeyDown)
+	numModifier_keys := numModifierKeys_Number("6")
 	return numModifier_keys
 }
 r34_numModifier() {
-	numModifier_keys := numModifierKeys_Number("4", lastRealKeyDown)
+	numModifier_keys := numModifierKeys_Number("4")
 	return numModifier_keys
 }
 r35_numModifier() {
-	numModifier_keys := numModifierKeys_Number("1", lastRealKeyDown)
+	numModifier_keys := numModifierKeys_Number("1")
 	return numModifier_keys
 }
 r36_numModifier() {
@@ -302,7 +302,7 @@ l46_numModifier() {
 
 
 r41_numModifier() {
-	numModifier_keys := numModifierKeys_Number("9", lastRealKeyDown)
+	numModifier_keys := numModifierKeys_Number("9")
 	return numModifier_keys
 }
 r42_numModifier() {

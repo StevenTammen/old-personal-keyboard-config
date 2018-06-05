@@ -70,7 +70,7 @@ IniWrite, %command_PassThroughAutospacing%, Status.ini, commandVars, command_Pas
 lastEnterDown := A_TickCount 
 
 ; Track keypresses before layers are activated to use in place of A_PriorHotkey (which returns the layer key, not the actual prior key)
-lastRealKeyDown := ""
+global lastRealKeyDown := ""
 
 
 
@@ -1099,7 +1099,7 @@ global winLeaderUp := "VKDA Up"
 
 *3::
 	lastKey := A_PriorHotkey
-	if(lastKey != "*3")
+	if(lastKey != "*3" and lastKey != "*3 Up")
 	{
 		lastRealKeyDown := Dual.cleanKey(lastKey)
 	}
@@ -1113,11 +1113,6 @@ global winLeaderUp := "VKDA Up"
 	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	return
 *3 Up::
-	lastKey := A_PriorHotkey
-	if(lastKey != "*3")
-	{
-		lastRealKeyDown := Dual.cleanKey(lastKey)
-	}
 	numModifier_keys := rt1_numModifier()
 	shiftModifier_keys := rt1_shiftModifier()
 	expdModifier_keys := rt1_expdModifier()

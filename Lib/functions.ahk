@@ -107,9 +107,9 @@ shiftModifierKeys_Letter(letter)
 }
 
 
-numModifierKeys_Number(num, lastRealKeyDown)
+numModifierKeys_Number(num)
 {
-	numModifierKeys := GetSpecialCaseKeys(lastRealKeyDown)
+	numModifierKeys := GetSpecialCaseKeys()
 
 	if(GetKeyState(rawState))
 	{
@@ -306,10 +306,10 @@ WriteNestLevelIfApplicable_Closing(nestLevel)
 }
 
 
-GetSpecialCaseKeys(lastRealKeyDown)
+GetSpecialCaseKeys()
 {
 	lastKey := A_PriorHotkey
-
+	
 	if((lastKey = "*3") or (lastKey = "*3 Up"))
 	{
 		lastKey := lastRealKeyDown
@@ -344,9 +344,9 @@ GetSpecialCaseKeys(lastRealKeyDown)
 ; -----------------------------------------------------------------------------------------------------------
 
 
-numLeaderKeys_Number(num, lastRealKeyDown)
+numLeaderKeys_Number(num)
 {
-	numLeaderKeys := GetSpecialCaseKeys(lastRealKeyDown)
+	numLeaderKeys := GetSpecialCaseKeys()
 
 	if(GetKeyState(rawState))
 	{
