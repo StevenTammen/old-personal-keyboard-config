@@ -4,7 +4,16 @@
 
 
 
-; Import Functions and Layers
+; Change Masking Key
+;-------------------------------------------------
+
+; Prevents masked Hotkeys from sending LCtrls that can interfere with the script.
+; See https://autohotkey.com/docs/commands/_MenuMaskKey.htm
+#MenuMaskKey VK07  
+
+
+
+; Imports
 ;-------------------------------------------------
 
 #Include <dual/dual>
@@ -35,15 +44,6 @@
 
 
 
-; Change Masking Key
-;-------------------------------------------------
-
-; Prevents masked Hotkeys from sending LCtrls that can interfere with the script.
-; See https://autohotkey.com/docs/commands/_MenuMaskKey.htm
-#MenuMaskKey VK07  
-
-
-
 ; Initialize Objects And Status Variables
 ;-------------------------------------------------
 
@@ -68,13 +68,14 @@ IniWrite, %command_PassThroughAutospacing%, Status.ini, commandVars, command_Pas
 
 ; To allow for Enters pressed close together to function differently from those pressed far apart
 lastEnterDown := A_TickCount 
+IniWrite, %lastEnterDown%, Status.ini, trackingVars, lastEnterDown
 
 ; Track keypresses before layers are activated to use in place of A_PriorHotkey (which returns the layer key, not the actual prior key)
 global lastRealKeyDown := ""
 
 
 
-; Initialize Layer Keys
+; Create Key Aliases
 ;-------------------------------------------------
 
 ; Num keys come before shift keys so that you can use the number layer when shift is locked down (double tapped)
@@ -256,7 +257,7 @@ global winLeaderUp := "VKDA Up"
 	r15_afterNum()
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	return
-*-::
+*`::
 	numModifier_keys := r16_numModifier()
 	shiftModifier_keys := r16_shiftModifier()
 	expdModifier_keys := r16_expdModifier()
@@ -822,7 +823,7 @@ global winLeaderUp := "VKDA Up"
 	
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
-*`::
+*-::
 	if(Modifiers("l46", "(", "("))
 	{
 		return
@@ -1058,6 +1059,7 @@ global winLeaderUp := "VKDA Up"
 ; Custom behavior, want it consistent across layers
 *Enter::
 	currentEnterDown := A_TickCount
+	IniRead, lastEnterDown, Status.ini, trackingVars, lastEnterDown
 	if((currentEnterDown - lastEnterDown) < 1000)
 	{
 		dual.comboKey()
@@ -1076,6 +1078,7 @@ global winLeaderUp := "VKDA Up"
 		dual.comboKey(["Enter", capSpacingDn], {(rawState): "Enter", (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	}
 	lastEnterDown := currentEnterDown
+	IniWrite, %lastEnterDown%, Status.ini, trackingVars, lastEnterDown
 	return
 ; Custom behavior, want it consistent across layers
 *\::

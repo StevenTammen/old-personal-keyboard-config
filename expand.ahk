@@ -4,19 +4,20 @@
 
 
 
-; Import Functions
-;-------------------------------------------------
-
-#Include <functions>
-
-
-
 ; Change Masking Key
 ;-------------------------------------------------
 
 ; Prevents masked Hotkeys from sending LCtrls that can interfere with the script.
 ; See https://autohotkey.com/docs/commands/_MenuMaskKey.htm
 #MenuMaskKey VK07
+
+
+
+; Imports
+;-------------------------------------------------
+
+#Include <functions>
+#Include <hotstrings>
 
 
 
@@ -35,7 +36,7 @@ IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassTh
 
 
 
-; Initialize Layer Keys
+; Create Key Aliases
 ;-------------------------------------------------
 
 ; Num keys come before shift keys so that you can use the number layer when shift is locked down (double tapped)
@@ -102,12 +103,10 @@ global winLeaderUp := "VKDA Up"
 
 
 
-; Import Expansions
+; Expansion Groupings
 ;-------------------------------------------------
 
-#Include <expansions/nested-punctuation>
-#Include <expansions/alternate-usage>
 #Include <expansions/text-briefs>
 #Include <expansions/named-entities>
-
-
+#Include <expansions/nested-punctuation>
+#Include <expansions/alternate-usage>
