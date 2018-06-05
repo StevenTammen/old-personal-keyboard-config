@@ -173,38 +173,6 @@ Hotstring(trigger, label, mode := 1, clearTrigger := 1, cond := ""){
 
 global charSpacing := {"`t": 1, "'": 1, ".": 2, "/": 2, ";": 2, ",": 2, "-": 2, " ": 1, "1": 0, "`n": 1, "2": 0, "3": 0}
 
-TextBrief(matchObj, lower, upper) 
-{
-
-	beginning := matchObj[1]
-	brief := matchObj[2]
-	endChar := matchObj[3]
-	
-	numMoves := charSpacing[endChar]
-	
-	KeyWait %endChar%
-	
-	Loop %numMoves%
-	{
-		SendInput {Left}
-	}
-	
-	Loop % StrLen(brief)
-	{
-		SendInput {Backspace}
-	}
-	
-	SendInput %lower%
-	
-	Loop %numMoves%
-	{
-		SendInput {Right}
-	}
-	
-	return
-}
-
-
 NamedEntity(matchObj, replacement)
 {
 
@@ -233,4 +201,75 @@ NamedEntity(matchObj, replacement)
 	}
 	
 	return
+}
+
+
+TextBrief(matchObj, lower, upper) 
+{
+
+	beginning := matchObj[1]
+	brief := matchObj[2]
+	endChar := matchObj[3]
+	
+	numMoves := charSpacing[endChar]
+	needsCap := NeedsCap(beginning)
+	
+	KeyWait %endChar%
+	
+	Loop %numMoves%
+	{
+		SendInput {Left}
+	}
+	
+	Loop % StrLen(brief)
+	{
+		SendInput {Backspace}
+	}
+	
+	if(needsCap)
+	{
+		SendInput %upper%
+	}
+	else
+	{
+		SendInput %lower%
+	}
+	
+	Loop %numMoves%
+	{
+		SendInput {Right}
+	}
+	
+	return
+}
+
+
+NeedsCap(beginning)
+{
+
+	capBeginnings := ["2", "2/", "2-", ".", "`n"]
+	for k, v in capBeginnings
+	{
+		if(v==beginning)
+		{
+			return true
+		}
+	}
+	
+	; Handle ?! on afterNum layer
+	if(beginning = "/" or beginning = "-")
+	{
+		currentAfterNumDown := A_TickCount
+		IniRead, lastAfterNumDown, Status.ini, trackingVars, lastAfterNumDown
+		
+		; We don't want the time too small because we need to type the brief but we don't want it
+		; too big either because then stuff like 123! {brief}({brief}) doesn't work (! being the afterNum
+		; version of ()). 1.5 seconds seems to work pretty well. Adjust up or down for your typing speed.
+		if((currentAfterNumDown - lastAfterNumDown) < 1500)
+		{
+			return true
+		}
+	}
+	
+	return false
 }

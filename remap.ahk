@@ -70,6 +70,10 @@ IniWrite, %command_PassThroughAutospacing%, Status.ini, commandVars, command_Pas
 lastEnterDown := A_TickCount 
 IniWrite, %lastEnterDown%, Status.ini, trackingVars, lastEnterDown
 
+; To allow for correct capitalization of hotstrings triggered after ?! on the afterNum layer
+lastAfterNumDown := A_TickCount 
+IniWrite, %lastAfterNumDown%, Status.ini, trackingVars, lastAfterNumDown
+
 ; Track keypresses before layers are activated to use in place of A_PriorHotkey (which returns the layer key, not the actual prior key)
 global lastRealKeyDown := ""
 
@@ -346,6 +350,7 @@ global winLeaderUp := "VKDA Up"
 	shiftLeader_keys := l26_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l26_expdLeader(expdModifier_keys)
 	afterNum_keys := AddKeyUp(shiftModifier_keys.Clone(), afterNumUp)
+	
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys})
 	return
 
@@ -741,6 +746,8 @@ global winLeaderUp := "VKDA Up"
 	shiftLeader_keys := l43_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l43_expdLeader(expdModifier_keys)
 	afterNum_keys := AddKeyUp(shiftModifier_keys.Clone(), afterNumUp)
+	; For hotstring capitalization tracking
+	WriteAfterNumTime()
 	
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
@@ -869,6 +876,8 @@ global winLeaderUp := "VKDA Up"
 	shiftLeader_keys := l46_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l46_expdLeader(expdModifier_keys)
 	afterNum_keys := AddKeyUp(shiftModifier_keys.Clone(), afterNumUp)
+	; For hotstring capitalization tracking
+	WriteAfterNumTime()
 	
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return

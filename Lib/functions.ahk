@@ -1,4 +1,11 @@
-﻿Modifiers(position, regKey, numKey)
+﻿WriteAfterNumTime()
+{
+	lastAfterNumDown := A_TickCount
+	IniWrite, %lastAfterNumDown%, Status.ini, trackingVars, lastAfterNumDown
+	return
+}
+
+Modifiers(position, regKey, numKey)
 {
 	
 	; Always arrange modifiers in the order of Ctrl > Alt > Shift > Win
