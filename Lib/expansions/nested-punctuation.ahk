@@ -4,13 +4,6 @@
 
 :*?: .::
 
-	IniRead, inQuote, Status.ini, nestVars, inQuote
-	if(inQuote)
-	{
-		inQuote := false
-		IniWrite, %inQuote%, Status.ini, nestVars, inQuote
-	}
-
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
 	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
@@ -51,13 +44,6 @@
 	return
 
 :*?: ,::
-
-	IniRead, inQuote, Status.ini, nestVars, inQuote
-	if(inQuote)
-	{
-		inQuote := false
-		IniWrite, %inQuote%, Status.ini, nestVars, inQuote
-	}
 
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
@@ -102,13 +88,6 @@
 	
 :*?b0: 2/::
 
-	IniRead, inQuote, Status.ini, nestVars, inQuote
-	if(inQuote)
-	{
-		inQuote := false
-		IniWrite, %inQuote%, Status.ini, nestVars, inQuote
-	}
-
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
 	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
@@ -150,13 +129,6 @@
 	
 :*?b0: 2,::
 
-	IniRead, inQuote, Status.ini, nestVars, inQuote
-	if(inQuote)
-	{
-		inQuote := false
-		IniWrite, %inQuote%, Status.ini, nestVars, inQuote
-	}
-
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
 	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
@@ -197,13 +169,6 @@
 	return
 	
 :*?b0: 2``::
-
-	IniRead, inQuote, Status.ini, nestVars, inQuote
-	if(inQuote)
-	{
-		inQuote := false
-		IniWrite, %inQuote%, Status.ini, nestVars, inQuote
-	}
 
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
@@ -248,13 +213,6 @@
 
 :*?b0: 3 ::
 
-	IniRead, inQuote, Status.ini, nestVars, inQuote
-	if(inQuote)
-	{
-		inQuote := false
-		IniWrite, %inQuote%, Status.ini, nestVars, inQuote
-	}
-
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
 	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
@@ -298,13 +256,6 @@
 
 	; We need this line since dual-role keys act weird in hotstrings if you don't ensure they are up when you start processing
 	KeyWait 1
-
-	IniRead, inQuote, Status.ini, nestVars, inQuote
-	if(inQuote)
-	{
-		inQuote := false
-		IniWrite, %inQuote%, Status.ini, nestVars, inQuote
-	}
 
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1

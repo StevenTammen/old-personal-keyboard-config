@@ -54,10 +54,6 @@ dual := new Dual
 nestLevel := 0
 IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
 
-; Store the quote status in an .ini file so it is accessible in the expand script
-inQuote := false
-IniWrite, %inQuote%, Status.ini, nestVars, inQuote 
-
 ; To allow for the deletion of paired characters as long as nothing else has been typed
 lastOpenPairDown := A_TickCount
 IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown 
@@ -672,7 +668,7 @@ global winLeaderUp := "VKDA Up"
 	{
 		return
 	}
-	if(GetKeyState(rawState))
+		if(GetKeyState(rawState))
 	{
 		defaultKeys := [""""]
 		regSpacingKeys := [""""]
@@ -680,62 +676,29 @@ global winLeaderUp := "VKDA Up"
 	}
 	else
 	{
-		IniRead, inQuote, Status.ini, nestVars, inQuote
 		IniRead, nestLevel, Status.ini, nestVars, nestLevel
-
-		if(inQuote)
-		{
-			inQuote := false
-			nestLevel := nestLevel - 1
-			
-			actuallyNeedToWrite := !(GetKeyState(shiftLeader) or GetKeyState(shiftModifier) or (GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier))))
-			
-			if(actuallyNeedToWrite)
-			{
-				IniWrite, %inQuote%, Status.ini, nestVars, inQuote
-				IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
-			}
+		nestLevel := nestLevel + 1
 		
-			if(nestLevel > 0)
-			{
-				defaultKeys := ["Right", "Space", regSpacingDn]
-				regSpacingKeys := ["Backspace", "Right", "Space"]
-				capSpacingKeys := ["Backspace", "Right", "Space"]
-			}
-			else
-			{
-				defaultKeys := ["Right", "Space", regSpacingDn, nestedPunctuationUp]
-				regSpacingKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
-				capSpacingKeys := ["Backspace", "Right", "Space" nestedPunctuationUp]
-			}
+		actuallyNeedToWrite := !(GetKeyState(shiftLeader) or GetKeyState(shiftModifier) or (GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier))))
+			
+		if(actuallyNeedToWrite)
+		{
+			IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+			lastOpenPairDown := A_TickCount
+			IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown
+		}
+		
+		if(GetKeyState(nestedPunctuation))
+		{
+			defaultKeys := ["Space", """", """", "Left", regSpacingDn]
+			regSpacingKeys := ["""", """", "Left"]
+			capSpacingKeys := ["""", """", "Left"]
 		}
 		else
 		{
-			inQuote := true
-			nestLevel := nestLevel + 1
-			
-			actuallyNeedToWrite := !(GetKeyState(shiftLeader) or GetKeyState(shiftModifier) or (GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier))))
-			
-			if(actuallyNeedToWrite)
-			{
-				IniWrite, %inQuote%, Status.ini, nestVars, inQuote
-				IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
-				lastOpenPairDown := A_TickCount
-				IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown
-			}
-	
-			if(GetKeyState(nestedPunctuation))
-			{
-				defaultKeys := ["Space", """", """", "Left", regSpacingDn]
-				regSpacingKeys := ["""", """", "Left"]
-				capSpacingKeys := ["""", """", "Left"]
-			}
-			else
-			{
-				defaultKeys := ["Space", """", """", "Left", regSpacingDn, nestedPunctuationDn]
-				regSpacingKeys := ["""", """", "Left", nestedPunctuationDn]
-				capSpacingKeys := ["""", """", "Left", nestedPunctuationDn]
-			}
+			defaultKeys := ["Space", """", """", "Left", regSpacingDn, nestedPunctuationDn]
+			regSpacingKeys := ["""", """", "Left", nestedPunctuationDn]
+			capSpacingKeys := ["""", """", "Left", nestedPunctuationDn]
 		}
 	}
 	
@@ -1025,9 +988,6 @@ global winLeaderUp := "VKDA Up"
 *]::
 	nestLevel := 0
 	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
-
-	inQuote := false
-	IniWrite, %inQuote%, Status.ini, nestVars, inQuote
 
 	subscript_PassThroughCap := false
 	IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
