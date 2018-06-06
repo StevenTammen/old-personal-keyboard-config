@@ -101,7 +101,7 @@ l26_numModifier() {
 r21_numModifier() {
 	if(GetKeyState(rawState))
 	{
-		numModifier_keys := "%"
+		numModifier_keys := ["%"]
 	}
 	else if(GetKeyState(regSpacing))
 	{			
@@ -127,7 +127,7 @@ r22_numModifier() {
 r23_numModifier() {
 	if(GetKeyState(rawState))
 	{
-		numModifier_keys := "-"
+		numModifier_keys := ["-"]
 	}
 	else if(GetKeyState(regSpacing))
 	{			
@@ -234,7 +234,7 @@ r35_numModifier() {
 r36_numModifier() {
 	if(GetKeyState(rawState))
 	{
-		numModifier_keys := "|"
+		numModifier_keys := ["|"]
 	}
 	else if(GetKeyState(regSpacing))
 	{			
@@ -263,11 +263,11 @@ l41_numModifier() {
 l42_numModifier() {
 	if(GetKeyState(rawState))
 	{
-		numModifier_keys := "$"
+		numModifier_keys := ["$"]
 	}
 	else if(GetKeyState(regSpacing))
 	{			
-		numModifier_keys := "$"
+		numModifier_keys := ["$"]
 	}
 	else if(GetKeyState(capSpacing))
 	{
@@ -323,11 +323,11 @@ r44_numModifier() {
 r45_numModifier() {
 	if(GetKeyState(rawState))
 	{
-		numModifier_keys := "&"
+		numModifier_keys := ["&"]
 	}
 	else if(GetKeyState(regSpacing))
 	{			
-		numModifier_keys := "&"
+		numModifier_keys := ["&"]
 	}
 	else if(GetKeyState(capSpacing))
 	{
