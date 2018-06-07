@@ -97,7 +97,11 @@ DealWithSubscriptAndSuperscriptPassThrough()
 
 shiftModifierKeys_Letter(letter)
 {
-	if(GetKeyState(regSpacing))
+	if(GetKeyState(rawLeader))
+	{			
+		shiftModifierKeys := [letter, rawLeaderUp]
+	}
+	else if(GetKeyState(regSpacing))
 	{			
 		shiftModifierKeys := [letter, regSpacingUp]
 	}
