@@ -1040,15 +1040,15 @@ global winLeaderUp := "VKDA Up"
 ; Thumbs
 ;-------------------------------------------------
 
+; We want space to function normally for shift layers so that we can put spaces between words with all caps.
+; This is why these combinators have been removed.
 *Space::
 	numModifier_keys := lt1_numModifier()
-	shiftModifier_keys := lt1_shiftModifier()
 	expdModifier_keys := lt1_expdModifier()
 	numLeader_keys := lt1_numLeader(numModifier_keys)
-	shiftLeader_keys := lt1_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := lt1_expdLeader(expdModifier_keys)
 	lt1_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	return
 *1::
 *1 Up::
@@ -1104,27 +1104,26 @@ global winLeaderUp := "VKDA Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	return
 
-
+; We want the number layer to function normally on the shift layers so that we can mix numbers/symbols with words with all caps.
+; This is why these combinators have been removed.
 *3::
 	lastKey := A_PriorHotkey
 	if(lastKey != "*3" and lastKey != "*3 Up")
 	{
 		lastRealKeyDown := Dual.cleanKey(lastKey)
 	}
-	numModifier_keys := rt1_numModifier()
-	shiftModifier_keys := rt1_shiftModifier()
+	numModifier_keys := numModifierUp
 	expdModifier_keys := rt1_expdModifier()
-	numLeader_keys := rt1_numLeader(numModifier_keys)
-	shiftLeader_keys := rt1_shiftLeader(shiftModifier_keys)
+	numLeader_keys := numModifierDn
 	expdLeader_keys := rt1_expdLeader(expdModifier_keys)
 	rt1_afterNum()
-	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	return
 *3 Up::
-	numModifier_keys := rt1_numModifier()
+	numModifier_keys := numModifierUp
 	shiftModifier_keys := rt1_shiftModifier()
 	expdModifier_keys := rt1_expdModifier()
-	numLeader_keys := rt1_numLeader(numModifier_keys)
+	numLeader_keys := numModifierDn
 	shiftLeader_keys := rt1_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := rt1_expdLeader(expdModifier_keys)
 	rt1_afterNum()
@@ -1137,10 +1136,10 @@ global winLeaderUp := "VKDA Up"
 *2::
 *2 Up::
 	numModifier_keys := rt2_numModifier()
-	shiftModifier_keys := rt2_shiftModifier()
+	shiftModifier_keys := shiftModifierUp
 	expdModifier_keys := rt2_expdModifier()
 	numLeader_keys := rt2_numLeader(numModifier_keys)
-	shiftLeader_keys := rt2_shiftLeader(shiftModifier_keys)
+	shiftLeader_keys := shiftModifierDn
 	expdLeader_keys := rt2_expdLeader(expdModifier_keys)
 	rt2_afterNum()
 	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
