@@ -108,5 +108,5 @@ global winLeaderUp := "VKDA Up"
 
 #Include <expansions/text-briefs>
 #Include <expansions/named-entities>
-#Include <expansions/nested-punctuation>
 #Include <expansions/alternate-usage>
+#Include <expansions/nested-punctuation>
