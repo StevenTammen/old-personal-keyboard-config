@@ -270,6 +270,10 @@ l45_afterNum() {
 	{
 		afterNum_keys := ["—", afterNumUp]
 	}
+	else if(GetKeyState(rawLeader))
+	{
+		afterNum_keys := ["Backspace", "—", rawLeaderUp, afterNumUp]
+	}
 	else if(GetKeyState(regSpacing))
 	{			
 		afterNum_keys := ["Backspace", "—", afterNumUp]

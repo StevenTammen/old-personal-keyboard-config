@@ -122,6 +122,10 @@ numModifierKeys_Number(num)
 	{
 		numModifierKeys := [num]
 	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifierKeys := ["Backspace", num, rawLeaderUp]
+	}
 	else if(GetKeyState(regSpacing))
 	{			
 		numModifierKeys.Push(num, "Space")
@@ -144,6 +148,10 @@ numModifierKeys_Opening_PassThroughCap(openingChar, closingChar)
 	if(GetKeyState(rawState))
 	{
 		numModifierKeys := [openingChar]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifierKeys := ["Backspace", openingChar, rawLeaderUp]
 	}
 	else
 	{
@@ -188,6 +196,10 @@ numModifierKeys_Opening_NoCap(openingChar, closingChar)
 	if(GetKeyState(rawState))
 	{
 		numModifierKeys := [openingChar]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifierKeys := ["Backspace", openingChar, rawLeaderUp]
 	}
 	else
 	{
@@ -349,315 +361,6 @@ GetSpecialCaseKeys()
 }
 
 ; -----------------------------------------------------------------------------------------------------------
-
-
-numLeaderKeys_Number(num)
-{
-	numLeaderKeys := GetSpecialCaseKeys()
-
-	if(GetKeyState(rawState))
-	{
-		numLeaderKeys := [num, numLeaderUp]
-	}
-	else if(GetKeyState(regSpacing))
-	{			
-		numLeaderKeys.Push(num, "Space", numLeaderUp)
-	}
-	else if(GetKeyState(capSpacing))
-	{
-		numLeaderKeys.Push(num, "Space", regSpacingDn, capSpacingUp, numLeaderUp)
-	}
-	else
-	{
-		numLeaderKeys.Push("Space", num, "Space", regSpacingDn, numLeaderUp)
-	}
-
-	return numLeaderKeys
-}
-
-
-numLeaderKeys_Opening_PassThroughCap(openingChar, closingChar)
-{
-	if(GetKeyState(rawState))
-	{
-		numLeaderKeys := [openingChar, numLeaderUp]
-	}
-	else
-	{
-		if(GetKeyState(nestedPunctuation))
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numLeaderKeys := [openingChar, ClosingChar, "Left", numLeaderUp]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numLeaderKeys := [openingChar, closingChar, "Left", numLeaderUp]
-			}
-			else
-			{
-				numLeaderKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, numLeaderUp]
-			}
-		}
-		else
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numLeaderKeys := [openingChar, ClosingChar, "Left", nestedPunctuationDn, numLeaderUp]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numLeaderKeys := [openingChar, closingChar, "Left", nestedPunctuationDn, numLeaderUp]
-			}
-			else
-			{
-				numLeaderKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, numLeaderUp]
-			}
-		}
-	}
-	
-	return numLeaderKeys
-}
-
-
-numLeaderKeys_Opening_NoCap(openingChar, closingChar)
-{
-	if(GetKeyState(rawState))
-	{
-		numLeaderKeys := [openingChar, numLeaderUp]
-	}
-	else
-	{
-		if(GetKeyState(nestedPunctuation))
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numLeaderKeys := [openingChar, closingChar, "Left", numLeaderUp]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numLeaderKeys := [openingChar, closingChar, "Left", regSpacingDn, numLeaderUp, capSpacingUp]
-			}
-			else
-			{
-				numLeaderKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, numLeaderUp]
-			}
-		}
-		else
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numLeaderKeys := [openingChar, closingChar, "Left", nestedPunctuationDn, numLeaderUp]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numLeaderKeys := [openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, numLeaderUp, capSpacingUp]
-			}
-			else
-			{
-				numLeaderKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, numLeaderUp]
-			}
-		}
-	}
-
-	return numLeaderKeys
-}
-
-
-numLeaderKeys_Closing(closingChar, nestLevel)
-{
-	if(GetKeyState(nestedPunctuation))
-	{
-		if(nestLevel > 0)
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numLeaderKeys := ["Backspace", "Right", "Space", numLeaderUp]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numLeaderKeys := ["Backspace", "Right", "Space", numLeaderUp]
-			}
-			else
-			{
-				numLeaderKeys := ["Right", "Space", regSpacingDn, numLeaderUp]
-			}
-		}
-		else
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numLeaderKeys := ["Backspace", "Right", "Space", nestedPunctuationUp, numLeaderUp]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numLeaderKeys := ["Backspace", "Right", "Space", nestedPunctuationUp, numLeaderUp]
-			}
-			else
-			{
-				numLeaderKeys := ["Right", "Space", regSpacingDn, nestedPunctuationUp, numLeaderUp]
-			}
-		}
-	}
-	else
-	{
-		numLeaderKeys := [closingChar, numLeaderUp]
-	}
-
-	return numLeaderKeys
-}
-
-
-numLeaderKeys_PuncCombinator(defaultKeys, regSpacingKeys, capSpacingKeys)
-{
-	numLeaderKeys := []
-
-	if(GetKeyState(rawState))
-	{
-		Loop % defaultKeys.Length()
-		{
-	    		numLeaderKeys.Push(defaultKeys[A_Index])
-		}
-
-		numLeaderKeys.Push(numLeaderUp)
-	}
-	else if(GetKeyState(regSpacing))
-	{		
-		Loop % regSpacingKeys.Length()
-		{
-	    		numLeaderKeys.Push(regSpacingKeys[A_Index])
-		}
-
-		numLeaderKeys.Push(numLeaderUp)
-	}
-	else if(GetKeyState(capSpacing))
-	{
-		Loop % capSpacingKeys.Length()
-		{
-	    		numLeaderKeys.Push(capSpacingKeys[A_Index])
-		}
-
-		numLeaderKeys.Push(numLeaderUp)
-	}
-	else
-	{
-		Loop % defaultKeys.Length()
-		{
-	    		numLeaderKeys.Push(defaultKeys[A_Index])
-		}
-
-		numLeaderKeys.Push(numLeaderUp)
-	}
-
-	return numLeaderKeys
-}
-
-
-shiftLeaderKeys_Letter(letter)
-{
-	if(GetKeyState(regSpacing))
-	{			
-		shiftLeaderKeys := [letter, regSpacingUp, shiftLeaderUp]
-	}
-	else if(GetKeyState(capSpacing))
-	{
-		shiftLeaderKeys := [letter, capSpacingUp, shiftLeaderUp]
-	}
-	else
-	{
-		shiftLeaderKeys := [letter, shiftLeaderUp]
-	}
-
-	return shiftLeaderKeys
-}
-
-
-VK8BKeys_Opening_PassThroughCap(openingChar, closingChar)
-{
-	if(GetKeyState(rawState))
-	{
-		VK8BKeys := [openingChar]
-	}
-	else
-	{
-		if(GetKeyState(nestedPunctuation))
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				VK8BKeys := [openingChar, ClosingChar, "Left"]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				VK8BKeys := [openingChar, closingChar, "Left"]
-			}
-			else
-			{
-				VK8BKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
-			}
-		}
-		else
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				VK8BKeys := [openingChar, ClosingChar, "Left", nestedPunctuationDn]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				VK8BKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
-			}
-			else
-			{
-				VK8BKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
-			}
-		}
-	}
-	
-	return VK8BKeys
-}
-
-
-VK8BKeys_Opening_NoCap(openingChar, closingChar)
-{
-	if(GetKeyState(rawState))
-	{
-		VK8BKeys := [openingChar]
-	}
-	else
-	{
-		if(GetKeyState(nestedPunctuation))
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				VK8BKeys := [openingChar, closingChar, "Left"]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				VK8BKeys := [openingChar, closingChar, "Left", regSpacingDn, capSpacingUp]
-			}
-			else
-			{
-				VK8BKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
-			}
-		}
-		else
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				VK8BKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				VK8BKeys := [openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, capSpacingUp]
-			}
-			else
-			{
-				VK8BKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
-			}
-		}
-	}
-
-	return VK8BKeys
-}
 
 
 GetLastChar()

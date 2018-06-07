@@ -103,6 +103,10 @@ r21_numModifier() {
 	{
 		numModifier_keys := ["%"]
 	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", "%", rawLeaderUp]
+	}
 	else if(GetKeyState(regSpacing))
 	{			
 		numModifier_keys := ["Backspace", "%", "Space"]
@@ -128,6 +132,10 @@ r23_numModifier() {
 	if(GetKeyState(rawState))
 	{
 		numModifier_keys := ["-"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", "-", rawLeaderUp]
 	}
 	else if(GetKeyState(regSpacing))
 	{			
@@ -191,9 +199,13 @@ l35_numModifier() {
 	return numModifier_keys
 }
 l36_numModifier() {
-if(GetKeyState(rawState))
+	if(GetKeyState(rawState))
 	{
 		numModifier_keys := ["."]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", ".", rawLeaderUp]
 	}
 	else if(GetKeyState(regSpacing))
 	{			
@@ -236,6 +248,10 @@ r36_numModifier() {
 	{
 		numModifier_keys := ["|"]
 	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", "|", rawLeaderUp]
+	}
 	else if(GetKeyState(regSpacing))
 	{			
 		numModifier_keys := ["|", "Space"]
@@ -264,6 +280,10 @@ l42_numModifier() {
 	if(GetKeyState(rawState))
 	{
 		numModifier_keys := ["$"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", "$", rawLeaderUp]
 	}
 	else if(GetKeyState(regSpacing))
 	{			
@@ -324,6 +344,10 @@ r45_numModifier() {
 	if(GetKeyState(rawState))
 	{
 		numModifier_keys := ["&"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", "&", rawLeaderUp]
 	}
 	else if(GetKeyState(regSpacing))
 	{			
@@ -394,6 +418,10 @@ lt1_numModifier() {
 	{
 		numModifier_keys := [":"]
 	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", ":", rawLeaderUp]
+	}
 	else if(GetKeyState(regSpacing))
 	{			
 		numModifier_keys := ["Backspace", ":", "Space"]
@@ -412,6 +440,10 @@ lt2_numModifier() {
 	if(GetKeyState(rawState))
 	{
 		numModifier_keys := [";"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", ";", rawLeaderUp]
 	}
 	else if(GetKeyState(regSpacing))
 	{			

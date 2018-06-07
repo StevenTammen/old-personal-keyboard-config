@@ -535,6 +535,12 @@ global winLeaderUp := "VKDA Up"
 		regSpacingKeys := ["."]
 		capSpacingKeys := ["."]
 	}
+	else if(GetKeyState(rawLeader))
+	{
+		defaultKeys := ["Backspace", ".", rawLeaderUp]
+		regSpacingKeys := ["Backspace", ".", rawLeaderUp]
+		capSpacingKeys := ["Backspace", ".", rawLeaderUp]
+	}
 	else
 	{
 		defaultKeys := [".", "Space", capSpacingDn]
@@ -668,11 +674,17 @@ global winLeaderUp := "VKDA Up"
 	{
 		return
 	}
-		if(GetKeyState(rawState))
+	if(GetKeyState(rawState))
 	{
 		defaultKeys := [""""]
 		regSpacingKeys := [""""]
 		capSpacingKeys := [""""]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		defaultKeys := ["Backspace", """", rawLeaderUp]
+		regSpacingKeys := ["Backspace", """", rawLeaderUp]
+		capSpacingKeys := ["Backspace", """", rawLeaderUp]
 	}
 	else
 	{
@@ -719,7 +731,19 @@ global winLeaderUp := "VKDA Up"
 	{
 		return
 	}
-	if(GetKeyState(nestedPunctuation))
+	if(GetKeyState(rawState))
+	{
+		defaultKeys := [")"]
+		regSpacingKeys := [")"]
+		capSpacingKeys := [")"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		defaultKeys := ["Backspace", ")", rawLeaderUp]
+		regSpacingKeys := ["Backspace", ")", rawLeaderUp]
+		capSpacingKeys := ["Backspace", ")", rawLeaderUp]
+	}
+	else if(GetKeyState(nestedPunctuation))
 	{
 		IniRead, nestLevel, Status.ini, nestVars, nestLevel
 		nestLevel := nestLevel - 1
@@ -773,6 +797,12 @@ global winLeaderUp := "VKDA Up"
 		regSpacingKeys := [","]
 		capSpacingKeys := [","]
 	}
+	else if(GetKeyState(rawLeader))
+	{
+		defaultKeys := ["Backspace", ",", rawLeaderUp]
+		regSpacingKeys := ["Backspace", ",", rawLeaderUp]
+		capSpacingKeys := ["Backspace", ",", rawLeaderUp]
+	}
 	else
 	{	
 		defaultKeys := [",", "Space", regSpacingDn]
@@ -803,6 +833,12 @@ global winLeaderUp := "VKDA Up"
 		defaultKeys := ["("]
 		regSpacingKeys := ["("]
 		capSpacingKeys := ["("]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		defaultKeys := ["Backspace", "(", rawLeaderUp]
+		regSpacingKeys := ["Backspace", "(", rawLeaderUp]
+		capSpacingKeys := ["Backspace", "(", rawLeaderUp]
 	}
 	else
 	{
@@ -1051,7 +1087,7 @@ global winLeaderUp := "VKDA Up"
 	return
 ; Custom behavior, want it consistent across layers
 *\::
-	dual.comboKey("\")
+	dual.comboKey(["\", rawLeaderDn], {(rawState): ["\"], (rawLeader): ["\", rawLeaderUp]})
 	return
 ; Custom behavior, want it consistent across layers
 *Home::

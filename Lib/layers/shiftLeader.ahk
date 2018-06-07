@@ -190,6 +190,10 @@ l45_shiftLeader() {
 	{
 		shiftLeader_keys := ["—", shiftLeaderUp]
 	}
+	else if(GetKeyState(rawLeader))
+	{
+		shiftLeader_keys := ["Backspace", "—", rawLeaderUp, shiftLeaderUp]
+	}
 	else if(GetKeyState(regSpacing))
 	{			
 		shiftLeader_keys := ["Backspace", "—", shiftLeaderUp]

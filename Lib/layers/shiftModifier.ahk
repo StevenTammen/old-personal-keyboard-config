@@ -182,6 +182,10 @@ l43_shiftModifier() {
 	{
 		shiftModifier_keys := ["?"]
 	}
+	else if(GetKeyState(rawLeader))
+	{
+		shiftModifier_keys := ["Backspace", "?", rawLeaderUp]
+	}
 	else if(GetKeyState(regSpacing))
 	{			
 		shiftModifier_keys := ["Backspace", "?", "Space", capSpacingDn, regSpacingUp]
@@ -200,6 +204,10 @@ l44_shiftModifier() {
 	if(GetKeyState(rawState))
 	{
 		shiftModifier_keys := ["_"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		shiftModifier_keys := ["Backspace", "_", rawLeaderUp]
 	}
 	else
 	{
@@ -257,6 +265,10 @@ l46_shiftModifier() {
 	if(GetKeyState(rawState))
 	{
 		shiftModifier_keys := ["!"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		shiftModifier_keys := ["Backspace", "!", rawLeaderUp]
 	}
 	else if(GetKeyState(regSpacing))
 	{			
