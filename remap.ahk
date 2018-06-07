@@ -1043,12 +1043,34 @@ global winLeaderUp := "VKDA Up"
 ; We want space to function normally for shift layers so that we can put spaces between words with all caps.
 ; This is why these combinators have been removed.
 *Space::
+
+	; Spacing is disabled by default after autospaced punctuation to help prevent typos,
+	; and to allow for proper spacing in nested punctuation expansions. However, we want
+	; to enable spaces after Enters, and manual spacing after double pressing (= intentional,
+	; not accidental).
+	lastKey := A_PriorHotkey
+	if(lastKey = "*Enter")
+	{
+		capSpacingKeys := "Space"
+		regSpacingKeys := ""
+	}
+	else if(lastKey = "*Space")
+	{
+		capSpacingKeys := "Space"
+		regSpacingKeys := "Space"
+	}
+	else
+	{
+		capSpacingKeys := ""
+		regSpacingKeys := ""
+	}
+
 	numModifier_keys := lt1_numModifier()
 	expdModifier_keys := lt1_expdModifier()
 	numLeader_keys := lt1_numLeader(numModifier_keys)
 	expdLeader_keys := lt1_expdLeader(expdModifier_keys)
 	lt1_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *1::
 *1 Up::
