@@ -95,6 +95,60 @@ DealWithSubscriptAndSuperscriptPassThrough()
 }
 
 
+ExitNestedPair(spacingType, nestLevel)
+{
+	IniRead, subscript_PassThroughCap, Status.ini, nestVars, subscript_PassThroughCap
+	IniRead, superscript_PassThroughCap, Status.ini, nestVars, superscript_PassThroughCap
+	
+	if(subscript_PassThroughCap)
+	{
+		subscript_PassThroughCap := false
+		IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
+		
+		defaultKeys := ["Right", "Space", capSpacingDn]
+		regSpacingKeys := ["Backspace", "Right", "Space", regSpacingUp, capSpacingDn]
+		capSpacingKeys := ["Backspace", "Right", "Space"]
+	}
+	else if(superscript_PassThroughCap)
+	{
+		superscript_PassThroughCap := false
+		IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap
+
+		defaultKeys := ["Right", "Space", capSpacingDn]
+		regSpacingKeys := ["Backspace", "Right", "Space", regSpacingUp, capSpacingDn]
+		capSpacingKeys := ["Backspace", "Right", "Space"]
+	}
+	else
+	{
+		defaultKeys := ["Right", "Space", regSpacingDn]
+		regSpacingKeys := ["Backspace", "Right", "Space"]
+		capSpacingKeys := ["Backspace", "Right", "Space"]
+	}
+	
+	; Exit the nested state if the nestLevel is zero
+	if(nestLevel = 0)
+	{
+		defaultKeys := AddKeyUp(defaultKeys, nestedPunctuationUp) 
+		regSpacingKeys := AddKeyUp(regSpacingKeys, nestedPunctuationUp) 
+		capSpacingKeys := AddKeyUp(capSpacingKeys, nestedPunctuationUp) 
+	}
+	
+	; Return the correct keys for the spacing type specified in the function call
+	if(spacingType = "default")
+	{
+		return defaultKeys
+	}
+	else if(spacingType = "regSpacing")
+	{
+		return regSpacingKeys
+	}
+	else
+	{
+		return capSpacingKeys
+	}
+}
+
+
 shiftModifierKeys_Letter(letter)
 {
 	if(GetKeyState(rawLeader))

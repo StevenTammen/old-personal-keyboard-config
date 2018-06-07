@@ -58,10 +58,6 @@ IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
 lastOpenPairDown := A_TickCount
 IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown 
 
-; Enable passing through capitalization for commands as a block (rather than capitalizing the first letter of the command).
-command_PassThroughAutospacing := "none"
-IniWrite, %command_PassThroughAutospacing%, Status.ini, commandVars, command_PassThroughAutospacing
-
 ; To allow for correct capitalization of hotstrings triggered after ?! on the afterNum layer
 lastAfterNumDown := A_TickCount 
 IniWrite, %lastAfterNumDown%, Status.ini, trackingVars, lastAfterNumDown
@@ -750,20 +746,10 @@ global winLeaderUp := "VKDA Up"
 		{
 			IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
 		}
-	
-		if(nestLevel > 0)
-
-		{
-			defaultKeys := ["Right", "Space", regSpacingDn]
-			regSpacingKeys := ["Backspace", "Right", "Space"]
-			capSpacingKeys := ["Backspace", "Right", "Space"]
-		}
-		else
-		{
-			defaultKeys := ["Right", "Space", regSpacingDn, nestedPunctuationUp]
-			regSpacingKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
-			capSpacingKeys := ["Backspace", "Right", "Space" nestedPunctuationUp]
-		}
+		
+		defaultKeys := ExitNestedPair("default", nestLevel)
+		regSpacingKeys := ExitNestedPair("regSpacing", nestLevel)
+		capSpacingKeys := ExitNestedPair("capSpacing", nestLevel)
 	}
 	else
 	{
@@ -778,9 +764,11 @@ global winLeaderUp := "VKDA Up"
 	numLeader_keys := l44_numLeader(numModifier_keys)
 	shiftLeader_keys := l44_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l44_expdLeader(expdModifier_keys)
-	afterNum_keys := AddKeyUp(shiftModifier_keys.Clone(), afterNumUp)
+	; We want to be able to close nested punctuation after numbers. This is more important than being able to type
+	; an underscore *after* numbers. (It more commonly occurs before them).
+	l44_afterNum()
 	
-	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *,::
 	if(Modifiers("l45", ",", ","))
