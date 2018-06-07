@@ -62,10 +62,6 @@ IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown
 command_PassThroughAutospacing := "none"
 IniWrite, %command_PassThroughAutospacing%, Status.ini, commandVars, command_PassThroughAutospacing
 
-; To allow for Enters pressed close together to function differently from those pressed far apart
-lastEnterDown := A_TickCount 
-IniWrite, %lastEnterDown%, Status.ini, trackingVars, lastEnterDown
-
 ; To allow for correct capitalization of hotstrings triggered after ?! on the afterNum layer
 lastAfterNumDown := A_TickCount 
 IniWrite, %lastAfterNumDown%, Status.ini, trackingVars, lastAfterNumDown
@@ -1085,27 +1081,22 @@ global winLeaderUp := "VKDA Up"
 	return
 ; Custom behavior, want it consistent across layers
 *Enter::
-	currentEnterDown := A_TickCount
-	IniRead, lastEnterDown, Status.ini, trackingVars, lastEnterDown
-	if((currentEnterDown - lastEnterDown) < 1000)
+	; By default, Enter gets rid of trailing spaces from autospacing, and capitalizes the next letter.
+	; Repeated Enter presses get around the default capSpacing behavior by using A_PriorHotkey.
+	; Backslash escaping is supported if one wishes to send an Enter without autospacing behavior
+	; of any form.
+	lastKey := A_PriorHotkey
+	if(lastKey = "*Enter")
 	{
-		dual.comboKey()
+		capSpacingKeys := "Enter"
+		regSpacingKeys := "Enter"
 	}
 	else
 	{
 		regSpacingKeys := ["Backspace", "Enter", capSpacingDn, regSpacingUp]
 		capSpacingKeys := ["Backspace", "Enter"]
-		
-		; ######## Backslash Escape ########
-		if(GetKeyState(rawLeader))
-		{
-			regSpacingKeys := ["Backspace", "Enter"]
-			capSpacingKeys := ["Backspace", "Enter"]
-		}
-		dual.comboKey(["Enter", capSpacingDn], {(rawState): "Enter", (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	}
-	lastEnterDown := currentEnterDown
-	IniWrite, %lastEnterDown%, Status.ini, trackingVars, lastEnterDown
+	dual.comboKey(["Enter", capSpacingDn], {(rawLeader): ["Backspace", "Enter"], (rawState): "Enter", (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 ; Custom behavior, want it consistent across layers
 *\::
