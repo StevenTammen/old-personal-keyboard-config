@@ -21,21 +21,6 @@
 
 
 
-; Initialize Objects And Status Variables
-;-------------------------------------------------
-
-; Enable passing through capitalization for subscripts as a block (rather than capitalizing the first letter of the subscript).
-; Stored in Status.ini to allow for resetting with Esc.
-global subscript_PassThroughCap := false
-IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap 
-
-; Enable passing through capitalization for superscripts as a block (rather than capitalizing the first letter of the superscript).
-; Stored in Status.ini to allow for resetting with Esc.
-global superscript_PassThroughCap := false
-IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap 
-
-
-
 ; Create Key Aliases
 ;-------------------------------------------------
 

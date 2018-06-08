@@ -183,6 +183,12 @@ NamedEntity(matchObj, replacement)
 	
 	KeyWait %endChar%
 	
+	if(endChar = "1")
+	{
+		; Use expd to expand out hotstrings without sending {Space} or another character.
+		SendInput {%expdLeaderUp%}
+	}
+	
 	Loop %numMoves%
 	{
 		SendInput {Left}
@@ -215,6 +221,12 @@ TextBrief(matchObj, lower, upper)
 	needsCap := NeedsCap(beginning)
 	
 	KeyWait %endChar%
+	
+	if(endChar = "1")
+	{
+		; Use expd to expand out hotstrings without sending {Space} or another character.
+		SendInput {%expdLeaderUp%}
+	}
 	
 	Loop %numMoves%
 	{
@@ -277,6 +289,10 @@ NeedsCap(beginning)
 
 CodeBrief_language(matchObj, newLanguage)
 {
+	
+	KeyWait 1
+	SendInput {%expdLeaderUp%}
+
 	language := newLanguage
 
 	Loop % StrLen(matchObj[1])
@@ -290,6 +306,10 @@ CodeBrief_language(matchObj, newLanguage)
 
 CodeBrief(matchObj, replacement)
 {
+
+	KeyWait 1
+	SendInput {%expdLeaderUp%}
+
 	Loop % StrLen(matchObj[1])
 	{
 		SendInput {Backspace}

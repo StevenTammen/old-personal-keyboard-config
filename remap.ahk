@@ -65,6 +65,16 @@ IniWrite, %lastAfterNumDown%, Status.ini, trackingVars, lastAfterNumDown
 ; Track keypresses before layers are activated to use in place of A_PriorHotkey (which returns the layer key, not the actual prior key)
 global lastRealKeyDown := ""
 
+; Enable passing through capitalization for subscripts as a block (rather than capitalizing the first letter of the subscript).
+; Stored in Status.ini to allow for resetting with Esc.
+global subscript_PassThroughCap := false
+IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap 
+
+; Enable passing through capitalization for superscripts as a block (rather than capitalizing the first letter of the superscript).
+; Stored in Status.ini to allow for resetting with Esc.
+global superscript_PassThroughCap := false
+IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap 
+
 
 
 ; Create Key Aliases
@@ -1088,6 +1098,9 @@ global winLeaderUp := "VKDA Up"
 	return
 ; Custom behavior, want it consistent across layers
 *\::
+	; Clear autospacing/autocapitalization when backslash escaping stuff
+	SendInput {%regSpacingUp%}
+	SendInput {%capSpacingUp%}
 	dual.comboKey(["\", rawLeaderDn], {(rawState): ["\"], (rawLeader): ["\", rawLeaderUp]})
 	return
 ; Custom behavior, want it consistent across layers
