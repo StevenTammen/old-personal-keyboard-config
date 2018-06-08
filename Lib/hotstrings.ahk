@@ -147,8 +147,9 @@ Hotstring(trigger, label, mode := 1, clearTrigger := 1, cond := ""){
 				
 			}
 		}
+		; Don't fully reset the haystack; keep 2 keys around for repeated matching of text briefs
 		if (matched){
-			typed := ""
+			typed := SubStr(typed, -2)
 		} else if (StrLen(typed) > 350){
 			StringTrimLeft,typed,typed,200
 		}
