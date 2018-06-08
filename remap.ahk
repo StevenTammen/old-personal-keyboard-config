@@ -286,8 +286,28 @@ global winLeaderUp := "VKDA Up"
 
 ; Custom behavior, want it consistent across layers
 *Tab::
-	dual.comboKey("Tab")
-	return
+	if(Modifiers("l21", "{Tab}", "{Tab}"))
+	{
+		return
+	}
+	
+	; Handle Shift+Tab separate from Dual
+	if(GetKeyState(shiftLeader))
+	{
+		SendInput +{Tab}{%shiftLeaderUp%}
+		return
+	}
+	else if(shiftDownNoUp)
+	{
+		SendInput +{Tab}
+		return
+	}
+	else
+	{
+		dual.comboKey("Tab")
+		return
+	}
+
 *b::
 	if(Modifiers("l22", "b", "{"))
 	{
@@ -454,30 +474,48 @@ global winLeaderUp := "VKDA Up"
 
 ; Custom behavior, want it consistent across layers
 *Backspace::
-
-	IniRead, lastOpenPairDown, Status.ini, nestVars, lastOpenPairDown
-	timeOfLastHotkey := A_TickCount - A_TimeSincePriorHotkey
-	
-	if((timeOfLastHotKey - lastOpenPairDown) < 50)
+	if(Modifiers("l31", "{Backspace}", "{Backspace}"))
 	{
-		IniRead, nestLevel, Status.ini, nestVars, nestLevel
-		nestLevel := nestLevel - 1
-		IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
-		
-		if(nestLevel > 0)
-		{
-			SendInput {Backspace}{Delete}
-		}
-		else
-		{
-			SendInput {Backspace}{Delete}{%nestedPunctuationUp%}
-		}
-	
 		return
 	}
+	
+	; Handle Shift+Backspace separate from Dual
+	if(GetKeyState(shiftLeader))
+	{
+		SendInput +{Backspace}{%shiftLeaderUp%}
+		return
+	}
+	else if(shiftDownNoUp)
+	{
+		SendInput +{Backspace}
+		return
+	}
+	else
+	{
+		IniRead, lastOpenPairDown, Status.ini, nestVars, lastOpenPairDown
+		timeOfLastHotkey := A_TickCount - A_TimeSincePriorHotkey
+		
+		if((timeOfLastHotKey - lastOpenPairDown) < 50)
+		{
+			IniRead, nestLevel, Status.ini, nestVars, nestLevel
+			nestLevel := nestLevel - 1
+			IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+			
+			if(nestLevel > 0)
+			{
+				SendInput {Backspace}{Delete}
+			}
+			else
+			{
+				SendInput {Backspace}{Delete}{%nestedPunctuationUp%}
+			}
+		
+			return
+		}
 
-	dual.comboKey({(regSpacing): ["Backspace", "Backspace", regSpacingUp], (capSpacing): ["Backspace", "Backspace", capSpacingUp]})
-	return
+		dual.comboKey({(regSpacing): ["Backspace", "Backspace", regSpacingUp], (capSpacing): ["Backspace", "Backspace", capSpacingUp]})
+		return
+	}
 *h::
 	if(Modifiers("l32", "h", "2"))
 	{
@@ -663,8 +701,27 @@ global winLeaderUp := "VKDA Up"
 
 ; Custom behavior, want it consistent across layers
 *Esc::
-	dual.comboKey("Esc")
-	return
+	if(Modifiers("l41", "{Esc}", "{Esc}"))
+	{
+		return
+	}
+	
+	; Handle Shift+Esc separate from Dual
+	if(GetKeyState(shiftLeader))
+	{
+		SendInput +{Esc}{%shiftLeaderUp%}
+		return
+	}
+	else if(shiftDownNoUp)
+	{
+		SendInput +{Esc}
+		return
+	}
+	else
+	{
+		dual.comboKey("Esc")
+		return
+	}
 *x::
 	if(Modifiers("l42", "x", "$"))
 	{
@@ -1122,30 +1179,68 @@ global winLeaderUp := "VKDA Up"
 	return
 ; Custom behavior, want it consistent across layers
 *Enter::
-	; By default, Enter gets rid of trailing spaces from autospacing, and capitalizes the next letter.
-	; Repeated Enter presses get around the default capSpacing behavior by using A_PriorHotkey.
-	; Backslash escaping is supported if one wishes to send an Enter without autospacing behavior
-	; of any form.
-	lastKey := A_PriorHotkey
-	if(lastKey = "*Enter")
+	if(Modifiers("lt3", "{Enter}", "{Enter}"))
 	{
-		capSpacingKeys := "Enter"
-		regSpacingKeys := "Enter"
+		return
+	}
+	
+	; Handle Shift+Enter separate from Dual
+	if(GetKeyState(shiftLeader))
+	{
+		SendInput +{Enter}{%shiftLeaderUp%}
+		return
+	}
+	else if(shiftDownNoUp)
+	{
+		SendInput +{Enter}
+		return
 	}
 	else
 	{
-		regSpacingKeys := ["Backspace", "Enter", capSpacingDn, regSpacingUp]
-		capSpacingKeys := ["Backspace", "Enter"]
+		; By default, Enter gets rid of trailing spaces from autospacing, and capitalizes the next letter.
+		; Repeated Enter presses get around the default capSpacing behavior by using A_PriorHotkey.
+		; Backslash escaping is supported if one wishes to send an Enter without autospacing behavior
+		; of any form.
+		lastKey := A_PriorHotkey
+		if(lastKey = "*Enter")
+		{
+			capSpacingKeys := "Enter"
+			regSpacingKeys := "Enter"
+		}
+		else
+		{
+			regSpacingKeys := ["Backspace", "Enter", capSpacingDn, regSpacingUp]
+			capSpacingKeys := ["Backspace", "Enter"]
+		}
+		dual.comboKey(["Enter", capSpacingDn], {(rawLeader): ["Backspace", "Enter"], (rawState): "Enter", (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+		return
 	}
-	dual.comboKey(["Enter", capSpacingDn], {(rawLeader): ["Backspace", "Enter"], (rawState): "Enter", (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
-	return
 ; Custom behavior, want it consistent across layers
 *\::
-	; Clear autospacing/autocapitalization when backslash escaping stuff
-	SendInput {%regSpacingUp%}
-	SendInput {%capSpacingUp%}
-	dual.comboKey(["\", rawLeaderDn], {(rawState): ["\"], (rawLeader): ["\", rawLeaderUp]})
-	return
+	if(Modifiers("lt4", "\", "\"))
+	{
+		return
+	}
+	
+	; Handle Shift+\ separate from Dual
+	if(GetKeyState(shiftLeader))
+	{
+		SendInput +\{%shiftLeaderUp%}
+		return
+	}
+	else if(shiftDownNoUp)
+	{
+		SendInput +\
+		return
+	}
+	else
+	{
+		; Clear autospacing/autocapitalization when backslash escaping stuff
+		SendInput {%regSpacingUp%}
+		SendInput {%capSpacingUp%}
+		dual.comboKey(["\", rawLeaderDn], {(rawState): "\", (rawLeader): ["\", rawLeaderUp]})
+		return
+	}
 ; Custom behavior, want it consistent across layers
 *Home::
 	dual.comboKey(rawStateDn, {(rawState): rawStateUp})
