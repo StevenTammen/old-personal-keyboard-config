@@ -273,3 +273,29 @@ NeedsCap(beginning)
 	
 	return false
 }
+
+
+CodeBrief_language(matchObj, newLanguage)
+{
+	language := newLanguage
+
+	Loop % StrLen(matchObj[1])
+	{
+		SendInput {Backspace}
+	}
+	
+	return
+}
+
+
+CodeBrief(matchObj, replacement)
+{
+	Loop % StrLen(matchObj[1])
+	{
+		SendInput {Backspace}
+	}
+	
+	SendInput %replacement%
+	
+	return
+}
