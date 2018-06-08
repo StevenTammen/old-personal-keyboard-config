@@ -238,15 +238,15 @@
 	{
 		if(GetKeyState(regSpacing))
 		{			
-			SendInput {Backspace 3}{Right}:{Space}{%nestedPunctuationUp%}
+			SendInput {Backspace 4}{Right}:{Space}{%nestedPunctuationUp%}
 		}
 		else if(GetKeyState(capSpacing))
 		{
-			SendInput {Backspace 3}{Right}:{Space}{%regSpacingDn%}{%capSpacingUp%}{%nestedPunctuationUp%}
+			SendInput {Backspace 4}{Right}:{Space}{%regSpacingDn%}{%capSpacingUp%}{%nestedPunctuationUp%}
 		}
 		else
 		{
-			SendInput {Backspace 3}{Right}:{Space}{%regSpacingDn%}{%nestedPunctuationUp%}
+			SendInput {Backspace 4}{Right}:{Space}{%regSpacingDn%}{%nestedPunctuationUp%}
 		}
 	}
 

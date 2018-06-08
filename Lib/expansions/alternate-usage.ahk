@@ -7,17 +7,17 @@ f_subscript(matchObj)
 {
 	if(GetKeyState(regSpacing))
 	{
-		SendInput {Backspace 3}{Right}{{}{}}{Left}
+		SendInput {Backspace 2}{Right}{{}{}}{Left}
 	}
 	else if(GetKeyState(capSpacing))
 	{
-		SendInput {Backspace 3}{Right}{{}{}}{Left}{%regSpacingDn%}{%capSpacingUp%}
+		SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}{%capSpacingUp%}
 		subscript_PassThroughCap := true
 		IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
 	}
 	else
 	{
-		SendInput {Backspace 3}{Right}{{}{}}{Left}{%regSpacingDn%}
+		SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}
 	}
 
 	return
@@ -30,17 +30,17 @@ f_superscript(matchObj)
 {
 	if(GetKeyState(regSpacing))
 	{
-		SendInput {Backspace 3}{Right}{{}{}}{Left}
+		SendInput {Backspace 2}{Right}{{}{}}{Left}
 	}
 	else if(GetKeyState(capSpacing))
 	{
-		SendInput {Backspace 3}{Right}{{}{}}{Left}{%regSpacingDn%}{%capSpacingUp%}
+		SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}{%capSpacingUp%}
 		superscript_PassThroughCap := true
 		IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap
 	}
 	else
 	{
-		SendInput {Backspace 3}{Right}{{}{}}{Left}{%regSpacingDn%}
+		SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}
 	}
 
 	return
