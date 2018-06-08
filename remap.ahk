@@ -75,6 +75,14 @@ IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterN
 ; Track keypresses before layers are activated to use in place of A_PriorHotkey (which returns the layer key, not the actual prior key)
 global lastRealKeyDown := ""
 
+; Track key downs to deal with GetKeyState() being unreliable when handling dual-role keys' down states
+; for times close to initial actuation
+global shiftDownNoUp := false
+global numDownNoUp := false
+global ctrlDownNoUp := false
+global altDownNoUp := false
+global winDownNoUp := false
+
 
 
 ; Create Key Aliases
@@ -990,15 +998,30 @@ global winLeaderUp := "VKDA Up"
 	return
 ; Custom behavior, want it consistent across layers
 *RWin::
-	dual.comboKey(winLeaderDn, {(winLeader): winLeaderUp})
+	dual.combine([], winLeaderDn, settings = false, {(winLeader): winLeaderUp})
+	winDownNoUp := true
+	return
+*RWin Up::
+	dual.combine([], winLeaderDn, settings = false, {(winLeader): winLeaderUp})
+	winDownNoUp := false
 	return
 ; Custom behavior, want it consistent across layers
 *LAlt::
-	dual.comboKey(altLeaderDn, {(altLeader): altLeaderUp})
+	dual.combine([], altLeaderDn, settings = false, {(altLeader): altLeaderUp})
+	altDownNoUp := true
+	return
+*LAlt Up::
+	dual.combine([], altLeaderDn, settings = false, {(altLeader): altLeaderUp})
+	altDownNoUp := false
 	return
 ; Custom behavior, want it consistent across layers
 *LCtrl::
-	dual.comboKey(ctrlLeaderDn, {(ctrlLeader): ctrlLeaderUp})
+	dual.combine([], ctrlLeaderDn, settings = false, {(ctrlLeader): ctrlLeaderUp})
+	ctrlDownNoUp := true
+	return
+*LCtrl Up::
+	dual.combine([], ctrlLeaderDn, settings = false, {(ctrlLeader): ctrlLeaderUp})
+	ctrlDownNoUp := false
 	return
 
 ; Mirrored Ctrl key: not needed twice	
@@ -1152,6 +1175,9 @@ global winLeaderUp := "VKDA Up"
 	expdLeader_keys := rt1_expdLeader(expdModifier_keys)
 	rt1_afterNum()
 	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	
+	numDownNoUp := true
+	
 	return
 *3 Up::
 	numModifier_keys := numModifierUp
@@ -1166,8 +1192,22 @@ global winLeaderUp := "VKDA Up"
 	; Activate afterNum layer on key-up to be able to type all punctuation after numbers
 	SendInput {%afterNumDn%}
 	
+	numDownNoUp := false
+	
 	return
 *2::
+	numModifier_keys := rt2_numModifier()
+	shiftModifier_keys := shiftModifierUp
+	expdModifier_keys := rt2_expdModifier()
+	numLeader_keys := rt2_numLeader(numModifier_keys)
+	shiftLeader_keys := shiftModifierDn
+	expdLeader_keys := rt2_expdLeader(expdModifier_keys)
+	rt2_afterNum()
+	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	
+	shiftDownNoUp := true
+	
+	return
 *2 Up::
 	numModifier_keys := rt2_numModifier()
 	shiftModifier_keys := shiftModifierUp
@@ -1177,6 +1217,9 @@ global winLeaderUp := "VKDA Up"
 	expdLeader_keys := rt2_expdLeader(expdModifier_keys)
 	rt2_afterNum()
 	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	
+	shiftDownNoUp := false
+	
 	return
 ; Mirrored Enter key: not needed twice	
 ;*Enter::

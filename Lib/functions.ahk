@@ -11,11 +11,19 @@
 		mods := mods . "Ctrl"
 		SendInput {%ctrlLeaderUp%}
 	}
+	else if(ctrlDownNoUp)
+	{
+		mods := mods . "Ctrl"
+	}
 	
 	if(GetKeyState(altLeader))
 	{
 		mods := mods . "Alt"
 		SendInput {%altLeaderUp%}
+	}
+	else if(altDownNoUp)
+	{
+		mods := mods . "Alt"
 	}
 	
 	sendLeaderUp := false
@@ -24,16 +32,23 @@
 		mods := mods . "Shift"
 		sendLeaderUp := true
 	}
+	else if(shiftDownNoUp)
+	{
+		mods := mods . "Shift"
+	}
 	
 	if(GetKeyState(winLeader))
 	{
 		mods := mods . "Win"
 		SendInput {%winLeaderUp%}
 	}
+	else if(winDownNoUp)
+	{
+		mods := mods . "Win"
+	}
 	
 	; This function should not do things if shift is the only modifier. Only when shift is combined
-	; with other modifiers, or when other modifiers are used without shift. We need to put
-	; the shiftLeader key back down if we get here and realize that only shift is down.
+	; with other modifiers, or when other modifiers are used without shift.
 	if(mods = "Shift")
 	{
 		return false
@@ -49,6 +64,10 @@
 		{
 			key := numKey
 			SendInput {%numLeaderUp%}		
+		}
+		else if(numDownNoUp)
+		{
+			key := numKey	
 		}
 		else
 		{
