@@ -269,17 +269,14 @@ NeedsCap(beginning)
 		}
 	}
 	
-	; Handle ?! on afterNum layer
+	; Deal with afterNum ?! capitalization
 	if(beginning = "/" or beginning = "-")
 	{
-		currentAfterNumDown := A_TickCount
-		IniRead, lastAfterNumDown, Status.ini, trackingVars, lastAfterNumDown
-		
-		; We don't want the time too small because we need to type the brief but we don't want it
-		; too big either because then stuff like 123! {brief}({brief}) doesn't work (! being the afterNum
-		; version of ()). 1.5 seconds seems to work pretty well. Adjust up or down for your typing speed.
-		if((currentAfterNumDown - lastAfterNumDown) < 1500)
+		IniRead, capBecauseOfAfterNumPunc, Status.ini, statusVars, capBecauseOfAfterNumPunc
+		if(capBecauseOfAfterNumPunc)
 		{
+			capBecauseOfAfterNumPunc := false
+			IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
 			return true
 		}
 	}

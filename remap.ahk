@@ -56,14 +56,7 @@ IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
 
 ; To allow for the deletion of paired characters as long as nothing else has been typed
 lastOpenPairDown := A_TickCount
-IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown 
-
-; To allow for correct capitalization of hotstrings triggered after ?! on the afterNum layer
-lastAfterNumDown := A_TickCount 
-IniWrite, %lastAfterNumDown%, Status.ini, trackingVars, lastAfterNumDown
-
-; Track keypresses before layers are activated to use in place of A_PriorHotkey (which returns the layer key, not the actual prior key)
-global lastRealKeyDown := ""
+IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown
 
 ; Enable passing through capitalization for subscripts as a block (rather than capitalizing the first letter of the subscript).
 ; Stored in Status.ini to allow for resetting with Esc.
@@ -73,7 +66,14 @@ IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroug
 ; Enable passing through capitalization for superscripts as a block (rather than capitalizing the first letter of the superscript).
 ; Stored in Status.ini to allow for resetting with Esc.
 global superscript_PassThroughCap := false
-IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap 
+IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap
+
+; Keep track of capitalization caused by ?! on the afterNum layer to properly handle expansion capitalization after them
+capBecauseOfAfterNumPunc := false
+IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
+
+; Track keypresses before layers are activated to use in place of A_PriorHotkey (which returns the layer key, not the actual prior key)
+global lastRealKeyDown := ""
 
 
 
@@ -723,8 +723,18 @@ global winLeaderUp := "VKDA Up"
 	shiftLeader_keys := l43_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l43_expdLeader(expdModifier_keys)
 	afterNum_keys := AddKeyUp(shiftModifier_keys.Clone(), afterNumUp)
-	; For hotstring capitalization tracking
-	WriteAfterNumTime()
+	
+	; For correct capitalization of expansions following afterNum ?
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader)))
+	{
+		capBecauseOfAfterNumPunc := true
+		IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
+	}
+	else
+	{
+		capBecauseOfAfterNumPunc := false
+		IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
+	}
 	
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
@@ -869,8 +879,18 @@ global winLeaderUp := "VKDA Up"
 	shiftLeader_keys := l46_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l46_expdLeader(expdModifier_keys)
 	afterNum_keys := AddKeyUp(shiftModifier_keys.Clone(), afterNumUp)
-	; For hotstring capitalization tracking
-	WriteAfterNumTime()
+	
+	; For correct capitalization of expansions following afterNum !
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader)))
+	{
+		capBecauseOfAfterNumPunc := true
+		IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
+	}
+	else
+	{
+		capBecauseOfAfterNumPunc := false
+		IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
+	}
 	
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
