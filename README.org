@@ -18,4 +18,5 @@ In the meantime, I am implementing it here for the experience, and so that I can
 
 Sometime in the future I plan on explaining in excruciating detail why my layout is what it is. I have been tinkering with keyboard layouts for something like 3 years now, and have thought about it a lot. I don't consider myself an expert by any means (there are people far smarter than me working on these things too), but I do "have reasons" for designing the layout how I did.
 
-This explanation will probably go up on my website, but I'll make sure to link it here when I get around to posting it.
+This explanation will probably go up on my website, but I'll make sure to link it here when I get around to posting it. You can see pictures/the general plan [[https://www.steventammen.com/pages/keyboard-layouts/#my-layout][here]].
+
