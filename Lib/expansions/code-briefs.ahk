@@ -18,8 +18,8 @@ f_python(matchObj)
 
 ; ------------------- blocks -------------------
 
-Hotstring("(\\while)1", "java_while", 3, 0)
-java_while(matchObj)
+Hotstring("(\\while)1", "f_while", 3, 0)
+f_while(matchObj)
 {
 	if(language = "java")
 	{

@@ -50,9 +50,19 @@
 ; Make dual object
 dual := new Dual
 
+; Use a variable to keep track of what sort of nesting behavior is enabled.
+; Options: "normal", "practice"
+nestingType := "normal"
+IniWrite, %nestingType%, Status.ini, nestVars, nestingType
+
 ; Store the nest level in an .ini file so it is accessible in the expand script
 nestLevel := 0
 IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+
+; Store the list of closing characters that (may) need to be entered.
+; This implementation uses a string-based stack to use IniRead/IniWrite
+closingChars := ""
+IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 
 ; To allow for the deletion of paired characters as long as nothing else has been typed
 lastOpenPairDown := A_TickCount
@@ -74,6 +84,15 @@ IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterN
 
 ; Track keypresses before layers are activated to use in place of A_PriorHotkey (which returns the layer key, not the actual prior key)
 global lastRealKeyDown := ""
+
+; Use a variable to override key behavior when in a sort of global command mode
+; (cf. Vim)
+global vimMode := false
+IniWrite, %vimMode%, Status.ini, statusVars, vimMode
+
+; Use a variable to keep track of the spacing state before entering Vim mode
+; so that it can be properly restored.
+global autoSpacingBeforeVim := true
 
 ; Track key downs to deal with GetKeyState() being unreliable when handling dual-role keys' down states
 ; for times close to initial actuation
@@ -205,15 +224,11 @@ global winLeaderUp := "VK8E Up"
 	l15_afterNum()
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	return
+	
+; Custom behavior, want it consistent across layers
 *5::
-	numModifier_keys := l16_numModifier()
-	shiftModifier_keys := l16_shiftModifier()
-	expdModifier_keys := l16_expdModifier()
-	numLeader_keys := l16_numLeader(numModifier_keys)
-	shiftLeader_keys := l16_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l16_expdLeader(expdModifier_keys)
-	l16_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	; Send keyboard shortcut for pulling up window switcher
+	SendInput ^!+1
 	return
 
 
@@ -285,29 +300,31 @@ global winLeaderUp := "VK8E Up"
 ;-------------------------------------------------
 
 ; Custom behavior, want it consistent across layers
-*Tab::
-	if(Modifiers("l21", "{Tab}", "{Tab}"))
+*\::
+	if(Modifiers("l21", "\", "\"))
 	{
 		return
 	}
 	
-	; Handle Shift+Tab separate from Dual
+	; Handle Shift+\ separate from Dual
 	if(GetKeyState(shiftLeader))
 	{
-		SendInput +{Tab}{%shiftLeaderUp%}
+		SendInput +\{%shiftLeaderUp%}
 		return
 	}
 	else if(shiftDownNoUp)
 	{
-		SendInput +{Tab}
+		SendInput +\
 		return
 	}
 	else
 	{
-		dual.comboKey("Tab")
+		; Clear autospacing/autocapitalization when backslash escaping stuff
+		SendInput {%regSpacingUp%}
+		SendInput {%capSpacingUp%}
+		dual.comboKey(["\", rawLeaderDn], {(rawState): "\", (rawLeader): ["\", rawLeaderUp]})
 		return
 	}
-
 *b::
 	if(Modifiers("l22", "b", "{"))
 	{
@@ -334,6 +351,22 @@ global winLeaderUp := "VK8E Up"
 	shiftLeader_keys := l23_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l23_expdLeader(expdModifier_keys)
 	l23_afterNum()
+	
+	; custom behavior for Vim mode
+	if(vimMode)
+	{
+		if(VimWindowActive())
+		{
+			SendInput y
+			return
+		}
+		else
+		{
+			SendInput ^c
+			return
+		}
+	}
+	
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["y", rawLeaderUp], (rawLeader): ["y", rawLeaderUp], (regSpacing): ["y", regSpacingUp], (capSpacing): ["Y", capSpacingUp]})
 	return
 *o::
@@ -473,47 +506,26 @@ global winLeaderUp := "VK8E Up"
 ;-------------------------------------------------
 
 ; Custom behavior, want it consistent across layers
-*Backspace::
-	if(Modifiers("l31", "{Backspace}", "{Backspace}"))
+*Tab::
+	if(Modifiers("l31", "{Tab}", "{Tab}"))
 	{
 		return
 	}
 	
-	; Handle Shift+Backspace separate from Dual
+	; Handle Shift+Tab separate from Dual
 	if(GetKeyState(shiftLeader))
 	{
-		SendInput +{Backspace}{%shiftLeaderUp%}
+		SendInput +{Tab}{%shiftLeaderUp%}
 		return
 	}
 	else if(shiftDownNoUp)
 	{
-		SendInput +{Backspace}
+		SendInput +{Tab}
 		return
 	}
 	else
 	{
-		IniRead, lastOpenPairDown, Status.ini, nestVars, lastOpenPairDown
-		timeOfLastHotkey := A_TickCount - A_TimeSincePriorHotkey
-		
-		if((timeOfLastHotKey - lastOpenPairDown) < 50)
-		{
-			IniRead, nestLevel, Status.ini, nestVars, nestLevel
-			nestLevel := nestLevel - 1
-			IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
-			
-			if(nestLevel > 0)
-			{
-				SendInput {Backspace}{Delete}
-			}
-			else
-			{
-				SendInput {Backspace}{Delete}{%nestedPunctuationUp%}
-			}
-		
-			return
-		}
-
-		dual.comboKey({(regSpacing): ["Backspace", "Backspace", regSpacingUp], (capSpacing): ["Backspace", "Backspace", capSpacingUp]})
+		dual.comboKey("Tab")
 		return
 	}
 *h::
@@ -528,6 +540,22 @@ global winLeaderUp := "VK8E Up"
 	shiftLeader_keys := l32_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l32_expdLeader(expdModifier_keys)
 	l32_afterNum()
+	
+	; custom behavior for Vim mode
+	if(vimMode)
+	{
+		if(VimWindowActive())
+		{
+			SendInput h
+			return
+		}
+		else
+		{
+			SendInput ^x
+			return
+		}
+	}
+	
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["h", rawLeaderUp], (regSpacing): ["h", regSpacingUp], (capSpacing): ["H", capSpacingUp]})
 	return
 *i::
@@ -542,6 +570,33 @@ global winLeaderUp := "VK8E Up"
 	shiftLeader_keys := l33_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l33_expdLeader(expdModifier_keys)
 	l33_afterNum()
+	
+	; custom behavior for Vim mode
+	if(vimMode)
+	{
+		if(VimWindowActive())
+		{
+			vimMode := false
+			IniWrite, %vimMode%, Status.ini, statusVars, vimMode
+			SendInput i
+			if(autoSpacingBeforeVim)
+			{
+				SendInput {%rawStateUp%}
+			}
+			return
+		}
+		else
+		{
+			vimMode := false
+			IniWrite, %vimMode%, Status.ini, statusVars, vimMode
+			if(autoSpacingBeforeVim)
+			{
+				SendInput {%rawStateUp%}
+			}
+			return
+		}
+	}
+	
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["i", rawLeaderUp], (regSpacing): ["i", regSpacingUp], (capSpacing): ["I", capSpacingUp]})
 	return
 *e::
@@ -570,6 +625,33 @@ global winLeaderUp := "VK8E Up"
 	shiftLeader_keys := l35_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l35_expdLeader(expdModifier_keys)
 	l35_afterNum()
+	
+	; custom behavior for Vim mode
+	if(vimMode)
+	{
+		if(VimWindowActive())
+		{
+			vimMode := false
+			IniWrite, %vimMode%, Status.ini, statusVars, vimMode
+			SendInput a
+			if(autoSpacingBeforeVim)
+			{
+				SendInput {%rawStateUp%}
+			}
+			return
+		}
+		else
+		{
+			vimMode := false
+			IniWrite, %vimMode%, Status.ini, statusVars, vimMode
+			if(autoSpacingBeforeVim)
+			{
+				SendInput {%rawStateUp%}
+			}
+			return
+		}
+	}
+	
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["a", rawLeaderUp], (regSpacing): ["a", regSpacingUp], (capSpacing): ["A", capSpacingUp]})
 	return
 *.::
@@ -700,28 +782,44 @@ global winLeaderUp := "VK8E Up"
 ;-------------------------------------------------
 
 ; Custom behavior, want it consistent across layers
-*Esc::
-	if(Modifiers("l41", "{Esc}", "{Esc}"))
+*Enter::
+	if(Modifiers("l41", "{Enter}", "{Enter}"))
 	{
 		return
 	}
 	
-	; Handle Shift+Esc separate from Dual
+	; Handle Shift+Enter separate from Dual
 	if(GetKeyState(shiftLeader))
 	{
-		SendInput +{Esc}{%shiftLeaderUp%}
+		SendInput +{Enter}{%shiftLeaderUp%}
 		return
 	}
 	else if(shiftDownNoUp)
 	{
-		SendInput +{Esc}
+		SendInput +{Enter}
 		return
 	}
 	else
 	{
-		dual.comboKey("Esc")
+		; By default, Enter gets rid of trailing spaces from autospacing, and capitalizes the next letter.
+		; Repeated Enter presses get around the default capSpacing behavior by using A_PriorHotkey.
+		; Backslash escaping is supported if one wishes to send an Enter without autospacing behavior
+		; of any form.
+		lastKey := A_PriorHotkey
+		if(lastKey = "*Enter")
+		{
+			capSpacingKeys := "Enter"
+			regSpacingKeys := "Enter"
+		}
+		else
+		{
+			regSpacingKeys := ["Backspace", "Enter", capSpacingDn, regSpacingUp]
+			capSpacingKeys := ["Backspace", "Enter"]
+		}
+		dual.comboKey(["Enter", capSpacingDn], {(rawLeader): ["Backspace", "Enter"], (rawState): "Enter", (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 		return
 	}
+
 *x::
 	if(Modifiers("l42", "x", "$"))
 	{
@@ -765,19 +863,44 @@ global winLeaderUp := "VK8E Up"
 			IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
 			lastOpenPairDown := A_TickCount
 			IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown
+			
+			IniRead, closingChars, Status.ini, nestVars, closingChars
+			closingChars := AddClosingCharToStack("""", closingChars)
+			IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 		}
 		
-		if(GetKeyState(nestedPunctuation))
+		IniRead, nestingType, Status.ini, nestVars, nestingType
+	
+		if(nestingType = "normal")
 		{
-			defaultKeys := ["Space", """", """", "Left", regSpacingDn]
-			regSpacingKeys := ["""", """", "Left"]
-			capSpacingKeys := ["""", """", "Left"]
+			if(GetKeyState(nestedPunctuation))
+			{
+				defaultKeys := ["Space", """", """", "Left", regSpacingDn]
+				regSpacingKeys := ["""", """", "Left"]
+				capSpacingKeys := ["""", """", "Left"]
+			}
+			else
+			{
+				defaultKeys := ["Space", """", """", "Left", regSpacingDn, nestedPunctuationDn]
+				regSpacingKeys := ["""", """", "Left", nestedPunctuationDn]
+				capSpacingKeys := ["""", """", "Left", nestedPunctuationDn]
+			}
 		}
-		else
+		
+		else  ; nestingType = "practice"
 		{
-			defaultKeys := ["Space", """", """", "Left", regSpacingDn, nestedPunctuationDn]
-			regSpacingKeys := ["""", """", "Left", nestedPunctuationDn]
-			capSpacingKeys := ["""", """", "Left", nestedPunctuationDn]
+			if(GetKeyState(nestedPunctuation))
+			{
+				defaultKeys := ["Space", """", regSpacingDn]
+				regSpacingKeys := [""""]
+				capSpacingKeys := [""""]
+			}
+			else
+			{
+				defaultKeys := ["Space", """", regSpacingDn, nestedPunctuationDn]
+				regSpacingKeys := ["""", nestedPunctuationDn]
+				capSpacingKeys := ["""", nestedPunctuationDn]
+			}
 		}
 	}
 	
@@ -810,9 +933,18 @@ global winLeaderUp := "VK8E Up"
 	}
 	if(GetKeyState(rawState))
 	{
-		defaultKeys := [")"]
-		regSpacingKeys := [")"]
-		capSpacingKeys := [")"]
+		if(IDEWindowActive() and !vimMode)
+		{
+			defaultKeys := ["Right"]
+			regSpacingKeys := ["Right"]
+			capSpacingKeys := ["Right"]
+		}
+		else
+		{
+			defaultKeys := [")"]
+			regSpacingKeys := [")"]
+			capSpacingKeys := [")"]
+		}
 	}
 	else if(GetKeyState(rawLeader))
 	{
@@ -826,15 +958,24 @@ global winLeaderUp := "VK8E Up"
 		nestLevel := nestLevel - 1
 		
 		actuallyNeedToWrite := !(GetKeyState(shiftLeader) or GetKeyState(shiftModifier) or (GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier))))
-			
+		
+		IniRead, closingChars, Status.ini, nestVars, closingChars
+		closingChar := GetClosingCharFromStack(closingChars)
+		
 		if(actuallyNeedToWrite)
 		{
 			IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+			
+			; Only remove closing char from the stack if we actually need to
+			; write. Otherwise, just use the read value to get the closing
+			; character
+			closingChars := RemoveClosingCharFromStack(closingChars)
+			IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 		}
 		
-		defaultKeys := ExitNestedPair("default", nestLevel)
-		regSpacingKeys := ExitNestedPair("regSpacing", nestLevel)
-		capSpacingKeys := ExitNestedPair("capSpacing", nestLevel)
+		defaultKeys := ExitNestedPair("default", nestLevel, closingChar)
+		regSpacingKeys := ExitNestedPair("regSpacing", nestLevel, closingChar)
+		capSpacingKeys := ExitNestedPair("capSpacing", nestLevel, closingChar)
 	}
 	else
 	{
@@ -890,6 +1031,29 @@ global winLeaderUp := "VK8E Up"
 	; Want em dash behavior. Redefine separately to avoid sending an extra shiftLeaderUp
 	afterNum_keys := l45_afterNum()
 	
+	; custom behavior for Vim mode
+	if(vimMode)
+	{	
+		if(VimWindowActive())
+		{
+			if(GetKeyState(numLeader))
+			{
+				SendInput P{%numLeaderUp%}
+				return
+			}
+			else
+			{
+				SendInput p
+				return
+			}
+		}
+		else
+		{
+			SendInput ^v
+			return
+		}
+	}
+	
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *-::
@@ -921,19 +1085,44 @@ global winLeaderUp := "VK8E Up"
 			IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
 			lastOpenPairDown := A_TickCount
 			IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown
+			
+			IniRead, closingChars, Status.ini, nestVars, closingChars
+			closingChars := AddClosingCharToStack(")", closingChars)
+			IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 		}
 		
-		if(GetKeyState(nestedPunctuation))
-		{
-			defaultKeys := ["Space", "(", ")", "Left", regSpacingDn]
-			regSpacingKeys := ["(", ")", "Left"]
-			capSpacingKeys := ["(", ")", "Left"]
+		IniRead, nestingType, Status.ini, nestVars, nestingType
+		
+		if(nestingType = "normal")
+		{	
+			if(GetKeyState(nestedPunctuation))
+			{
+				defaultKeys := ["Space", "(", ")", "Left", regSpacingDn]
+				regSpacingKeys := ["(", ")", "Left"]
+				capSpacingKeys := ["(", ")", "Left"]
+			}
+			else
+			{
+				defaultKeys := ["Space", "(", ")", "Left", regSpacingDn, nestedPunctuationDn]
+				regSpacingKeys := ["(", ")", "Left", nestedPunctuationDn]
+				capSpacingKeys := ["(", ")", "Left", nestedPunctuationDn]
+			}
 		}
-		else
-		{
-			defaultKeys := ["Space", "(", ")", "Left", regSpacingDn, nestedPunctuationDn]
-			regSpacingKeys := ["(", ")", "Left", nestedPunctuationDn]
-			capSpacingKeys := ["(", ")", "Left", nestedPunctuationDn]
+		
+		else  ; nestingType = "practice"
+		{	
+			if(GetKeyState(nestedPunctuation))
+			{
+				defaultKeys := ["Space", "(", regSpacingDn]
+				regSpacingKeys := ["("]
+				capSpacingKeys := ["("]
+			}
+			else
+			{
+				defaultKeys := ["Space", "(", regSpacingDn, nestedPunctuationDn]
+				regSpacingKeys := ["(", nestedPunctuationDn]
+				capSpacingKeys := ["(", nestedPunctuationDn]
+			}
 		}
 	}
 
@@ -1031,14 +1220,14 @@ global winLeaderUp := "VK8E Up"
 	r45_afterNum()
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["z", rawLeaderUp], (regSpacing): ["z", regSpacingUp], (capSpacing): ["Z", capSpacingUp]})
 	return
-; Mirrored Vim key: not needed twice	
-; *Esc::
-;	expdLeader_keys := r46_expdLeader(expdModifier_keys)
+; Mirrored Enter key: not needed twice	
+;*Enter::
+;	numModifier_keys := r46_numModifier()
+;	shiftModifier_keys := r46_shiftModifier()
 ;	expdModifier_keys := r46_expdModifier()
 ;	numLeader_keys := r46_numLeader(numModifier_keys)
-;	numModifier_keys := r46_numModifier()
 ;	shiftLeader_keys := r46_shiftLeader(shiftModifier_keys)
-;	shiftModifier_keys := r46_shiftModifier()
+;	expdLeader_keys := r46_expdLeader(expdModifier_keys)
 ;	r46_afterNum()
 ;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 ;	return
@@ -1134,9 +1323,21 @@ global winLeaderUp := "VK8E Up"
 ; Thumbs
 ;-------------------------------------------------
 
-; We want space to function normally for shift layers so that we can put spaces between words with all caps.
+; We want the number layer to function normally on the shift layers so that we can mix numbers/symbols with words with all caps.
 ; This is why these combinators have been removed.
 *Space::
+
+	if(Modifiers("lt1", "{Space}", "{Space}"))
+	{
+		return
+	}
+	
+	; Handle shiftLeader+Space separate from Dual. Here, we use shiftLeader+Space to toggle autospacing/autocapitalization
+	if(GetKeyState(shiftLeader))
+	{
+		dual.comboKey([rawStateDn, shiftLeaderUp], {(rawState): [rawStateUp, shiftLeaderUp]})
+		return
+	}
 
 	; Spacing is disabled by default after autospaced punctuation to help prevent typos,
 	; and to allow for proper spacing in nested punctuation expansions. However, we want
@@ -1166,96 +1367,7 @@ global winLeaderUp := "VK8E Up"
 	lt1_afterNum()
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
-*1::
-*1 Up::
-	numModifier_keys := lt2_numModifier()
-	shiftModifier_keys := lt2_shiftModifier()
-	expdModifier_keys := lt2_expdModifier()
-	numLeader_keys := lt2_numLeader(numModifier_keys)
-	shiftLeader_keys := lt2_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := lt2_expdLeader(expdModifier_keys)
-	lt2_afterNum()
-	dual.combine(expdModifier, expdLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
-	return
-; Custom behavior, want it consistent across layers
-*Enter::
-	if(Modifiers("lt3", "{Enter}", "{Enter}"))
-	{
-		return
-	}
 	
-	; Handle Shift+Enter separate from Dual
-	if(GetKeyState(shiftLeader))
-	{
-		SendInput +{Enter}{%shiftLeaderUp%}
-		return
-	}
-	else if(shiftDownNoUp)
-	{
-		SendInput +{Enter}
-		return
-	}
-	else
-	{
-		; By default, Enter gets rid of trailing spaces from autospacing, and capitalizes the next letter.
-		; Repeated Enter presses get around the default capSpacing behavior by using A_PriorHotkey.
-		; Backslash escaping is supported if one wishes to send an Enter without autospacing behavior
-		; of any form.
-		lastKey := A_PriorHotkey
-		if(lastKey = "*Enter")
-		{
-			capSpacingKeys := "Enter"
-			regSpacingKeys := "Enter"
-		}
-		else
-		{
-			regSpacingKeys := ["Backspace", "Enter", capSpacingDn, regSpacingUp]
-			capSpacingKeys := ["Backspace", "Enter"]
-		}
-		dual.comboKey(["Enter", capSpacingDn], {(rawLeader): ["Backspace", "Enter"], (rawState): "Enter", (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
-		return
-	}
-; Custom behavior, want it consistent across layers
-*\::
-	if(Modifiers("lt4", "\", "\"))
-	{
-		return
-	}
-	
-	; Handle Shift+\ separate from Dual
-	if(GetKeyState(shiftLeader))
-	{
-		SendInput +\{%shiftLeaderUp%}
-		return
-	}
-	else if(shiftDownNoUp)
-	{
-		SendInput +\
-		return
-	}
-	else
-	{
-		; Clear autospacing/autocapitalization when backslash escaping stuff
-		SendInput {%regSpacingUp%}
-		SendInput {%capSpacingUp%}
-		dual.comboKey(["\", rawLeaderDn], {(rawState): "\", (rawLeader): ["\", rawLeaderUp]})
-		return
-	}
-; Custom behavior, want it consistent across layers
-*Home::
-	dual.comboKey(rawStateDn, {(rawState): rawStateUp})
-	return
-*Left::
-	numModifier_keys := lt6_numModifier()
-	shiftModifier_keys := lt6_shiftModifier()
-	expdModifier_keys := lt6_expdModifier()
-	numLeader_keys := lt6_numLeader(numModifier_keys)
-	shiftLeader_keys := lt6_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := lt6_expdLeader(expdModifier_keys)
-	lt6_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
-	return
-
 ; We want the number layer to function normally on the shift layers so that we can mix numbers/symbols with words with all caps.
 ; This is why these combinators have been removed.
 *3::
@@ -1265,10 +1377,10 @@ global winLeaderUp := "VK8E Up"
 		lastRealKeyDown := Dual.cleanKey(lastKey)
 	}
 	numModifier_keys := numModifierUp
-	expdModifier_keys := rt1_expdModifier()
+	expdModifier_keys := lt2_expdModifier()
 	numLeader_keys := numModifierDn
-	expdLeader_keys := rt1_expdLeader(expdModifier_keys)
-	rt1_afterNum()
+	expdLeader_keys := lt2_expdLeader(expdModifier_keys)
+	lt2_afterNum()
 	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	
 	numDownNoUp := true
@@ -1276,12 +1388,12 @@ global winLeaderUp := "VK8E Up"
 	return
 *3 Up::
 	numModifier_keys := numModifierUp
-	shiftModifier_keys := rt1_shiftModifier()
-	expdModifier_keys := rt1_expdModifier()
+	shiftModifier_keys := lt2_shiftModifier()
+	expdModifier_keys := lt2_expdModifier()
 	numLeader_keys := numModifierDn
-	shiftLeader_keys := rt1_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := rt1_expdLeader(expdModifier_keys)
-	rt1_afterNum()
+	shiftLeader_keys := lt2_shiftLeader(shiftModifier_keys)
+	expdLeader_keys := lt2_expdLeader(expdModifier_keys)
+	lt2_afterNum()
 	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	
 	; Activate afterNum layer on key-up to be able to type all punctuation after numbers
@@ -1290,62 +1402,194 @@ global winLeaderUp := "VK8E Up"
 	numDownNoUp := false
 	
 	return
+	
+	
+;;;;;;;;;;;;;;;;;;;;; TODO: brief layer on left thumb. lt3	
+	
+	
+; Custom behavior, want it consistent across layers
+*Esc::
+	if(Modifiers("lt4", "{Esc}", "{Esc}"))
+	{
+		return
+	}
+	
+	; Handle Shift+Esc separate from Dual
+	if(GetKeyState(shiftLeader))
+	{
+		SendInput +{Esc}{%shiftLeaderUp%}
+		return
+	}
+	else if(shiftDownNoUp)
+	{
+		SendInput +{Esc}
+		return
+	}
+	; if no modifiers, proceed with default behavior, which is to
+	; disable autospacing and enter Vim mod
+	else
+	{
+		vimMode := true
+		IniWrite, %vimMode%, Status.ini, statusVars, vimMode
+		
+		autoSpacingBeforeVim := !(GetKeyState(rawState))
+		if(autoSpacingBeforeVim)
+		{
+			SendInput {%rawStateDn%}
+		}
+		
+		dual.comboKey("Esc")
+		return
+	}
+
+; Custom behavior, want it consistent across layers
+*Backspace::
+	if(Modifiers("rt1", "{Backspace}", "{Backspace}"))
+	{
+		return
+	}
+	
+	; Handle Shift+Backspace separate from Dual
+	if(GetKeyState(shiftLeader))
+	{
+		SendInput +{Backspace}{%shiftLeaderUp%}
+		return
+	}
+	else if(shiftDownNoUp)
+	{
+		SendInput +{Backspace}
+		return
+	}
+	else
+	{
+		IniRead, lastOpenPairDown, Status.ini, nestVars, lastOpenPairDown
+		timeOfLastHotkey := A_TickCount - A_TimeSincePriorHotkey
+		
+		if((timeOfLastHotKey - lastOpenPairDown) < 50)
+		{
+			IniRead, nestLevel, Status.ini, nestVars, nestLevel
+			nestLevel := nestLevel - 1
+			IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+			
+			if(nestLevel > 0)
+			{
+				SendInput {Backspace}{Delete}
+			}
+			else
+			{
+				SendInput {Backspace}{Delete}{%nestedPunctuationUp%}
+			}
+		
+			return
+		}
+
+		dual.comboKey({(regSpacing): ["Backspace", "Backspace", regSpacingUp], (capSpacing): ["Backspace", "Backspace", capSpacingUp]})
+		return
+	}
+
+colonKeys := false
 *2::
-	numModifier_keys := rt2_numModifier()
+
+	lastKey := A_PriorHotkey
+	if(numDownNoUp)
+	{
+		colonKeys := true
+		numModifier_keys := rt2_numModifier()
+		dual.comboKey({(numModifier): numModifier_keys})
+		return
+	}
+	else if((lastKey = "*3") or (lastKey = "*3 Up")) {
+		colonKeys := true
+		numModifier_keys := rt2_numModifier()
+		numLeader_keys := rt2_numLeader(numModifier_keys)
+		dual.comboKey({(numLeader): numLeader_keys})
+		return
+	}
+	else {
+		colonKeys := false
+	}
+	
 	shiftModifier_keys := shiftModifierUp
 	expdModifier_keys := rt2_expdModifier()
-	numLeader_keys := rt2_numLeader(numModifier_keys)
 	shiftLeader_keys := shiftModifierDn
 	expdLeader_keys := rt2_expdLeader(expdModifier_keys)
 	rt2_afterNum()
-	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	
 	shiftDownNoUp := true
 	
 	return
+
 *2 Up::
-	numModifier_keys := rt2_numModifier()
+
+	if(colonKeys)
+	{
+		return
+	}
+
 	shiftModifier_keys := shiftModifierUp
 	expdModifier_keys := rt2_expdModifier()
-	numLeader_keys := rt2_numLeader(numModifier_keys)
 	shiftLeader_keys := shiftModifierDn
 	expdLeader_keys := rt2_expdLeader(expdModifier_keys)
 	rt2_afterNum()
-	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	
 	shiftDownNoUp := false
 	
 	return
-; Mirrored Enter key: not needed twice	
-;*Enter::
-;	numModifier_keys := lt3_numModifier()
-;	shiftModifier_keys := lt3_shiftModifier()
-;	expdModifier_keys := lt3_expdModifier()
-;	numLeader_keys := lt3_numLeader(numModifier_keys)
-;	shiftLeader_keys := lt3_shiftLeader(shiftModifier_keys)
-;	expdLeader_keys := lt3_expdLeader(expdModifier_keys)
-;	lt3_afterNum()
+
+semicolonKeys := ""
+*1::
+
+	lastKey := A_PriorHotkey
+	if(numDownNoUp)
+	{
+		semicolonKeys := true
+		numModifier_keys := rt3_numModifier()
+		dual.comboKey({(numModifier): numModifier_keys})
+		return
+	}
+	else if((lastKey = "*3") or (lastKey = "*3 Up")) {
+		semicolonKeys := true
+		numModifier_keys := rt3_numModifier()
+		numLeader_keys := rt3_numLeader(numModifier_keys)
+		dual.comboKey({(numLeader): numLeader_keys})
+		return
+	}
+	else {
+		semicolonKeys := false
+	}
+
+	shiftModifier_keys := rt3_shiftModifier()
+	expdModifier_keys := rt3_expdModifier()
+	shiftLeader_keys := rt3_shiftLeader(shiftModifier_keys)
+	expdLeader_keys := rt3_expdLeader(expdModifier_keys)
+	rt3_afterNum()
+	dual.combine(expdModifier, expdLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	return
+*1 Up::
+
+	if(semicolonKeys)
+	{
+		return
+	}
+
+	shiftModifier_keys := rt3_shiftModifier()
+	expdModifier_keys := rt3_expdModifier()
+	shiftLeader_keys := rt3_shiftLeader(shiftModifier_keys)
+	expdLeader_keys := rt3_expdLeader(expdModifier_keys)
+	rt3_afterNum()
+	dual.combine(expdModifier, expdLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	return
+
+; Mirrored Vim key: not needed twice	
+; *Esc::
+;	numModifier_keys := rt4_numModifier()
+;	shiftModifier_keys := rt4_shiftModifier()
+;	expdModifier_keys := rt4_expdModifier()
+;	numLeader_keys := rt4_numLeader(numModifier_keys)
+;	shiftLeader_keys := rt4_shiftLeader(shiftModifier_keys)
+;	expdLeader_keys := rt4_expdLeader(expdModifier_keys)
+;	rt4_afterNum()
 ;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 ;	return
-; Custom behavior, want it consistent across layers
-*PgDn::
-	dual.comboKey()
-	return
-; Custom behavior, want it consistent across layers
-*PgUp::
-	dual.comboKey()
-	return
-*Right::
-	numModifier_keys := rt6_numModifier()
-	shiftModifier_keys := rt6_shiftModifier()
-	expdModifier_keys := rt6_expdModifier()
-	numLeader_keys := rt6_numLeader(numModifier_keys)
-	shiftLeader_keys := rt6_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := rt6_expdLeader(expdModifier_keys)
-	rt6_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
-	return
-
-
-
-

@@ -211,49 +211,93 @@ l44_shiftModifier() {
 	}
 	else
 	{
-			IniRead, nestLevel, Status.ini, nestVars, nestLevel
-			nestLevel := nestLevel + 1
-			
-			actuallyNeedToWrite := GetKeyState(shiftLeader) or GetKeyState(shiftModifier) or (GetKeyState(numAfter) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+		IniRead, nestLevel, Status.ini, nestVars, nestLevel
+		nestLevel := nestLevel + 1
+		
+		actuallyNeedToWrite := GetKeyState(shiftLeader) or GetKeyState(shiftModifier) or (GetKeyState(numAfter) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
 
-			if(actuallyNeedToWrite)
-			{
-				IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
-				lastOpenPairDown := A_TickCount
-				IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown
-			}
-			
-		if(GetKeyState(nestedPunctuation))
+		if(actuallyNeedToWrite)
 		{
-			if(GetKeyState(regSpacing))
-			{			
-				shiftModifier_keys := ["_", "_", "Left"]
-			}
-			else if(GetKeyState(capSpacing))
+			IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+			lastOpenPairDown := A_TickCount
+			IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown
+			
+			IniRead, closingChars, Status.ini, nestVars, closingChars
+			closingChars := AddClosingCharToStack("_", closingChars)
+			IniWrite, %closingChars%, Status.ini, nestVars, closingChars
+		}
+		
+		IniRead, nestingType, Status.ini, nestVars, nestingType
+	
+		if(nestingType = "normal")
+		{
+			if(GetKeyState(nestedPunctuation))
 			{
-				shiftModifier_keys := ["_", "_", "Left"]
+				if(GetKeyState(regSpacing))
+				{			
+					shiftModifier_keys := ["_", "_", "Left"]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					shiftModifier_keys := ["_", "_", "Left"]
+				}
+				else
+				{
+					shiftModifier_keys := ["Space", "_", "_", "Left", regSpacingDn]
+				}
 			}
 			else
 			{
-				shiftModifier_keys := ["Space", "_", "_", "Left", regSpacingDn]
+				if(GetKeyState(regSpacing))
+				{			
+					shiftModifier_keys := ["_", "_", "Left", nestedPunctuationDn]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					shiftModifier_keys := ["_", "_", "Left", nestedPunctuationDn]
+				}
+				else
+				{
+					shiftModifier_keys := ["Space", "_", "_", "Left", regSpacingDn, nestedPunctuationDn]
+				}
 			}
 		}
-		else
+		
+		else  ; nestingType = "practice"
 		{
-			if(GetKeyState(regSpacing))
-			{			
-				shiftModifier_keys := ["_", "_", "Left", nestedPunctuationDn]
-			}
-			else if(GetKeyState(capSpacing))
+			if(GetKeyState(nestedPunctuation))
 			{
-				shiftModifier_keys := ["_", "_", "Left", nestedPunctuationDn]
+				if(GetKeyState(regSpacing))
+				{			
+					shiftModifier_keys := ["_"]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					shiftModifier_keys := ["_"]
+				}
+				else
+				{
+					shiftModifier_keys := ["Space", "_", regSpacingDn]
+				}
 			}
 			else
 			{
-				shiftModifier_keys := ["Space", "_", "_", "Left", regSpacingDn, nestedPunctuationDn]
+				if(GetKeyState(regSpacing))
+				{			
+					shiftModifier_keys := ["_", nestedPunctuationDn]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					shiftModifier_keys := ["_", nestedPunctuationDn]
+				}
+				else
+				{
+					shiftModifier_keys := ["Space", "_", regSpacingDn, nestedPunctuationDn]
+				}
 			}
 		}
 	}
+	
 	return shiftModifier_keys
 }
 ; Not used intentionally; using comma default behavior instead in remap.ahk

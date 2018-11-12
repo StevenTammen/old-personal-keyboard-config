@@ -58,11 +58,11 @@ f_superscript(matchObj)
 
 	if(nestLevel > 0)
 	{
-		SendInput {Backspace 3}{Right}{Space}
+		SendInput {Backspace}{Right}{Space}
 	}
 	else
 	{
-		SendInput {Backspace 3}{Right}{Space}{%nestedPunctuationUp%}
+		SendInput {Backspace}{Right}{Space}{%nestedPunctuationUp%}
 	}
 
 	return
@@ -77,11 +77,11 @@ f_superscript(matchObj)
 
 	if(nestLevel > 0)
 	{
-		SendInput {Backspace 2}{Right}{Space}
+		SendInput {Backspace}{Right}{Space}
 	}
 	else
 	{
-		SendInput {Backspace 2}{Right}{Space}{%nestedPunctuationUp%}
+		SendInput {Backspace}{Right}{Space}{%nestedPunctuationUp%}
 	}
 
 	return

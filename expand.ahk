@@ -93,6 +93,6 @@ global winLeaderUp := "VK8E Up"
 
 #Include <expansions/text-briefs>
 #Include <expansions/named-entities>
+#Include <expansions/command-briefs>
 #Include <expansions/code-briefs>
 #Include <expansions/alternate-usage>
-#Include <expansions/nested-punctuation>

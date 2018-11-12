@@ -85,12 +85,33 @@
 }
 
 
+AddClosingCharToStack(closingChar, closingChars)
+{
+	closingChars := closingChar . closingChars
+	return closingChars
+}
+
+
+GetClosingCharFromStack(closingChars)
+{
+	closingChar := SubStr(closingChars, 1, 1)
+	return closingChar
+}
+
+
+RemoveClosingCharFromStack(closingChars)
+{
+	closingChars := SubStr(closingChars, 2)
+	return closingChars
+}
+
+
 AddKeyUp(keys, keyUp) 
 {
 	newKeys := []
 	Loop % keys.Length()
 	{
-	    	newKeys.Push(keys[A_Index])
+	    newKeys.Push(keys[A_Index])
 	}
 	newKeys.Push(keyUp)
 	return newKeys
@@ -107,34 +128,67 @@ DealWithSubscriptAndSuperscriptPassThrough()
 }
 
 
-ExitNestedPair(spacingType, nestLevel)
+ExitNestedPair(spacingType, nestLevel, closingChar)
 {
 	IniRead, subscript_PassThroughCap, Status.ini, nestVars, subscript_PassThroughCap
 	IniRead, superscript_PassThroughCap, Status.ini, nestVars, superscript_PassThroughCap
 	
-	if(subscript_PassThroughCap)
+	IniRead, nestingType, Status.ini, nestVars, nestingType
+	
+	if(nestingType = "normal")
 	{
-		subscript_PassThroughCap := false
-		IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
-		
-		defaultKeys := ["Right", "Space", capSpacingDn]
-		regSpacingKeys := ["Backspace", "Right", "Space", regSpacingUp, capSpacingDn]
-		capSpacingKeys := ["Backspace", "Right", "Space"]
-	}
-	else if(superscript_PassThroughCap)
-	{
-		superscript_PassThroughCap := false
-		IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap
+		if(subscript_PassThroughCap)
+		{
+			subscript_PassThroughCap := false
+			IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
+			
+			defaultKeys := ["Right", "Space", capSpacingDn]
+			regSpacingKeys := ["Backspace", "Right", "Space", regSpacingUp, capSpacingDn]
+			capSpacingKeys := ["Backspace", "Right", "Space"]
+		}
+		else if(superscript_PassThroughCap)
+		{
+			superscript_PassThroughCap := false
+			IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap
 
-		defaultKeys := ["Right", "Space", capSpacingDn]
-		regSpacingKeys := ["Backspace", "Right", "Space", regSpacingUp, capSpacingDn]
-		capSpacingKeys := ["Backspace", "Right", "Space"]
+			defaultKeys := ["Right", "Space", capSpacingDn]
+			regSpacingKeys := ["Backspace", "Right", "Space", regSpacingUp, capSpacingDn]
+			capSpacingKeys := ["Backspace", "Right", "Space"]
+		}
+		else
+		{
+			defaultKeys := ["Right", "Space", regSpacingDn]
+			regSpacingKeys := ["Backspace", "Right", "Space"]
+			capSpacingKeys := ["Backspace", "Right", "Space"]
+		}
 	}
-	else
-	{
-		defaultKeys := ["Right", "Space", regSpacingDn]
-		regSpacingKeys := ["Backspace", "Right", "Space"]
-		capSpacingKeys := ["Backspace", "Right", "Space"]
+	
+	else ; nestingType = "practice"
+	{	
+		if(subscript_PassThroughCap)
+		{
+			subscript_PassThroughCap := false
+			IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
+			
+			defaultKeys := [closingChar, "Space", capSpacingDn]
+			regSpacingKeys := ["Backspace", closingChar, "Space", regSpacingUp, capSpacingDn]
+			capSpacingKeys := ["Backspace", closingChar, "Space"]
+		}
+		else if(superscript_PassThroughCap)
+		{
+			superscript_PassThroughCap := false
+			IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap
+
+			defaultKeys := [closingChar, "Space", capSpacingDn]
+			regSpacingKeys := ["Backspace", closingChar, "Space", regSpacingUp, capSpacingDn]
+			capSpacingKeys := ["Backspace", closingChar, "Space"]
+		}
+		else
+		{
+			defaultKeys := [closingChar, "Space", regSpacingDn]
+			regSpacingKeys := ["Backspace", closingChar, "Space"]
+			capSpacingKeys := ["Backspace", closingChar, "Space"]
+		}
 	}
 	
 	; Exit the nested state if the nestLevel is zero
@@ -143,7 +197,7 @@ ExitNestedPair(spacingType, nestLevel)
 		defaultKeys := AddKeyUp(defaultKeys, nestedPunctuationUp) 
 		regSpacingKeys := AddKeyUp(regSpacingKeys, nestedPunctuationUp) 
 		capSpacingKeys := AddKeyUp(capSpacingKeys, nestedPunctuationUp) 
-	}
+	}	
 	
 	; Return the correct keys for the spacing type specified in the function call
 	if(spacingType = "default")
@@ -225,34 +279,73 @@ numModifierKeys_Opening_PassThroughCap(openingChar, closingChar)
 	}
 	else
 	{
-		if(GetKeyState(nestedPunctuation))
+		IniRead, nestingType, Status.ini, nestVars, nestingType
+	
+		if(nestingType = "normal")
 		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := [openingChar, ClosingChar, "Left"]
-			}
-			else if(GetKeyState(capSpacing))
+			if(GetKeyState(nestedPunctuation))
 			{
-				numModifierKeys := [openingChar, closingChar, "Left"]
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := [openingChar, closingChar, "Left"]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := [openingChar, closingChar, "Left"]
+				}
+				else
+				{
+					numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
+				}
 			}
 			else
 			{
-				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
+				}
+				else
+				{
+					numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
+				}
 			}
 		}
-		else
+		
+		else  ; nestingType = "practice"
 		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := [openingChar, ClosingChar, "Left", nestedPunctuationDn]
-			}
-			else if(GetKeyState(capSpacing))
+			if(GetKeyState(nestedPunctuation))
 			{
-				numModifierKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := [openingChar]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := [openingChar]
+				}
+				else
+				{
+					numModifierKeys := ["Space", openingChar, regSpacingDn]
+				}
 			}
 			else
 			{
-				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := [openingChar, nestedPunctuationDn]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := [openingChar, nestedPunctuationDn]
+				}
+				else
+				{
+					numModifierKeys := ["Space", openingChar, regSpacingDn, nestedPunctuationDn]
+				}
 			}
 		}
 	}
@@ -273,35 +366,75 @@ numModifierKeys_Opening_NoCap(openingChar, closingChar)
 	}
 	else
 	{
-		if(GetKeyState(nestedPunctuation))
+		IniRead, nestingType, Status.ini, nestVars, nestingType
+	
+		if(nestingType = "normal")
 		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := [openingChar, closingChar, "Left"]
-			}
-			else if(GetKeyState(capSpacing))
+			if(GetKeyState(nestedPunctuation))
 			{
-				numModifierKeys := [openingChar, closingChar, "Left", regSpacingDn, capSpacingUp]
-			}
-			else
-			{
-				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
-			}
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := [openingChar, closingChar, "Left"]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := [openingChar, closingChar, "Left", regSpacingDn, capSpacingUp]
+				}
+				else
+				{
+					numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn]
+				}
 
-		}
-		else
-		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
-			}
-			else if(GetKeyState(capSpacing))
-			{
-				numModifierKeys := [openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, capSpacingUp]
 			}
 			else
 			{
-				numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := [openingChar, closingChar, "Left", nestedPunctuationDn]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := [openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn, capSpacingUp]
+				}
+				else
+				{
+					numModifierKeys := ["Space", openingChar, closingChar, "Left", regSpacingDn, nestedPunctuationDn]
+				}
+			}
+		}
+		
+		else  ; nestingType = "practice"
+		{
+			if(GetKeyState(nestedPunctuation))
+			{
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := [openingChar]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := [openingChar, regSpacingDn, capSpacingUp]
+				}
+				else
+				{
+					numModifierKeys := ["Space", openingChar, regSpacingDn]
+				}
+
+			}
+			else
+			{
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := [openingChar, nestedPunctuationDn]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := [openingChar, regSpacingDn, nestedPunctuationDn, capSpacingUp]
+				}
+				else
+				{
+					numModifierKeys := ["Space", openingChar, regSpacingDn, nestedPunctuationDn]
+				}
 			}
 		}
 	}
@@ -310,44 +443,85 @@ numModifierKeys_Opening_NoCap(openingChar, closingChar)
 }
 
 
-numModifierKeys_Closing(closingChar, nestLevel)
+; This function defines generic closing behavior, similar to ). 
+; When not nested, however, the specific closing character is sent.
+numModifierKeys_Closing(specificClosingChar, generalClosingChar, nestLevel)
 {
 	if(GetKeyState(nestedPunctuation))
 	{
-		if(nestLevel > 0)
+		IniRead, nestingType, Status.ini, nestVars, nestingType
+		
+		if(nestingType = "normal")
 		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := ["Backspace", "Right", "Space"]
-			}
-			else if(GetKeyState(capSpacing))
+			if(nestLevel > 0)
 			{
-				numModifierKeys := ["Backspace", "Right", "Space"]
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := ["Backspace", "Right", "Space"]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := ["Backspace", "Right", "Space"]
+				}
+				else
+				{
+					numModifierKeys := ["Right", "Space", regSpacingDn]
+				}
 			}
 			else
 			{
-				numModifierKeys := ["Right", "Space", regSpacingDn]
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
+				}
+				else
+				{
+					numModifierKeys := ["Right", "Space", regSpacingDn, nestedPunctuationUp]
+				}
 			}
 		}
-		else
+		
+		else  ; nestingType = "practice"
 		{
-			if(GetKeyState(regSpacing))
-			{			
-				numModifierKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
-			}
-			else if(GetKeyState(capSpacing))
+			if(nestLevel > 0)
 			{
-				numModifierKeys := ["Backspace", "Right", "Space", nestedPunctuationUp]
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := ["Backspace", generalClosingChar, "Space"]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := ["Backspace", generalClosingChar, "Space"]
+				}
+				else
+				{
+					numModifierKeys := [generalClosingChar, "Space", regSpacingDn]
+				}
 			}
 			else
 			{
-				numModifierKeys := ["Right", "Space", regSpacingDn, nestedPunctuationUp]
+				if(GetKeyState(regSpacing))
+				{			
+					numModifierKeys := ["Backspace", generalClosingChar, "Space", nestedPunctuationUp]
+				}
+				else if(GetKeyState(capSpacing))
+				{
+					numModifierKeys := ["Backspace", generalClosingChar, "Space", nestedPunctuationUp]
+				}
+				else
+				{
+					numModifierKeys := [generalClosingChar, "Space", regSpacingDn, nestedPunctuationUp]
+				}
 			}
 		}
 	}
 	else
 	{
-		numModifierKeys := [closingChar]
+		numModifierKeys := [specificClosingChar]
 	}
 
 	return numModifierKeys
@@ -372,7 +546,7 @@ numModifierKeys_PuncCombinator(defaultKeys, regSpacingKeys, capSpacingKeys)
 }
 
 
-WriteNestLevelIfApplicable_Opening(nestLevel)
+WriteNestVarsIfApplicable_Opening(nestLevel, closingChar)
 {	
 	actuallyNeedToWrite := (GetKeyState(numLeader) or GetKeyState(numModifier))
 	
@@ -381,16 +555,24 @@ WriteNestLevelIfApplicable_Opening(nestLevel)
 		IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
 		lastOpenPairDown := A_TickCount
 		IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown
+		
+		IniRead, closingChars, Status.ini, nestVars, closingChars
+		closingChars := AddClosingCharToStack(closingChar, closingChars)
+		IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 	}
 }
 
-WriteNestLevelIfApplicable_Closing(nestLevel)
+WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
 {	
 	actuallyNeedToWrite := (GetKeyState(numLeader) or GetKeyState(numModifier))
 	
 	if(actuallyNeedToWrite)
 	{
 		IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+		
+		; remove closing character from stack
+		closingChars := RemoveClosingCharFromStack(closingChars)
+		IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 	}
 }
 
@@ -419,7 +601,7 @@ GetSpecialCaseKeys()
 	}
 	else
 	{
-		for i, value in ["h", "i", "e", "a", "w", "m", "t", "s", "r", "n", "Space"]
+		for i, value in ["h", "i", "e", "a", "w", "m", "t", "s", "r", "n", "2"]
 		{
 			if((lastKey = value) and regSpacingIsDown) ; The keys above will only be a number if regSpacing is down. We don't want a leading space for these
 			{
@@ -428,6 +610,46 @@ GetSpecialCaseKeys()
 		}
 	}
 	return specialCaseKeys
+}
+
+
+VimWindowActive()
+{
+	; Names of executable files (ahk_exe) that implement Vim behavior.
+	; Vim mode will pass through appropriate keypresses and let these programs
+	; handle the actual behavior.
+	vimExecutables := ["emacs.exe", "clion64.exe", "idea64.exe", "pycharm64.exe"]
+	
+	for index, executable in vimExecutables
+	{
+		window := "ahk_exe " . executable
+		if(WinActive(window))
+		{
+			return true
+		}
+	}
+	
+	return false
+}
+
+
+IDEWindowActive()
+{
+	; Names of executable files (ahk_exe) that implement Vim behavior.
+	; Vim mode will pass through appropriate keypresses and let these programs
+	; handle the actual behavior.
+	IDEs := ["clion64.exe", "idea64.exe", "pycharm64.exe"]
+	
+	for index, executable in IDEs
+	{
+		window := "ahk_exe " . executable
+		if(WinActive(window))
+		{
+			return true
+		}
+	}
+	
+	return false
 }
 
 ; -----------------------------------------------------------------------------------------------------------
@@ -486,3 +708,4 @@ EndCommandMode()
 
 	return
 }
+

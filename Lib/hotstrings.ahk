@@ -285,9 +285,22 @@ NeedsCap(beginning)
 }
 
 
+CommandBrief(matchObj)
+{
+	KeyWait 1
+	SendInput {%expdLeaderUp%}
+
+	Loop % StrLen(matchObj[1])
+	{
+		SendInput {Backspace}
+	}
+	
+	return
+}
+
+
 CodeBrief_language(matchObj, newLanguage)
 {
-	
 	KeyWait 1
 	SendInput {%expdLeaderUp%}
 
@@ -304,7 +317,6 @@ CodeBrief_language(matchObj, newLanguage)
 
 CodeBrief(matchObj, replacement)
 {
-
 	KeyWait 1
 	SendInput {%expdLeaderUp%}
 

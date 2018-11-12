@@ -64,35 +64,39 @@ l21_numModifier() {
 l22_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel + 1
-	WriteNestLevelIfApplicable_Opening(nestLevel)
+	WriteNestVarsIfApplicable_Opening(nestLevel, "}")
 	numModifier_keys := numModifierKeys_Opening_NoCap("{", "}")
 	return numModifier_keys
 }
 l23_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel + 1
-	WriteNestLevelIfApplicable_Opening(nestLevel)
+	WriteNestVarsIfApplicable_Opening(nestLevel, "]")
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("[", "]")
 	return numModifier_keys
 }
 l24_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
-	WriteNestLevelIfApplicable_Closing(nestLevel)
-	numModifier_keys := numModifierKeys_Closing("]", nestLevel)
+	IniRead, closingChars, Status.ini, nestVars, closingChars
+	closingChar := GetClosingCharFromStack(closingChars)
+	WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
+	numModifier_keys := numModifierKeys_Closing("]", closingChar, nestLevel)
 	return numModifier_keys
 }
 l25_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
-	WriteNestLevelIfApplicable_Closing(nestLevel)
-	numModifier_keys := numModifierKeys_Closing("}", nestLevel)
+	IniRead, closingChars, Status.ini, nestVars, closingChars
+	closingChar := GetClosingCharFromStack(closingChars)
+	WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
+	numModifier_keys := numModifierKeys_Closing("}", closingChar, nestLevel)
 	return numModifier_keys
 }
 l26_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel + 1
-	WriteNestLevelIfApplicable_Opening(nestLevel)
+	WriteNestVarsIfApplicable_Opening(nestLevel, "'")
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("'", "'")
 	return numModifier_keys
 }
@@ -124,7 +128,7 @@ r21_numModifier() {
 r22_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel + 1
-	WriteNestLevelIfApplicable_Opening(nestLevel)
+	WriteNestVarsIfApplicable_Opening(nestLevel, "/")
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("/", "/")
 	return numModifier_keys
 }
@@ -154,21 +158,21 @@ r23_numModifier() {
 r24_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel + 1
-	WriteNestLevelIfApplicable_Opening(nestLevel)
+	WriteNestVarsIfApplicable_Opening(nestLevel, "*")
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("*", "*")
 	return numModifier_keys
 }
 r25_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel + 1
-	WriteNestLevelIfApplicable_Opening(nestLevel)
+	WriteNestVarsIfApplicable_Opening(nestLevel, "+")
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("+", "+")
 	return numModifier_keys
 }
 r26_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel + 1
-	WriteNestLevelIfApplicable_Opening(nestLevel)
+	WriteNestVarsIfApplicable_Opening(nestLevel, "^")
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("^", "^")
 	return numModifier_keys
 }
@@ -328,16 +332,24 @@ r41_numModifier() {
 r42_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel + 1
-	WriteNestLevelIfApplicable_Opening(nestLevel)
+	WriteNestVarsIfApplicable_Opening(nestLevel, "=")
 	numModifier_keys := numModifierKeys_Opening_NoCap("=", "=")
 	return numModifier_keys
 }
 r43_numModifier() {
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestVarsIfApplicable_Opening(nestLevel, ">")
 	numModifier_keys := numModifierKeys_Opening_NoCap("<", ">")
 	return numModifier_keys
 }
 r44_numModifier() {
-	numModifier_keys := numModifierKeys_Closing(">", nestLevel)
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel - 1
+	IniRead, closingChars, Status.ini, nestVars, closingChars
+	closingChar := GetClosingCharFromStack(closingChars)
+	WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
+	numModifier_keys := numModifierKeys_Closing(">", closingChar, nestLevel)
 	return numModifier_keys
 }
 r45_numModifier() {
@@ -414,49 +426,11 @@ r55_numModifier() {
 ;-------------------------------------------------
 
 lt1_numModifier() {
-	if(GetKeyState(rawState))
-	{
-		numModifier_keys := [":"]
-	}
-	else if(GetKeyState(rawLeader))
-	{
-		numModifier_keys := ["Backspace", ":", rawLeaderUp]
-	}
-	else if(GetKeyState(regSpacing))
-	{			
-		numModifier_keys := ["Backspace", ":", "Space"]
-	}
-	else if(GetKeyState(capSpacing))
-	{
-		numModifier_keys := ["Backspace", ":", "Space", regSpacingDn, capSpacingUp]
-	}
-	else
-	{
-		numModifier_keys := [":", "Space", regSpacingDn]
-	}
+	numModifier_keys := [""]
 	return numModifier_keys
 }
 lt2_numModifier() {
-	if(GetKeyState(rawState))
-	{
-		numModifier_keys := [";"]
-	}
-	else if(GetKeyState(rawLeader))
-	{
-		numModifier_keys := ["Backspace", ";", rawLeaderUp]
-	}
-	else if(GetKeyState(regSpacing))
-	{			
-		numModifier_keys := ["Backspace", ";", "Space"]
-	}
-	else if(GetKeyState(capSpacing))
-	{
-		numModifier_keys := ["Backspace", ";", "Space", regSpacingDn, capSpacingUp]
-	}
-	else
-	{
-		numModifier_keys := [";", "Space", regSpacingDn]
-	}
+	numModifier_keys := [""]
 	return numModifier_keys
 }
 lt3_numModifier() {
@@ -482,11 +456,49 @@ rt1_numModifier() {
 	return numModifier_keys
 }
 rt2_numModifier() {
-	numModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := [":"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", ":", rawLeaderUp]
+	}
+	else if(GetKeyState(regSpacing))
+	{
+		numModifier_keys := ["Backspace", ":", "Space"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["Backspace", ":", "Space", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := [":", "Space", regSpacingDn]
+	}
 	return numModifier_keys
 }
 rt3_numModifier() {
-	numModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := [";"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", ";", rawLeaderUp]
+	}
+	else if(GetKeyState(regSpacing))
+	{	
+		numModifier_keys := ["Backspace", ";", "Space"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["Backspace", ";", "Space", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := [";", "Space", regSpacingDn]
+	}
 	return numModifier_keys
 }
 rt4_numModifier() {
@@ -494,10 +506,48 @@ rt4_numModifier() {
 	return numModifier_keys
 }
 rt5_numModifier() {
-	numModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := [":"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", ":", rawLeaderUp]
+	}
+	else if(GetKeyState(regSpacing))
+	{
+		numModifier_keys := ["Backspace", ":", "Space"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["Backspace", ":", "Space", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := [":", "Space", regSpacingDn]
+	}
 	return numModifier_keys
 }
 rt6_numModifier() {
-	numModifier_keys := [""]
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := [";"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", ";", rawLeaderUp]
+	}
+	else if(GetKeyState(regSpacing))
+	{	
+		numModifier_keys := ["Backspace", ";", "Space"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["Backspace", ";", "Space", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := [";", "Space", regSpacingDn]
+	}
 	return numModifier_keys
 }
