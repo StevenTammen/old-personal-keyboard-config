@@ -26,14 +26,16 @@ Gui, Color, %insertColor%
 Gui, Font, s16
 Gui, Add, Text, vStatusBar cWhite w%barWidth% h40
 
-SetTimer, UpdateOSD, 200
-Gosub, UpdateOSD  ; Make the first update immediate rather than waiting for the timer.
+SetTimer, KeepOnTop, 2500 ; make the status bar sit on top of the Windows task bar
+
+SetTimer, UpdateStatusBar, 200
+Gosub, UpdateStatusBar  ; Make the first update immediate rather than waiting for the timer.
 
 Gui, Show, x0 y0 w%barWidth% h40 NoActivate
 return
 	
 
-UpdateOSD:
+UpdateStatusBar:
 
 	IniRead, vimMode, Status.ini, statusVars, vimMode
 	color := insertColor
@@ -86,5 +88,8 @@ UpdateOSD:
 	
 	Gui, Color, %color%
 	GuiControl,, StatusBar, %text%
+	return
+
+KeepOnTop:
 	Gui, +AlwaysOnTop
 	return
