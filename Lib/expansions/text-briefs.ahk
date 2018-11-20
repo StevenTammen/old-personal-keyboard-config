@@ -25,6 +25,13 @@ f_id(matchObj)
 	return
 }
 
+Hotstring("(3[\ta-z'.\/;,\-21]|2|2[\t'.\/;,\- ]|[^123][\t.\/;,\- \n])(iv)([\t'.\/;,\- 1\n23])", "f_iv", 3, 0)
+f_iv(matchObj)
+{
+	TextBrief(matchObj, "I've", "I've")
+	return
+}
+
 Hotstring("(3[\ta-z'.\/;,\-21]|2|2[\t'.\/;,\- ]|[^123][\t.\/;,\- \n])(wo)([\t'.\/;,\- 1\n23])", "f_wo", 3, 0)
 f_wo(matchObj)
 {

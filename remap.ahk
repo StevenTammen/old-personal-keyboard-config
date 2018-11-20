@@ -52,7 +52,7 @@ dual := new Dual
 
 ; Use a variable to keep track of what sort of nesting behavior is enabled.
 ; Options: "normal", "practice"
-nestingType := "normal"
+nestingType := "practice"
 IniWrite, %nestingType%, Status.ini, nestVars, nestingType
 
 ; Store the nest level in an .ini file so it is accessible in the expand script
