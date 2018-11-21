@@ -134,9 +134,24 @@ l35_expdModifier() {
 	return expdModifier_keys
 }
 l36_expdModifier() {
+
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel + 1
-	WriteNestVarsIfApplicable_Opening(nestLevel, "~")
+	
+	; hardcoded here since this is the expd layer unlike the num layer
+	; that the WriteNestVarsIfApplicable_Opening() is written for
+	actuallyNeedToWrite := (GetKeyState(expdLeader) or GetKeyState(expdModifier))
+	if(actuallyNeedToWrite)
+	{
+		IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+		lastOpenPairDown := A_TickCount
+		IniWrite, %lastOpenPairDown%, Status.ini, nestVars, lastOpenPairDown
+		
+		IniRead, closingChars, Status.ini, nestVars, closingChars
+		closingChars := AddClosingCharToStack("~", closingChars)
+		IniWrite, %closingChars%, Status.ini, nestVars, closingChars
+	}
+	
 	expdModifier_keys := numModifierKeys_Opening_NoCap("~", "~")
 	return expdModifier_keys
 }

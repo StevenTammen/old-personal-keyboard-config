@@ -55,6 +55,10 @@ f_superscript(matchObj)
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
 	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+	
+	IniRead, closingChars, Status.ini, nestVars, closingChars
+	closingChars := RemoveClosingCharFromStack(closingChars)
+	IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 
 	if(nestLevel > 0)
 	{
@@ -71,9 +75,15 @@ f_superscript(matchObj)
 
 :*?b0:3g ::
 
+	KeyWait Space
+
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
 	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+	
+	IniRead, closingChars, Status.ini, nestVars, closingChars
+	closingChars := RemoveClosingCharFromStack(closingChars)
+	IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 
 	if(nestLevel > 0)
 	{
@@ -89,10 +99,16 @@ f_superscript(matchObj)
 ; ------------------- {Spc}~ -------------------
 
 :*?b0: 1.::
-
+	
+	KeyWait .
+	
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
 	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
+	
+	IniRead, closingChars, Status.ini, nestVars, closingChars
+	closingChars := RemoveClosingCharFromStack(closingChars)
+	IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 
 	if(nestLevel > 0)
 	{
