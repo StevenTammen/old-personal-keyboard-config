@@ -51,8 +51,8 @@
 dual := new Dual
 
 ; Use a variable to keep track of what sort of nesting behavior is enabled.
-; Options: "normal", "practice"
-nestingType := "practice"
+; Options: "paired", "unpaired"
+nestingType := "unpaired"
 IniWrite, %nestingType%, Status.ini, nestVars, nestingType
 
 ; Store the nest level in an .ini file so it is accessible in the expand script
@@ -871,7 +871,7 @@ global winLeaderUp := "VK8E Up"
 		
 		IniRead, nestingType, Status.ini, nestVars, nestingType
 	
-		if(nestingType = "normal")
+		if(nestingType = "paired")
 		{
 			if(GetKeyState(nestedPunctuation))
 			{
@@ -887,7 +887,7 @@ global winLeaderUp := "VK8E Up"
 			}
 		}
 		
-		else  ; nestingType = "practice"
+		else  ; nestingType = "unpaired"
 		{
 			if(GetKeyState(nestedPunctuation))
 			{
@@ -1093,7 +1093,7 @@ global winLeaderUp := "VK8E Up"
 		
 		IniRead, nestingType, Status.ini, nestVars, nestingType
 		
-		if(nestingType = "normal")
+		if(nestingType = "paired")
 		{	
 			if(GetKeyState(nestedPunctuation))
 			{
@@ -1109,7 +1109,7 @@ global winLeaderUp := "VK8E Up"
 			}
 		}
 		
-		else  ; nestingType = "practice"
+		else  ; nestingType = "unpaired"
 		{	
 			if(GetKeyState(nestedPunctuation))
 			{

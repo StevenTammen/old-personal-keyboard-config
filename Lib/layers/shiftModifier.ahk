@@ -229,7 +229,7 @@ l44_shiftModifier() {
 		
 		IniRead, nestingType, Status.ini, nestVars, nestingType
 	
-		if(nestingType = "normal")
+		if(nestingType = "paired")
 		{
 			if(GetKeyState(nestedPunctuation))
 			{
@@ -263,7 +263,7 @@ l44_shiftModifier() {
 			}
 		}
 		
-		else  ; nestingType = "practice"
+		else  ; nestingType = "unpaired"
 		{
 			if(GetKeyState(nestedPunctuation))
 			{

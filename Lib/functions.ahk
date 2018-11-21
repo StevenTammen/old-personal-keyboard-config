@@ -135,7 +135,7 @@ ExitNestedPair(spacingType, nestLevel, closingChar)
 	
 	IniRead, nestingType, Status.ini, nestVars, nestingType
 	
-	if(nestingType = "normal")
+	if(nestingType = "paired")
 	{
 		if(subscript_PassThroughCap)
 		{
@@ -163,7 +163,7 @@ ExitNestedPair(spacingType, nestLevel, closingChar)
 		}
 	}
 	
-	else ; nestingType = "practice"
+	else ; nestingType = "unpaired"
 	{	
 		if(subscript_PassThroughCap)
 		{
@@ -281,7 +281,7 @@ numModifierKeys_Opening_PassThroughCap(openingChar, closingChar)
 	{
 		IniRead, nestingType, Status.ini, nestVars, nestingType
 	
-		if(nestingType = "normal")
+		if(nestingType = "paired")
 		{
 			if(GetKeyState(nestedPunctuation))
 			{
@@ -315,7 +315,7 @@ numModifierKeys_Opening_PassThroughCap(openingChar, closingChar)
 			}
 		}
 		
-		else  ; nestingType = "practice"
+		else  ; nestingType = "unpaired"
 		{
 			if(GetKeyState(nestedPunctuation))
 			{
@@ -368,7 +368,7 @@ numModifierKeys_Opening_NoCap(openingChar, closingChar)
 	{
 		IniRead, nestingType, Status.ini, nestVars, nestingType
 	
-		if(nestingType = "normal")
+		if(nestingType = "paired")
 		{
 			if(GetKeyState(nestedPunctuation))
 			{
@@ -403,7 +403,7 @@ numModifierKeys_Opening_NoCap(openingChar, closingChar)
 			}
 		}
 		
-		else  ; nestingType = "practice"
+		else  ; nestingType = "unpaired"
 		{
 			if(GetKeyState(nestedPunctuation))
 			{
@@ -451,7 +451,7 @@ numModifierKeys_Closing(specificClosingChar, generalClosingChar, nestLevel)
 	{
 		IniRead, nestingType, Status.ini, nestVars, nestingType
 		
-		if(nestingType = "normal")
+		if(nestingType = "paired")
 		{
 			if(nestLevel > 0)
 			{
@@ -485,7 +485,7 @@ numModifierKeys_Closing(specificClosingChar, generalClosingChar, nestLevel)
 			}
 		}
 		
-		else  ; nestingType = "practice"
+		else  ; nestingType = "unpaired"
 		{
 			if(nestLevel > 0)
 			{

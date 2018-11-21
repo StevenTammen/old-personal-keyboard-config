@@ -1,18 +1,18 @@
-﻿Hotstring("(\\practice)1", "f_practice", 3, 0)
-f_practice(matchObj)
+﻿Hotstring("(\\paired)1", "f_paired", 3, 0)
+f_paired(matchObj)
 {
 	CommandBrief(matchObj)
 
 	IniRead, nestingType, Status.ini, nestVars, nestingType
 	
-	if(nestingType = "normal")
+	if(nestingType = "paired")
 	{
-		nestingType = "practice"
+		nestingType = "unpaired"
 		IniWrite, %nestingType%, Status.ini, nestVars, nestingType
 	}
-	else  ; nestingType = "practice"
+	else  ; nestingType = "unpaired"
 	{
-		nestingType = "normal"
+		nestingType = "paired"
 		IniWrite, %nestingType%, Status.ini, nestVars, nestingType
 	}
 }
