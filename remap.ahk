@@ -98,6 +98,8 @@ global autoSpacingBeforeVim := true
 ; for times close to initial actuation
 global shiftDownNoUp := false
 global numDownNoUp := false
+global expdDownNoUp := false
+
 global ctrlDownNoUp := false
 global altDownNoUp := false
 global winDownNoUp := false
@@ -856,7 +858,7 @@ global winLeaderUp := "VK8E Up"
 		IniRead, nestLevel, Status.ini, nestVars, nestLevel
 		nestLevel := nestLevel + 1
 		
-		actuallyNeedToWrite := !(GetKeyState(shiftLeader) or GetKeyState(shiftModifier) or (GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier))))
+		actuallyNeedToWrite := !(GetKeyState(shiftLeader) or shiftDownNoUp or (GetKeyState(afterNum) and !(GetKeyState(numLeader) or numDownNoUp)))
 			
 		if(actuallyNeedToWrite)
 		{
@@ -957,7 +959,7 @@ global winLeaderUp := "VK8E Up"
 		IniRead, nestLevel, Status.ini, nestVars, nestLevel
 		nestLevel := nestLevel - 1
 		
-		actuallyNeedToWrite := !(GetKeyState(shiftLeader) or GetKeyState(shiftModifier) or (GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier))))
+		actuallyNeedToWrite := !(GetKeyState(shiftLeader) or shiftDownNoUp or (GetKeyState(afterNum) and !(GetKeyState(numLeader) or numDownNoUp)))
 		
 		IniRead, closingChars, Status.ini, nestVars, closingChars
 		closingChar := GetClosingCharFromStack(closingChars)
@@ -1078,7 +1080,7 @@ global winLeaderUp := "VK8E Up"
 		IniRead, nestLevel, Status.ini, nestVars, nestLevel
 		nestLevel := nestLevel + 1
 		
-		actuallyNeedToWrite := !(GetKeyState(shiftLeader) or GetKeyState(shiftModifier) or (GetKeyState(afterNum) and !(GetKeyState(numLeader) or GetKeyState(numModifier))))
+		actuallyNeedToWrite := !(GetKeyState(shiftLeader) or shiftDownNoUp or (GetKeyState(afterNum) and !(GetKeyState(numLeader) or numDownNoUp)))
 			
 		if(actuallyNeedToWrite)
 		{
@@ -1566,6 +1568,9 @@ semicolonKeys := ""
 	expdLeader_keys := rt3_expdLeader(expdModifier_keys)
 	rt3_afterNum()
 	dual.combine(expdModifier, expdLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	
+	expdDownNoUp := true
+	
 	return
 *1 Up::
 
@@ -1580,6 +1585,9 @@ semicolonKeys := ""
 	expdLeader_keys := rt3_expdLeader(expdModifier_keys)
 	rt3_afterNum()
 	dual.combine(expdModifier, expdLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	
+	expdDownNoUp := false
+	
 	return
 
 ; Mirrored Vim key: not needed twice	

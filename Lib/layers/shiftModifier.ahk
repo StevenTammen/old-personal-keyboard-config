@@ -214,7 +214,7 @@ l44_shiftModifier() {
 		IniRead, nestLevel, Status.ini, nestVars, nestLevel
 		nestLevel := nestLevel + 1
 		
-		actuallyNeedToWrite := GetKeyState(shiftLeader) or GetKeyState(shiftModifier) or (GetKeyState(numAfter) and !(GetKeyState(numLeader) or GetKeyState(numModifier)))
+		actuallyNeedToWrite := GetKeyState(shiftLeader) or shiftDownNoUp or (GetKeyState(numAfter) and !(GetKeyState(numLeader) or numDownNoUp))
 
 		if(actuallyNeedToWrite)
 		{

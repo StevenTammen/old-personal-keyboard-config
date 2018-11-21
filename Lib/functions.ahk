@@ -548,7 +548,7 @@ numModifierKeys_PuncCombinator(defaultKeys, regSpacingKeys, capSpacingKeys)
 
 WriteNestVarsIfApplicable_Opening(nestLevel, closingChar)
 {	
-	actuallyNeedToWrite := (GetKeyState(numLeader) or GetKeyState(numModifier))
+	actuallyNeedToWrite := (GetKeyState(numLeader) or numDownNoUp)
 	
 	if(actuallyNeedToWrite)
 	{
@@ -564,7 +564,7 @@ WriteNestVarsIfApplicable_Opening(nestLevel, closingChar)
 
 WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
 {	
-	actuallyNeedToWrite := (GetKeyState(numLeader) or GetKeyState(numModifier))
+	actuallyNeedToWrite := (GetKeyState(numLeader) or numDownNoUp)
 	
 	if(actuallyNeedToWrite)
 	{

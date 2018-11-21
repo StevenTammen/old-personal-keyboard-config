@@ -140,7 +140,7 @@ l36_expdModifier() {
 	
 	; hardcoded here since this is the expd layer unlike the num layer
 	; that the WriteNestVarsIfApplicable_Opening() is written for
-	actuallyNeedToWrite := (GetKeyState(expdLeader) or GetKeyState(expdModifier))
+	actuallyNeedToWrite := (GetKeyState(expdLeader) or expdDownNoUp)
 	if(actuallyNeedToWrite)
 	{
 		IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
