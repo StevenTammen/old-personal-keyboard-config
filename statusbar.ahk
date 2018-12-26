@@ -24,7 +24,7 @@ global insertColor := "336600"
 global vimColor := "800000"
 ; TODO: visualColor for visual mode in vim
 
-global contentWidth := 1600 ;px
+global contentWidth := 1000 ;px
 global horizontalPadding := 20 ;px
 global barWidth := (contentWidth + horizontalPadding)
 global controlWidth := contentWidth/4

@@ -259,6 +259,11 @@ TextBrief(matchObj, lower, upper)
 
 NeedsCap(beginning)
 {
+	; Handle period, which will have an unwanted leading character due to the
+	; negated group in the regexes.
+	if(SubStr(beginning, 2, 1) == ".") {
+		beginning := "."
+	}
 
 	capBeginnings := ["2", "2/", "2-", ".", "`n"]
 	for k, v in capBeginnings

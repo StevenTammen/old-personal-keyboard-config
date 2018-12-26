@@ -1,6 +1,31 @@
-﻿; The negated regular expression character class [^123] is to prevent the hotkey from triggering on what were
-; intended to be only base layer characters that occur after a layer key (1, 2, 3). These briefs need to be modified
-; at some point to deal with modifier layers (so that one can use briefs right after numbers, for example).
+﻿; Map uu to qu to be able to type q. Match on . to always trigger, but still include the
+; verbose beginnings at higher priority for calculating capitalization.
+Hotstring("(3[\ta-z'.\/;,\-21]|2|2[\t'.\/;,\- ]|[^123][\t.\/;,\- \n]|.)uu", "f_q", 3, 0)
+f_q(matchObj)
+{
+	beginning := matchObj[1]
+	needsCap := NeedsCap(beginning)
+	
+	KeyWait u
+	
+	SendInput {Backspace 2}
+
+	if(needsCap)
+	{
+		SendInput Qu
+	}
+	else
+	{
+		SendInput qu
+	}
+}
+
+; -----------------------------------------------------------------------------
+
+; The negated regular expression character class [^123] is to prevent the hotkey from triggering on what were
+; intended to be only base layer characters that occur after a layer key (1, 2, 3). These briefs need to be
+; modified at some point to deal with modifier layers (so that one can use briefs right after numbers, for
+; example).
 
 ; Using the normal starters and enders for this brief was causing problems on Typeracer. An extra "I" was getting entered.
 ; Removing the matches for capitalization starters (e.g., .?!) appears to have solved the problem.
@@ -25,10 +50,27 @@ f_id(matchObj)
 	return
 }
 
-Hotstring("(3[\ta-z'.\/;,\-21]|2|2[\t'.\/;,\- ]|[^123][\t.\/;,\- \n])(iv)([\t'.\/;,\- 1\n23])", "f_iv", 3, 0)
-f_iv(matchObj)
+Hotstring("(3[\ta-z'.\/;,\-21]|2|2[\t'.\/;,\- ]|[^123][\t.\/;,\- \n])(iv)([\t'.\/;,\- 1\n23])", "f_ive", 3, 0)
+Hotstring("(3[\ta-z'.\/;,\-21]|2|2[\t'.\/;,\- ]|[^123][\t.\/;,\- \n])(ive)([\t'.\/;,\- 1\n23])", "f_ive", 3, 0)
+f_ive(matchObj)
 {
 	TextBrief(matchObj, "I've", "I've")
+	return
+}
+
+; no brief ill because that conflicts with the word "ill" (as in sick)
+Hotstring("(3[\ta-z'.\/;,\-21]|2|2[\t'.\/;,\- ]|[^123][\t.\/;,\- \n])(il)([\t'.\/;,\- 1\n23])", "f_il", 3, 0)
+f_il(matchObj)
+{
+	TextBrief(matchObj, "I'll", "I'll")
+	return
+}
+
+; no brief ill because that conflicts with the word "ill" (as in sick)
+Hotstring("(3[\ta-z'.\/;,\-21]|2|2[\t'.\/;,\- ]|[^123][\t.\/;,\- \n])(youre)([\t'.\/;,\- 1\n23])", "f_youre", 3, 0)
+f_youre(matchObj)
+{
+	TextBrief(matchObj, "you're", "You're")
 	return
 }
 
@@ -92,6 +134,13 @@ Hotstring("(3[\ta-z'.\/;,\-21]|2|2[\t'.\/;,\- ]|[^123][\t.\/;,\- \n])(mb)([\t'.\
 f_mb(matchObj)
 {
 	TextBrief(matchObj, "maybe", "Maybe")
+	return
+}
+
+Hotstring("(3[\ta-z'.\/;,\-21]|2|2[\t'.\/;,\- ]|[^123][\t.\/;,\- \n])(bw)([\t'.\/;,\- 1\n23])", "f_bw", 3, 0)
+f_bw(matchObj)
+{
+	TextBrief(matchObj, "between", "Between")
 	return
 }
 
