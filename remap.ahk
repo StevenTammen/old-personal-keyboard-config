@@ -661,7 +661,7 @@ global winLeaderUp := "VK8E Up"
 	{
 		return
 	}
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or BrowserOrTerminalFocused())
 	{
 		defaultKeys := ["."]
 		regSpacingKeys := ["."]
@@ -818,7 +818,18 @@ global winLeaderUp := "VK8E Up"
 			regSpacingKeys := ["Backspace", "Enter", capSpacingDn, regSpacingUp]
 			capSpacingKeys := ["Backspace", "Enter"]
 		}
-		dual.comboKey(["Enter", capSpacingDn], {(rawLeader): ["Backspace", "Enter"], (rawState): "Enter", (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+		
+		; Don't capitalize the next letter in browsers and terminals
+		if(BrowserOrTerminalFocused())
+		{
+			defaultKeys := "Enter"
+		}
+		else
+		{
+			defaultKeys := ["Enter", capSpacingDn]
+		}
+		
+		dual.comboKey(defaultKeys, {(rawLeader): ["Backspace", "Enter"], (rawState): "Enter", (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 		return
 	}
 

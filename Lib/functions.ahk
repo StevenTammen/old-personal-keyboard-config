@@ -635,12 +635,28 @@ VimWindowActive()
 
 IDEWindowActive()
 {
-	; Names of executable files (ahk_exe) that implement Vim behavior.
-	; Vim mode will pass through appropriate keypresses and let these programs
-	; handle the actual behavior.
+	; List of IDE programs
 	IDEs := ["clion64.exe", "idea64.exe", "pycharm64.exe"]
 	
 	for index, executable in IDEs
+	{
+		window := "ahk_exe " . executable
+		if(WinActive(window))
+		{
+			return true
+		}
+	}
+	
+	return false
+}
+
+
+BrowserOrTerminalFocused()
+{
+	; List of browser and terminal programs
+	programs := ["chrome.exe", "mintty.exe"]
+	
+	for index, executable in programs
 	{
 		window := "ahk_exe " . executable
 		if(WinActive(window))

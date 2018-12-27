@@ -178,7 +178,7 @@ l42_shiftModifier() {
 	return shiftModifier_keys
 }
 l43_shiftModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or BrowserOrTerminalFocused())
 	{
 		shiftModifier_keys := ["!"]
 	}
@@ -201,7 +201,7 @@ l43_shiftModifier() {
 	return shiftModifier_keys
 }
 l44_shiftModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or BrowserOrTerminalFocused())
 	{
 		shiftModifier_keys := ["?"]
 	}
