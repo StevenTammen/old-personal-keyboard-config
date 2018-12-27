@@ -337,19 +337,49 @@ r42_numModifier() {
 	return numModifier_keys
 }
 r43_numModifier() {
-	IniRead, nestLevel, Status.ini, nestVars, nestLevel
-	nestLevel := nestLevel + 1
-	WriteNestVarsIfApplicable_Opening(nestLevel, ">")
-	numModifier_keys := numModifierKeys_Opening_NoCap("<", ">")
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := ["<"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", "<", rawLeaderUp]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifier_keys := ["<", "Space"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["<", "Space", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := ["Space", "<", "Space", regSpacingDn]
+	}
 	return numModifier_keys
 }
 r44_numModifier() {
-	IniRead, nestLevel, Status.ini, nestVars, nestLevel
-	nestLevel := nestLevel - 1
-	IniRead, closingChars, Status.ini, nestVars, closingChars
-	closingChar := GetClosingCharFromStack(closingChars)
-	WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
-	numModifier_keys := numModifierKeys_Closing(">", closingChar, nestLevel)
+	if(GetKeyState(rawState))
+	{
+		numModifier_keys := [">"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["Backspace", ">", rawLeaderUp]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifier_keys := [">", "Space"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := [">", "Space", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := ["Space", ">", "Space", regSpacingDn]
+	}
 	return numModifier_keys
 }
 r45_numModifier() {
