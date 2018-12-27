@@ -1591,3 +1591,21 @@ semicolonKeys := ""
 ;	rt4_afterNum()
 ;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 ;	return
+
+
+
+; Mouse
+;-------------------------------------------------
+
+*LButton::
+	SendInput {LButton Down}
+	return
+*LButton Up::
+	SendInput {%regSpacingUp%}{%capSpacingUp%}{LButton Up}
+	return
+*RButton::
+	SendInput {RButton Down}
+	return
+*RButton Up::
+	SendInput {%regSpacingUp%}{%capSpacingUp%}{RButton Up}
+	return
