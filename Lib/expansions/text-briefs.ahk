@@ -29,7 +29,7 @@ f_q(matchObj)
 
 ; Using the normal starters and enders for this brief was causing problems on Typeracer. An extra "I" was getting entered.
 ; Removing the matches for capitalization starters (e.g., .?!) appears to have solved the problem.
-Hotstring("(3[\ta-z'.\/;,\-21]|2[\t'.;, ]|[^123][\t\/;,\- \n])(i)([\t'.\/;,\- 1\n23])", "f_i", 3, 0)
+Hotstring("(3[\ta-z'.\/;,\-21]|2[\t'.,\- ]|[^123][\t\/;,\- \n])(i)([\t'.\/;,\- 1\n23])", "f_i", 3, 0)
 f_i(matchObj)
 {
 	TextBrief(matchObj, "I", "I")

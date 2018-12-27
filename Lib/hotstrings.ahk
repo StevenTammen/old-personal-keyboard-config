@@ -265,7 +265,7 @@ NeedsCap(beginning)
 		beginning := "."
 	}
 
-	capBeginnings := ["2", "2/", "2-", ".", "`n"]
+	capBeginnings := ["2", "2/", "2;", ".", "`n"]
 	for k, v in capBeginnings
 	{
 		if(v==beginning)
@@ -275,7 +275,7 @@ NeedsCap(beginning)
 	}
 	
 	; Deal with afterNum ?! capitalization
-	if(beginning = "/" or beginning = "-")
+	if(SubStr(beginning, 2, 1) == "/" or SubStr(beginning, 2, 1) == ";")
 	{
 		IniRead, capBecauseOfAfterNumPunc, Status.ini, statusVars, capBecauseOfAfterNumPunc
 		if(capBecauseOfAfterNumPunc)

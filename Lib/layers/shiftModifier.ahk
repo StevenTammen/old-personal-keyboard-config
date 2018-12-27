@@ -180,6 +180,29 @@ l42_shiftModifier() {
 l43_shiftModifier() {
 	if(GetKeyState(rawState))
 	{
+		shiftModifier_keys := ["!"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		shiftModifier_keys := ["Backspace", "!", rawLeaderUp]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		shiftModifier_keys := ["Backspace", "!", "Space", capSpacingDn, regSpacingUp]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		shiftModifier_keys := ["Backspace", "!", "Space"]
+	}
+	else
+	{
+		shiftModifier_keys := ["!", "Space", capSpacingDn]
+	}
+	return shiftModifier_keys
+}
+l44_shiftModifier() {
+	if(GetKeyState(rawState))
+	{
 		shiftModifier_keys := ["?"]
 	}
 	else if(GetKeyState(rawLeader))
@@ -200,7 +223,107 @@ l43_shiftModifier() {
 	}
 	return shiftModifier_keys
 }
-l44_shiftModifier() {
+; Not used intentionally; using comma default behavior instead in remap.ahk
+l45_shiftModifier() {
+	shiftModifier_keys := [""]
+	return shiftModifier_keys
+}
+l46_shiftModifier() {
+	if(GetKeyState(rawState))
+	{
+		shiftModifier_keys := ["–"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		shiftModifier_keys := ["Backspace", "–", rawLeaderUp]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		shiftModifier_keys := ["Backspace", "–"]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		shiftModifier_keys := ["Backspace", "–", regSpacingDn, capSpacingUp]
+	}
+	else
+	{
+		shiftModifier_keys := ["–", regSpacingDn]
+	}
+	return shiftModifier_keys
+}
+
+
+r41_shiftModifier() {
+	shiftModifier_keys := shiftModifierKeys_Letter("W")
+	return shiftModifier_keys
+}
+r42_shiftModifier() {
+	shiftModifier_keys := shiftModifierKeys_Letter("G")
+	return shiftModifier_keys
+}
+r43_shiftModifier() {
+	shiftModifier_keys := shiftModifierKeys_Letter("F")
+	return shiftModifier_keys
+}
+r44_shiftModifier() {
+	shiftModifier_keys := shiftModifierKeys_Letter("J")
+	return shiftModifier_keys
+}
+r45_shiftModifier() {
+	shiftModifier_keys := shiftModifierKeys_Letter("Z")
+	return shiftModifier_keys
+}
+r46_shiftModifier() {
+	shiftModifier_keys := [""]
+	return shiftModifier_keys
+}
+
+
+
+; Extra Row
+;-------------------------------------------------
+
+l52_shiftModifier() {
+	shiftModifier_keys := [""]
+	return shiftModifier_keys
+}
+l53_shiftModifier() {
+	shiftModifier_keys := [""]
+	return shiftModifier_keys
+}
+l54_shiftModifier() {
+	shiftModifier_keys := [""]
+	return shiftModifier_keys
+}
+l55_shiftModifier() {
+	shiftModifier_keys := [""]
+	return shiftModifier_keys
+}
+
+
+r52_shiftModifier() {
+	shiftModifier_keys := [""]
+	return shiftModifier_keys
+}
+r53_shiftModifier() {
+	shiftModifier_keys := [""]
+	return shiftModifier_keys
+}
+r54_shiftModifier() {
+	shiftModifier_keys := [""]
+	return shiftModifier_keys
+}
+r55_shiftModifier() {
+	shiftModifier_keys := [""]
+	return shiftModifier_keys
+}
+
+
+
+; Thumbs
+;-------------------------------------------------
+
+lt1_shiftModifier() {
 	if(GetKeyState(rawState))
 	{
 		shiftModifier_keys := ["_"]
@@ -298,110 +421,6 @@ l44_shiftModifier() {
 		}
 	}
 	
-	return shiftModifier_keys
-}
-; Not used intentionally; using comma default behavior instead in remap.ahk
-l45_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
-}
-l46_shiftModifier() {
-	if(GetKeyState(rawState))
-	{
-		shiftModifier_keys := ["!"]
-	}
-	else if(GetKeyState(rawLeader))
-	{
-		shiftModifier_keys := ["Backspace", "!", rawLeaderUp]
-	}
-	else if(GetKeyState(regSpacing))
-	{			
-		shiftModifier_keys := ["Backspace", "!", "Space", capSpacingDn, regSpacingUp]
-	}
-	else if(GetKeyState(capSpacing))
-	{
-		shiftModifier_keys := ["Backspace", "!", "Space"]
-	}
-	else
-	{
-		shiftModifier_keys := ["!", "Space", capSpacingDn]
-	}
-	return shiftModifier_keys
-}
-
-
-r41_shiftModifier() {
-	shiftModifier_keys := shiftModifierKeys_Letter("W")
-	return shiftModifier_keys
-}
-r42_shiftModifier() {
-	shiftModifier_keys := shiftModifierKeys_Letter("G")
-	return shiftModifier_keys
-}
-r43_shiftModifier() {
-	shiftModifier_keys := shiftModifierKeys_Letter("F")
-	return shiftModifier_keys
-}
-r44_shiftModifier() {
-	shiftModifier_keys := shiftModifierKeys_Letter("J")
-	return shiftModifier_keys
-}
-r45_shiftModifier() {
-	shiftModifier_keys := shiftModifierKeys_Letter("Z")
-	return shiftModifier_keys
-}
-r46_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
-}
-
-
-
-; Extra Row
-;-------------------------------------------------
-
-l52_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
-}
-l53_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
-}
-l54_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
-}
-l55_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
-}
-
-
-r52_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
-}
-r53_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
-}
-r54_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
-}
-r55_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
-}
-
-
-
-; Thumbs
-;-------------------------------------------------
-
-lt1_shiftModifier() {
-	shiftModifier_keys := [""]
 	return shiftModifier_keys
 }
 lt2_shiftModifier() {

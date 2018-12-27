@@ -992,11 +992,21 @@ global winLeaderUp := "VK8E Up"
 	numLeader_keys := l44_numLeader(numModifier_keys)
 	shiftLeader_keys := l44_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l44_expdLeader(expdModifier_keys)
-	; We want to be able to close nested punctuation after numbers. This is more important than being able to type
-	; an underscore *after* numbers. (It more commonly occurs before them).
-	l44_afterNum()
+	afterNum_keys := AddKeyUp(shiftModifier_keys.Clone(), afterNumUp)
 	
-	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	; For correct capitalization of expansions following afterNum !
+	if(GetKeyState(afterNum) and !(GetKeyState(numLeader)))
+	{
+		capBecauseOfAfterNumPunc := true
+		IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
+	}
+	else
+	{
+		capBecauseOfAfterNumPunc := false
+		IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
+	}
+	
+	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *,::
 	if(Modifiers("l45", ",", ","))
@@ -1134,21 +1144,8 @@ global winLeaderUp := "VK8E Up"
 	numLeader_keys := l46_numLeader(numModifier_keys)
 	shiftLeader_keys := l46_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := l46_expdLeader(expdModifier_keys)
-	afterNum_keys := AddKeyUp(shiftModifier_keys.Clone(), afterNumUp)
 	
-	; For correct capitalization of expansions following afterNum !
-	if(GetKeyState(afterNum) and !(GetKeyState(numLeader)))
-	{
-		capBecauseOfAfterNumPunc := true
-		IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
-	}
-	else
-	{
-		capBecauseOfAfterNumPunc := false
-		IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
-	}
-	
-	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 
 
@@ -1333,13 +1330,6 @@ global winLeaderUp := "VK8E Up"
 	{
 		return
 	}
-	
-	; Handle shiftLeader+Space separate from Dual. Here, we use shiftLeader+Space to toggle autospacing/autocapitalization
-	if(GetKeyState(shiftLeader))
-	{
-		dual.comboKey([rawStateDn, shiftLeaderUp], {(rawState): [rawStateUp, shiftLeaderUp]})
-		return
-	}
 
 	; Spacing is disabled by default after autospaced punctuation to help prevent typos,
 	; and to allow for proper spacing in nested punctuation expansions. However, we want
@@ -1361,13 +1351,15 @@ global winLeaderUp := "VK8E Up"
 		capSpacingKeys := ""
 		regSpacingKeys := ""
 	}
-
+	
 	numModifier_keys := lt1_numModifier()
+	shiftModifier_keys := lt1_shiftModifier()
 	expdModifier_keys := lt1_expdModifier()
 	numLeader_keys := lt1_numLeader(numModifier_keys)
+	shiftLeader_keys := lt1_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := lt1_expdLeader(expdModifier_keys)
 	lt1_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 	
 ; We want the number layer to function normally on the shift layers so that we can mix numbers/symbols with words with all caps.
@@ -1390,13 +1382,11 @@ global winLeaderUp := "VK8E Up"
 	return
 *3 Up::
 	numModifier_keys := numModifierUp
-	shiftModifier_keys := lt2_shiftModifier()
 	expdModifier_keys := lt2_expdModifier()
 	numLeader_keys := numModifierDn
-	shiftLeader_keys := lt2_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := lt2_expdLeader(expdModifier_keys)
 	lt2_afterNum()
-	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	
 	; Activate afterNum layer on key-up to be able to type all punctuation after numbers
 	SendInput {%afterNumDn%}
