@@ -20,9 +20,9 @@ global winLeader := "VK8E"
 
 ; ---------------------- Global constants --------------------------
 
-global insertColor := "336600"
-global vimColor := "800000"
-; TODO: visualColor for visual mode in vim
+global insertColor := "00cc66"
+global vimColor := "ff9933"
+global visualColor := "800000"
 
 global contentWidth := 1000 ;px
 global horizontalPadding := 20 ;px
@@ -44,7 +44,7 @@ Gui, Add, Text, vClosingChars cWhite w%controlWidth% h40 y0
 
 
 ; Make the status bar stay on top of the Windows task bar
-SetTimer, KeepOnTop, 2500 
+SetTimer, KeepOnTop, 4000 
 
 
 ; Make the first status update manually
@@ -127,8 +127,14 @@ UpdateStatusBar:
 GetColor()
 {
 	IniRead, vimMode, Status.ini, statusVars, vimMode
+	IniRead, visualMode, Status.ini, statusVars, visualMode
 	color := insertColor
-	if(vimMode)
+	
+	if(visualMode != "")
+	{
+		color := visualColor
+	}
+	else if(vimMode)
 	{
 		color := vimColor
 	}

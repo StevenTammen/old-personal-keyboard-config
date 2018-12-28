@@ -615,10 +615,10 @@ GetSpecialCaseKeys()
 
 VimWindowActive()
 {
-	; Names of executable files (ahk_exe) that implement Vim behavior.
+	; List of executable files (ahk_exe) that implement Vim behavior.
 	; Vim mode will pass through appropriate keypresses and let these programs
 	; handle the actual behavior.
-	vimExecutables := ["emacs.exe", "clion64.exe", "idea64.exe", "pycharm64.exe"]
+	vimExecutables := ["emacs.exe", "mintty.exe", "clion64.exe", "idea64.exe", "pycharm64.exe"]
 	
 	for index, executable in vimExecutables
 	{
