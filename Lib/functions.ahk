@@ -668,6 +668,30 @@ BrowserOrTerminalFocused()
 	return false
 }
 
+
+NeedToDragNonText()
+{
+	; List of programs that need to drag things that aren't 
+	; text, like icons and what have you. Easier to define 
+	; this negation than all the programs that need to drag text.
+	; explorer.exe includes taskbar dragging and desktop dragging
+	; as well as the file manager icon dragging, evidently 
+	; (according to the window spy).
+	programs := ["explorer.exe"]
+	
+	for index, executable in programs
+	{
+		window := "ahk_exe " . executable
+		if(WinActive(window))
+		{
+			return true
+		}
+	}
+	
+	return false
+}
+
+
 ; -----------------------------------------------------------------------------------------------------------
 
 
