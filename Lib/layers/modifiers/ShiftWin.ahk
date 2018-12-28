@@ -315,3 +315,13 @@ rt6_ShiftWin(key) {
 	SendInput +#%key%
 	return
 }
+
+
+lmb_ShiftWin(key) {
+	SendInput +#%key%
+	return
+}
+rmb_ShiftWin(key) {
+	SendInput +#%key%
+	return
+}

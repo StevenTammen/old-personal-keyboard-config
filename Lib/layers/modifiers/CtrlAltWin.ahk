@@ -315,3 +315,13 @@ rt6_CtrlAltWin(key) {
 	SendInput ^!#%key%
 	return
 }
+
+
+lmb_CtrlAltWin(key) {
+	SendInput ^!#%key%
+	return
+}
+rmb_CtrlAltWin(key) {
+	SendInput ^!#%key%
+	return
+}

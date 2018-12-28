@@ -315,3 +315,13 @@ rt6_Win(key) {
 	SendInput #%key%
 	return
 }
+
+
+lmb_Win(key) {
+	SendInput #%key%
+	return
+}
+rmb_Win(key) {
+	SendInput #%key%
+	return
+}

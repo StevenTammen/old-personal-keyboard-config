@@ -1726,13 +1726,47 @@ semicolonKeys := ""
 ;-------------------------------------------------
 
 *LButton::
-	SendInput {LButton Down}
+	if(Modifiers("lmb", "{LButton Down}", "{LButton Down}"))
+	{
+		return
+	}
+	
+	; Handle Shift+LButton separate from Dual
+	if(GetKeyState(shiftLeader))
+	{
+		SendInput +{LButton Down}{%shiftLeaderUp%}
+	}
+	else if(shiftDownNoUp)
+	{
+		SendInput +{LButton Down}
+	}
+	else
+	{
+		SendInput {LButton Down}
+	}
 	return
 *LButton Up::
 	SendInput {%regSpacingUp%}{%capSpacingUp%}{LButton Up}
 	return
 *RButton::
-	SendInput {RButton Down}
+	if(Modifiers("rmb", "{RButton Down}", "{RButton Down}"))
+	{
+		return
+	}
+	
+	; Handle Shift+RButton separate from Dual
+	if(GetKeyState(shiftLeader))
+	{
+		SendInput +{RButton Down}{%shiftLeaderUp%}
+	}
+	else if(shiftDownNoUp)
+	{
+		SendInput +{RButton Down}
+	}
+	else
+	{
+		SendInput {RButton Down}
+	}
 	return
 *RButton Up::
 	SendInput {%regSpacingUp%}{%capSpacingUp%}{RButton Up}

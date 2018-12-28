@@ -315,3 +315,13 @@ rt6_CtrlShift(key) {
 	SendInput ^+%key%
 	return
 }
+
+
+lmb_CtrlShift(key) {
+	SendInput ^+%key%
+	return
+}
+rmb_CtrlShift(key) {
+	SendInput ^+%key%
+	return
+}

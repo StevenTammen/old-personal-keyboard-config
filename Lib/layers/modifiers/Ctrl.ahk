@@ -315,3 +315,13 @@ rt6_Ctrl(key) {
 	SendInput ^%key%
 	return
 }
+
+
+lmb_Ctrl(key) {
+	SendInput ^%key%
+	return
+}
+rmb_Ctrl(key) {
+	SendInput ^%key%
+	return
+}
