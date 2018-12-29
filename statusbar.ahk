@@ -1,4 +1,9 @@
-﻿; ---------------------- Key aliases --------------------------
+﻿#NoEnv
+SendMode Input
+#SingleInstance force
+SetWorkingDir %A_ScriptDir%
+
+; ---------------------- Key aliases --------------------------
 
 global numLeader := "VK0E"
 global numModifier := "VK0F"

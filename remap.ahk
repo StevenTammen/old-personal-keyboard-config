@@ -1,6 +1,7 @@
-﻿SendMode Input
-#NoEnv
+﻿#NoEnv
+SendMode Input
 #SingleInstance force
+SetWorkingDir %A_ScriptDir%
 
 
 
