@@ -651,10 +651,10 @@ IDEWindowActive()
 }
 
 
-BrowserOrTerminalFocused()
+TerminalFocused()
 {
-	; List of browser and terminal programs
-	programs := ["chrome.exe", "mintty.exe"]
+	; List of terminal programs
+	programs := ["mintty.exe"]
 	
 	for index, executable in programs
 	{

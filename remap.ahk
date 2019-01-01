@@ -692,7 +692,7 @@ global winLeaderUp := "VK8E Up"
 	{
 		return
 	}
-	if(GetKeyState(rawState) or BrowserOrTerminalFocused())
+	if(GetKeyState(rawState) or TerminalFocused())
 	{
 		defaultKeys := ["."]
 		regSpacingKeys := ["."]
@@ -875,8 +875,8 @@ global winLeaderUp := "VK8E Up"
 			capSpacingKeys := ["Backspace", "Enter"]
 		}
 		
-		; Don't capitalize the next letter in browsers and terminals
-		if(BrowserOrTerminalFocused())
+		; Don't capitalize the next letter in terminals
+		if(TerminalFocused())
 		{
 			defaultKeys := "Enter"
 		}
@@ -1416,12 +1416,16 @@ global winLeaderUp := "VK8E Up"
 ; Thumbs
 ;-------------------------------------------------
 
+lastSpaceDown := 0
 vimModifier := false
 justExitedVimMode := false
 
 ; We want the number layer to function normally on the shift layers so that we can mix numbers/symbols with words with all caps.
 ; This is why these combinators have been removed.
 *Space::
+	
+	currSpaceDown := A_TickCount
+
 	if(vimMode)
 	{
 		lt1_vim()
@@ -1432,13 +1436,15 @@ justExitedVimMode := false
 		return
 	}
 	
-		lastKey := A_PriorHotkey
+	lastKey := A_PriorHotkey
 	
 	; Tap and hold for temporary Vim access. This is extremely efficient:
 	; double tapping space is faster than pressing the Vim key then holding
 	; down space.
-	if(lastKey = "*Space Up")
+	if(lastKey == "*Space Up" and ((currSpaceDown - lastSpaceDown) < 300))
 	{
+		lastSpaceDown := A_TickCount
+	
 		if(justExitedVimMode)
 		{
 			justExitedVimMode := false
@@ -1464,6 +1470,7 @@ justExitedVimMode := false
 	}
 	else
 	{
+		lastSpaceDown := A_TickCount
 		justExitedVimMode := false
 	}
 	
@@ -1489,7 +1496,7 @@ justExitedVimMode := false
 	shiftLeader_keys := lt1_shiftLeader(shiftModifier_keys)
 	expdLeader_keys := lt1_expdLeader(expdModifier_keys)
 	lt1_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	dual.comboKey(["Space", regSpacingDn], {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 	
 *Space Up::
