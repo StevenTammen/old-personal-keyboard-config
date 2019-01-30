@@ -1,22 +1,41 @@
-[[https://waffle.io/StevenTammen/hieam][https://badge.waffle.io/StevenTammen/hieam.svg?columns=all]]
+[[https://waffle.io/StevenTammen/typing-extended][https://badge.waffle.io/StevenTammen/typing-extended.svg?columns=all]]
 
-** Basic Overview
+* Basic Overview
 
-This project is based on the Balance 12 layout as designed by Sasha Viminitz (see the initial conception [[https://mathematicalmulticore.wordpress.com/the-keyboard-layout-project/#comment-4976][on the MTGAP page]]).
+This project is focused on improving keyboard interaction with Microsoft Windows (and hopefully *nix in the future). In the times of mechanical typewriters, it was true that typists could only make use of a single layer of lever-actuated keys for writing (rather than, say, executing system commands). Nowadays, however, software lets us do much, much more than this. The basic idea behind this project is to push the envelope of keyboard-based computer interaction as far as it can go.
 
-I have added layers for numbers/symbols and punctuation, added a significant amount of higher-order logic (such as intelligent autospacing and autocapitalization), and customized it for the [[https://www.kinesis-ergo.com/shop/advantage2/][Kinesis Advantage2]] that I type on. Both leader key behavior and modifier key behavior are supported for the layers, which means that dual-use keys will never create unexpected situations. While you don't get the ability to put an arbitrary character on key-down (the layout instead uses the leader key for that layer), you do have the ability to use leader key behavior (for single characters) or modifier key behavior (for sequences of characters) depending upon circumstances. I find this much more efficient overall, assuming you are willing to dedicate thumb keys exclusively to layers.
+** Typing as linear character input
 
-This repository is still somewhat rough. I am most of the way finished refactoring my code from the prior iteration, but there are still some things to implement. I am quite busy this summer, and still learning the layout itself, so some of these may be a while in coming. See the [[https://waffle.io/StevenTammen/hieam][Waffle.io board]] for a complete overview of the state of the project.
+Typing is not the only input paradigm out there. Most people are accustomed to using a mouse or trackball along with a keyboard, and some have even come across other systems entirely like [[https://github.com/openstenoproject/plover/wiki/Stenography-overview][stenography]] and the [[http://www.openstenoproject.org/palantype/tutorial/2016/08/21/learn-palantype.html][palantype]].
 
-My implementation makes heavy use of the [[https://github.com/lydell/dual][Dual library]] for layers, handling rollover, Space-FN behavior, and so forth.
+Keyboards deal primarily with character input (unlike mice and trackballs). Specifically, keyboards deal with /linear/ input, as opposed to /chorded/ input (phonetic and orthographic input systems). While linear input has its advantages (such as no word-boundary conflicts, since spacing is done manually), chorded systems are substantially faster once proficiency is gained. While fast typists may break 130+ WPM, even average stenographers break 225 WPM.
 
-I very much suggest people with the requisite knowledge and experience implement the ideas here using firmware like [[https://github.com/tmk/tmk_keyboard][TMK]], [[https://github.com/qmk/qmk_firmware/][QMK]], or [[https://github.com/ahtn/keyplus][keyplus]]. I am planning on putting most of this layout's behavior in firmware once I learn enough soldering and design to build a [[https://github.com/adereth/dactyl-keyboard][Dactyl Keyboard]], and enough embedded programming to grok the firmware options competently.
+** Typing as compared to phonetic and orthographic input systems
 
-In the meantime, I am implementing it here for the experience, and so that I can learn how to type with the fully-autospaced layout even before I get an ideal keyboard setup.
+So why shouldn't everyone go off and learn stenography? For one thing, it's not as easy as it looks! Now, mind you, it is also not impossibly difficult, and the [[http://www.openstenoproject.org/][Open Steno Project]] and [[https://github.com/openstenoproject/plover][Plover]] (open source stenography software) are doing much to grow a "hobbyist" community of self-taught stenographers that are doing it less for career reasons and more because it is fun and efficient. Plover's lead dev, [[https://tedmor.in/][Ted Morin]], is around 180 WPM I believe... and he's not a professional stenographer, but a programmer.
 
-** Design choices
+Typing has one huge leg up on steno, and that is the fact that it is easy to learn, relatively speaking. I went from hunting and pecking at ~50 WPM to touch typing at the same speed in a few weeks of moderate practice (on a completely different keyboard layout, no less). And I don't consider myself to be especially coordinated or mechanically adept.
 
-Sometime in the future I plan on explaining in excruciating detail why my layout is what it is. I have been tinkering with keyboard layouts for something like 3 years now, and have thought about it a lot. I don't consider myself an expert by any means (there are people far smarter than me working on these things too), but I do "have reasons" for designing the layout how I did.
+I am optimistic that stenography will gain more traction among people who use computers a lot (since it is likely superior in the long run, even when the time-cost of learning is factored in), but for people who /don't/ use computers as much, the time to learn it will never be made back up from efficiency gains.
 
-This explanation will probably go up on my website, but I'll make sure to link it here when I get around to posting it. You can see pictures/the general plan [[https://www.steventammen.com/pages/keyboard-layouts/#my-layout][here]].
+The upshot of all this is that typing has its place in the input hierarchy, and will not ever be completely replaced by chorded input systems (and rightly so). This project thus exists to make typing -- and all keyboard use, by extension -- as efficient as possible
 
+* Implemented features
+
+This branch has a (relatively) stable, working-copy of my own personal scripts. I have not quite started using my layout full-time (I am still hunting-and-pecking for some things), mostly because I've been too busy to get application-specific spacing implemented (such that autospacing is correctly defined for various use cases). However, a lot of other functionality is already in place. Among other things, this project:
+
+- Correctly autospaces all punctuation (according to Org mode markup, at the moment).
+- Correctly autocapitalizes around .?! and Enter
+- Automatically nests "" () [] etc. (either showing the closing key immediately, or keeping track of it internally and letting you close pairs with the closing parentheses key, saving many keypresses in the long run).
+- Implements what I call "leader key behavior" (tap a layer key to activate a layer for a single press) and "modifier key behavior" (hold a layer key to keep a layer activated for multiple presses) with [[https://github.com/lydell/dual][dual use keys]].
+- Implements prefixing modifier keys combinations (e.g., tap Shift, then Control, then a key to send {Ctrl + Shift + Key}), while still supporting normal behavior.
+- Supports intelligent, regex-defined text expansions (e.g., wo --> without; st --> something; etc.) that correctly autocapitalize and expand around punctuation and spacing (including autospaced things).
+- Supports expand keys to prefix individual letters for incredibly common words like "the", "and", and so forth.
+- Supports a universal Vim mode, including visual mode and visual line mode, across the entire operating system. Also supports tapping-then-holding Space for a transient Vim state (mostly useful for moving the cursor around without having to jump in and out of Vim mode).
+- Uses a simple status bar to display relevant program information, such as the currently active layer, the spacing status, and other such things.
+
+* The refactor branch
+
+This project will remain crippled to a large extent until configuration is shifted to a GUI. This will be accomplished using [[http://www.keyboard-layout-editor.com/]] for GUI configuration, and its JSON export coupled with a code generator and library functions to define behavior on the backend.
+
+There are other things that will go into the refactor (such as using a program-internal buffer for tracking keypresses and controlling backspacing behavior), but GUI configuration is the biggie. After getting this up and running, features will be ported over from my personal scripts, with regular releases and better documentation.

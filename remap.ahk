@@ -19,6 +19,7 @@ SetWorkingDir %A_ScriptDir%
 
 #Include <dual/dual>
 #Include <functions>
+;#Include <virtualDesktops>
 
 #Include <layers/vim>
 #Include <layers/numLeader>
