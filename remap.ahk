@@ -26,8 +26,10 @@ SetWorkingDir %A_ScriptDir%
 #Include <layers/numModifier>
 #Include <layers/shiftLeader>
 #Include <layers/shiftModifier>
-#Include <layers/expdLeader>
-#Include <layers/expdModifier>
+#Include <layers/expd1Leader>
+#Include <layers/expd1Modifier>
+#Include <layers/expd2Leader>
+#Include <layers/expd2Modifier>
 #Include <layers/afterNum>
 
 #Include <layers/modifiers/Alt>
@@ -122,18 +124,20 @@ global numLeader := "VK0E"
 global numModifier := "VK0F"
 global shiftLeader := "VK16"
 global shiftModifier := "VK1A"
-global expdLeader := "VK3A"
-global expdModifier := "VK3B"
-global afterNum := "VK3C"
-global rawLeader := "VK3D"
-global rawState := "VK88"
-global regSpacing := "VK89"
-global capSpacing := "VK8A"
-global nestedPunctuation := "VK8B"
+global expd1Leader := "VK3A"
+global expd1Modifier := "VK3B"
+global expd2Leader := "VK3C"
+global expd2Modifier := "VK3D"
+global afterNum := "VK3E"
+global rawLeader := "VK3F"
+global rawState := "VK40"
+global regSpacing := "VK88"
+global capSpacing := "VK89"
+global nestedPunctuation := "VK8A"
 
-global ctrlLeader := "VK8C"
-global altLeader := "VK8D"
-global winLeader := "VK8E"
+global ctrlLeader := "VK8B"
+global altLeader := "VK8C"
+global winLeader := "VK8D"
 
 ; Explicit down and up variables are defined for ease of use: using expression syntax and straight key definitions,
 ; you would need concatenation like ~keyVar . " Down"~ and ~keyVar . " Up"~, which is a bit verbose.
@@ -143,36 +147,40 @@ global numLeaderDn := "VK0E Down"
 global numModifierDn := "VK0F Down"
 global shiftLeaderDn := "VK16 Down"
 global shiftModifierDn := "VK1A Down"
-global expdLeaderDn := "VK3A Down"
-global expdModifierDn := "VK3B Down"
-global afterNumDn := "VK3C Down"
-global rawLeaderDn := "VK3D Down"
-global rawStateDn := "VK88 Down"
-global regSpacingDn := "VK89 Down"
-global capSpacingDn := "VK8A Down"
-global nestedPunctuationDn := "VK8B Down"
+global expd1LeaderDn := "VK3A Down"
+global expd1ModifierDn := "VK3B Down"
+global expd2LeaderDn := "VK3C Down"
+global expd2ModifierDn := "VK3D Down"
+global afterNumDn := "VK3E Down"
+global rawLeaderDn := "VK3F Down"
+global rawStateDn := "VK40 Down"
+global regSpacingDn := "VK88 Down"
+global capSpacingDn := "VK89 Down"
+global nestedPunctuationDn := "VK8A Down"
 
-global ctrlLeaderDn := "VK8C Down"
-global altLeaderDn := "VK8D Down"
-global winLeaderDn := "VK8E Down"
+global ctrlLeaderDn := "VK8B Down"
+global altLeaderDn := "VK8C Down"
+global winLeaderDn := "VK8D Down"
 
 
 global numLeaderUp := "VK0E Up"
 global numModifierUp := "VK0F Up"
 global shiftLeaderUp := "VK16 Up"
 global shiftModifierUp := "VK1A Up"
-global expdLeaderUp := "VK3A Up"
-global expdModifierUp := "VK3B Up"
-global afterNumUp := "VK3C Up"
-global rawLeaderUp := "VK3D Up"
-global rawStateUp := "VK88 Up"
-global regSpacingUp := "VK89 Up"
-global capSpacingUp := "VK8A Up"
-global nestedPunctuationUp := "VK8B Up"
+global expd1LeaderUp := "VK3A Up"
+global expd1ModifierUp := "VK3B Up"
+global expd2LeaderUp := "VK3C Up"
+global expd2ModifierUp := "VK3D Up"
+global afterNumUp := "VK3E Up"
+global rawLeaderUp := "VK3F Up"
+global rawStateUp := "VK40 Up"
+global regSpacingUp := "VK88 Up"
+global capSpacingUp := "VK89 Up"
+global nestedPunctuationUp := "VK8A Up"
 
-global ctrlLeaderUp := "VK8C Up"
-global altLeaderUp := "VK8D Up"
-global winLeaderUp := "VK8E Up"
+global ctrlLeaderUp := "VK8B Up"
+global altLeaderUp := "VK8C Up"
+global winLeaderUp := "VK8D Up"
 
 
 
@@ -182,52 +190,62 @@ global winLeaderUp := "VK8E Up"
 *=::
 	numModifier_keys := l11_numModifier()
 	shiftModifier_keys := l11_shiftModifier()
-	expdModifier_keys := l11_expdModifier()
+	expd1Modifier_keys := l11_expd1Modifier()
+	expd2Modifier_keys := l11_expd2Modifier()
 	numLeader_keys := l11_numLeader(numModifier_keys)
 	shiftLeader_keys := l11_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l11_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l11_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l11_expd2Leader(expd2Modifier_keys)
 	l11_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
 *LShift:
 	numModifier_keys := l12_numModifier()
 	shiftModifier_keys := l12_shiftModifier()
-	expdModifier_keys := l12_expdModifier()
+	expd1Modifier_keys := l12_expd1Modifier()
+	expd2Modifier_keys := l12_expd2Modifier()
 	numLeader_keys := l12_numLeader(numModifier_keys)
 	shiftLeader_keys := l12_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l12_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l12_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l12_expd2Leader(expd2Modifier_keys)
 	l12_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
 *RShift::
 	numModifier_keys := l13_numModifier()
 	shiftModifier_keys := l13_shiftModifier()
-	expdModifier_keys := l13_expdModifier()
+	expd1Modifier_keys := l13_expd1Modifier()
+	expd2Modifier_keys := l13_expd2Modifier()
 	numLeader_keys := l13_numLeader(numModifier_keys)
 	shiftLeader_keys := l13_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l13_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l13_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l13_expd2Leader(expd2Modifier_keys)
 	l13_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
 *Del::
 	numModifier_keys := l14_numModifier()
 	shiftModifier_keys := l14_shiftModifier()
-	expdModifier_keys := l14_expdModifier()
+	expd1Modifier_keys := l14_expd1Modifier()
+	expd2Modifier_keys := l14_expd2Modifier()
 	numLeader_keys := l14_numLeader(numModifier_keys)
 	shiftLeader_keys := l14_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l14_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l14_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l14_expd2Leader(expd2Modifier_keys)
 	l14_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
 *4::
 	numModifier_keys := l15_numModifier()
 	shiftModifier_keys := l15_shiftModifier()
-	expdModifier_keys := l15_expdModifier()
+	expd1Modifier_keys := l15_expd1Modifier()
+	expd2Modifier_keys := l15_expd2Modifier()
 	numLeader_keys := l15_numLeader(numModifier_keys)
 	shiftLeader_keys := l15_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l15_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l15_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l15_expd2Leader(expd2Modifier_keys)
 	l15_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
 	
 ; Custom behavior, want it consistent across layers
@@ -276,62 +294,74 @@ global winLeaderUp := "VK8E Up"
 ;*Esc::
 ;	numModifier_keys := r11_numModifier()
 ;	shiftModifier_keys := r11_shiftModifier()
-;	expdModifier_keys := r11_expdModifier()
+;	expd1Modifier_keys := r11_expd1Modifier()
+;	expd2Modifier_keys := r11_expd2Modifier()
 ;	numLeader_keys := r11_numLeader(numModifier_keys)
 ;	shiftLeader_keys := r11_shiftLeader(shiftModifier_keys)
-;	expdLeader_keys := r11_expdLeader(expdModifier_keys)
+;	expd1Leader_keys := r11_expd1Leader(expd1Modifier_keys)
+;	expd2Leader_keys := r11_expd2Leader(expd2Modifier_keys)
 ;	r11_afterNum()
-;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 ;	return
 *7::
 	numModifier_keys := r12_numModifier()
 	shiftModifier_keys := r12_shiftModifier()
-	expdModifier_keys := r12_expdModifier()
+	expd1Modifier_keys := r12_expd1Modifier()
+	expd2Modifier_keys := r12_expd2Modifier()
 	numLeader_keys := r12_numLeader(numModifier_keys)
 	shiftLeader_keys := r12_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r12_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r12_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r12_expd2Leader(expd2Modifier_keys)
 	r12_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
 *8::
 	numModifier_keys := r13_numModifier()
 	shiftModifier_keys := r13_shiftModifier()
-	expdModifier_keys := r13_expdModifier()
+	expd1Modifier_keys := r13_expd1Modifier()
+	expd2Modifier_keys := r13_expd2Modifier()
 	numLeader_keys := r13_numLeader(numModifier_keys)
 	shiftLeader_keys := r13_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r13_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r13_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r13_expd2Leader(expd2Modifier_keys)
 	r13_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
 *9::
 	numModifier_keys := r14_numModifier()
 	shiftModifier_keys := r14_shiftModifier()
-	expdModifier_keys := r14_expdModifier()
+	expd1Modifier_keys := r14_expd1Modifier()
+	expd2Modifier_keys := r14_expd2Modifier()
 	numLeader_keys := r14_numLeader(numModifier_keys)
 	shiftLeader_keys := r14_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r14_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r14_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r14_expd2Leader(expd2Modifier_keys)
 	r14_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
-*0::
+*Right::
 	numModifier_keys := r15_numModifier()
 	shiftModifier_keys := r15_shiftModifier()
-	expdModifier_keys := r15_expdModifier()
+	expd1Modifier_keys := r15_expd1Modifier()
+	expd2Modifier_keys := r15_expd2Modifier()
 	numLeader_keys := r15_numLeader(numModifier_keys)
 	shiftLeader_keys := r15_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r15_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r15_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r15_expd2Leader(expd2Modifier_keys)
 	r15_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
 *`::
 	numModifier_keys := r16_numModifier()
 	shiftModifier_keys := r16_shiftModifier()
-	expdModifier_keys := r16_expdModifier()
+	expd1Modifier_keys := r16_expd1Modifier()
+	expd2Modifier_keys := r16_expd2Modifier()
 	numLeader_keys := r16_numLeader(numModifier_keys)
 	shiftLeader_keys := r16_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r16_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r16_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r16_expd2Leader(expd2Modifier_keys)
 	r16_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
 
 
@@ -378,12 +408,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := l22_numModifier()
 	shiftModifier_keys := l22_shiftModifier()
-	expdModifier_keys := l22_expdModifier()
+	expd1Modifier_keys := l22_expd1Modifier()
+	expd2Modifier_keys := l22_expd2Modifier()
 	numLeader_keys := l22_numLeader(numModifier_keys)
 	shiftLeader_keys := l22_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l22_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l22_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l22_expd2Leader(expd2Modifier_keys)
 	l22_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["b", rawLeaderUp], (rawLeader): ["b", rawLeaderUp], (regSpacing): ["b", regSpacingUp], (capSpacing): ["B", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["b", rawLeaderUp], (rawLeader): ["b", rawLeaderUp], (regSpacing): ["b", regSpacingUp], (capSpacing): ["B", capSpacingUp]})
 	return
 *y::
 	if(vimMode)
@@ -397,13 +429,15 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := l23_numModifier()
 	shiftModifier_keys := l23_shiftModifier()
-	expdModifier_keys := l23_expdModifier()
+	expd1Modifier_keys := l23_expd1Modifier()
+	expd2Modifier_keys := l23_expd2Modifier()
 	numLeader_keys := l23_numLeader(numModifier_keys)
 	shiftLeader_keys := l23_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l23_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l23_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l23_expd2Leader(expd2Modifier_keys)
 	l23_afterNum()
 	
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["y", rawLeaderUp], (rawLeader): ["y", rawLeaderUp], (regSpacing): ["y", regSpacingUp], (capSpacing): ["Y", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["y", rawLeaderUp], (rawLeader): ["y", rawLeaderUp], (regSpacing): ["y", regSpacingUp], (capSpacing): ["Y", capSpacingUp]})
 	return
 *o::
 	if(vimMode)
@@ -417,12 +451,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := l24_numModifier()
 	shiftModifier_keys := l24_shiftModifier()
-	expdModifier_keys := l24_expdModifier()
+	expd1Modifier_keys := l24_expd1Modifier()
+	expd2Modifier_keys := l24_expd2Modifier()
 	numLeader_keys := l24_numLeader(numModifier_keys)
 	shiftLeader_keys := l24_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l24_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l24_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l24_expd2Leader(expd2Modifier_keys)
 	l24_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["o", rawLeaderUp], (regSpacing): ["o", regSpacingUp], (capSpacing): ["O", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["o", rawLeaderUp], (regSpacing): ["o", regSpacingUp], (capSpacing): ["O", capSpacingUp]})
 	return
 *u::
 	if(vimMode)
@@ -436,12 +472,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := l25_numModifier()
 	shiftModifier_keys := l25_shiftModifier()
-	expdModifier_keys := l25_expdModifier()
+	expd1Modifier_keys := l25_expd1Modifier()
+	expd2Modifier_keys := l25_expd2Modifier()
 	numLeader_keys := l25_numLeader(numModifier_keys)
 	shiftLeader_keys := l25_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l25_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l25_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l25_expd2Leader(expd2Modifier_keys)
 	l25_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["u", rawLeaderUp], (regSpacing): ["u", regSpacingUp], (capSpacing): ["U", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["u", rawLeaderUp], (regSpacing): ["u", regSpacingUp], (capSpacing): ["U", capSpacingUp]})
 	return
 *'::
 	if(vimMode)
@@ -455,13 +493,15 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := l26_numModifier()
 	shiftModifier_keys := l26_shiftModifier()
-	expdModifier_keys := l26_expdModifier()
+	expd1Modifier_keys := l26_expd1Modifier()
+	expd2Modifier_keys := l26_expd2Modifier()
 	numLeader_keys := l26_numLeader(numModifier_keys)
 	shiftLeader_keys := l26_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l26_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l26_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l26_expd2Leader(expd2Modifier_keys)
 	afterNum_keys := AddKeyUp(shiftModifier_keys.Clone(), afterNumUp)
 	
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (afterNum): afterNum_keys})
 	return
 
 
@@ -477,12 +517,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r21_numModifier()
 	shiftModifier_keys := r21_shiftModifier()
-	expdModifier_keys := r21_expdModifier()
+	expd1Modifier_keys := r21_expd1Modifier()
+	expd2Modifier_keys := r21_expd2Modifier()
 	numLeader_keys := r21_numLeader(numModifier_keys)
 	shiftLeader_keys := r21_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r21_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r21_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r21_expd2Leader(expd2Modifier_keys)
 	r21_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["k", rawLeaderUp], (regSpacing): ["k", regSpacingUp], (capSpacing): ["K", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["k", rawLeaderUp], (regSpacing): ["k", regSpacingUp], (capSpacing): ["K", capSpacingUp]})
 	return
 *d::
 	if(vimMode)
@@ -496,12 +538,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r22_numModifier()
 	shiftModifier_keys := r22_shiftModifier()
-	expdModifier_keys := r22_expdModifier()
+	expd1Modifier_keys := r22_expd1Modifier()
+	expd2Modifier_keys := r22_expd2Modifier()
 	numLeader_keys := r22_numLeader(numModifier_keys)
 	shiftLeader_keys := r22_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r22_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r22_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r22_expd2Leader(expd2Modifier_keys)
 	r22_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["d", rawLeaderUp], (regSpacing): ["d", regSpacingUp], (capSpacing): ["D", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["d", rawLeaderUp], (regSpacing): ["d", regSpacingUp], (capSpacing): ["D", capSpacingUp]})
 	return
 *c::
 	if(vimMode)
@@ -515,12 +559,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r23_numModifier()
 	shiftModifier_keys := r23_shiftModifier()
-	expdModifier_keys := r23_expdModifier()
+	expd1Modifier_keys := r23_expd1Modifier()
+	expd2Modifier_keys := r23_expd2Modifier()
 	numLeader_keys := r23_numLeader(numModifier_keys)
 	shiftLeader_keys := r23_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r23_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r23_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r23_expd2Leader(expd2Modifier_keys)
 	r23_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["c", rawLeaderUp], (regSpacing): ["c", regSpacingUp], (capSpacing): ["C", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["c", rawLeaderUp], (regSpacing): ["c", regSpacingUp], (capSpacing): ["C", capSpacingUp]})
 	return
 *l::
 	if(vimMode)
@@ -534,12 +580,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r24_numModifier()
 	shiftModifier_keys := r24_shiftModifier()
-	expdModifier_keys := r24_expdModifier()
+	expd1Modifier_keys := r24_expd1Modifier()
+	expd2Modifier_keys := r24_expd2Modifier()
 	numLeader_keys := r24_numLeader(numModifier_keys)
 	shiftLeader_keys := r24_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r24_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r24_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r24_expd2Leader(expd2Modifier_keys)
 	r24_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["l", rawLeaderUp], (regSpacing): ["l", regSpacingUp], (capSpacing): ["L", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["l", rawLeaderUp], (regSpacing): ["l", regSpacingUp], (capSpacing): ["L", capSpacingUp]})
 	return
 *p::
 	if(vimMode)
@@ -553,12 +601,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r25_numModifier()
 	shiftModifier_keys := r25_shiftModifier()
-	expdModifier_keys := r25_expdModifier()
+	expd1Modifier_keys := r25_expd1Modifier()
+	expd2Modifier_keys := r25_expd2Modifier()
 	numLeader_keys := r25_numLeader(numModifier_keys)
 	shiftLeader_keys := r25_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r25_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r25_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r25_expd2Leader(expd2Modifier_keys)
 	r25_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["p", rawLeaderUp], (regSpacing): ["p", regSpacingUp], (capSpacing): ["P", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["p", rawLeaderUp], (regSpacing): ["p", regSpacingUp], (capSpacing): ["P", capSpacingUp]})
 	return
 *q::
 	if(Modifiers("r26", "q", "^"))
@@ -567,12 +617,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r26_numModifier()
 	shiftModifier_keys := r26_shiftModifier()
-	expdModifier_keys := r26_expdModifier()
+	expd1Modifier_keys := r26_expd1Modifier()
+	expd2Modifier_keys := r26_expd2Modifier()
 	numLeader_keys := r26_numLeader(numModifier_keys)
 	shiftLeader_keys := r26_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r26_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r26_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r26_expd2Leader(expd2Modifier_keys)
 	r26_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["q", rawLeaderUp], (regSpacing): ["q", regSpacingUp], (capSpacing): ["Q", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["q", rawLeaderUp], (regSpacing): ["q", regSpacingUp], (capSpacing): ["Q", capSpacingUp]})
 	return
 
 
@@ -616,13 +668,15 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := l32_numModifier()
 	shiftModifier_keys := l32_shiftModifier()
-	expdModifier_keys := l32_expdModifier()
+	expd1Modifier_keys := l32_expd1Modifier()
+	expd2Modifier_keys := l32_expd2Modifier()
 	numLeader_keys := l32_numLeader(numModifier_keys)
 	shiftLeader_keys := l32_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l32_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l32_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l32_expd2Leader(expd2Modifier_keys)
 	l32_afterNum()
 	
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["h", rawLeaderUp], (regSpacing): ["h", regSpacingUp], (capSpacing): ["H", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["h", rawLeaderUp], (regSpacing): ["h", regSpacingUp], (capSpacing): ["H", capSpacingUp]})
 	return
 *i::
 	if(vimMode)
@@ -636,13 +690,15 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := l33_numModifier()
 	shiftModifier_keys := l33_shiftModifier()
-	expdModifier_keys := l33_expdModifier()
+	expd1Modifier_keys := l33_expd1Modifier()
+	expd2Modifier_keys := l33_expd2Modifier()
 	numLeader_keys := l33_numLeader(numModifier_keys)
 	shiftLeader_keys := l33_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l33_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l33_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l33_expd2Leader(expd2Modifier_keys)
 	l33_afterNum()
 	
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["i", rawLeaderUp], (regSpacing): ["i", regSpacingUp], (capSpacing): ["I", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["i", rawLeaderUp], (regSpacing): ["i", regSpacingUp], (capSpacing): ["I", capSpacingUp]})
 	return
 *e::
 	if(vimMode)
@@ -656,12 +712,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := l34_numModifier()
 	shiftModifier_keys := l34_shiftModifier()
-	expdModifier_keys := l34_expdModifier()
+	expd1Modifier_keys := l34_expd1Modifier()
+	expd2Modifier_keys := l34_expd2Modifier()
 	numLeader_keys := l34_numLeader(numModifier_keys)
 	shiftLeader_keys := l34_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l34_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l34_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l34_expd2Leader(expd2Modifier_keys)
 	l34_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["e", rawLeaderUp], (regSpacing): ["e", regSpacingUp], (capSpacing): ["E", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["e", rawLeaderUp], (regSpacing): ["e", regSpacingUp], (capSpacing): ["E", capSpacingUp]})
 	return
 *a::
 	if(vimMode)
@@ -675,13 +733,15 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := l35_numModifier()
 	shiftModifier_keys := l35_shiftModifier()
-	expdModifier_keys := l35_expdModifier()
+	expd1Modifier_keys := l35_expd1Modifier()
+	expd2Modifier_keys := l35_expd2Modifier()
 	numLeader_keys := l35_numLeader(numModifier_keys)
 	shiftLeader_keys := l35_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l35_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l35_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l35_expd2Leader(expd2Modifier_keys)
 	l35_afterNum()
 	
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["a", rawLeaderUp], (regSpacing): ["a", regSpacingUp], (capSpacing): ["A", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["a", rawLeaderUp], (regSpacing): ["a", regSpacingUp], (capSpacing): ["A", capSpacingUp]})
 	return
 *.::
 	if(vimMode)
@@ -714,13 +774,15 @@ global winLeaderUp := "VK8E Up"
 
 	numModifier_keys := l36_numModifier()
 	shiftModifier_keys := l36_shiftModifier()
-	expdModifier_keys := l36_expdModifier()
+	expd1Modifier_keys := l36_expd1Modifier()
+	expd2Modifier_keys := l36_expd2Modifier()
 	numLeader_keys := l36_numLeader(numModifier_keys)
 	shiftLeader_keys := l36_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l36_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l36_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l36_expd2Leader(expd2Modifier_keys)
 	l36_afterNum()
 	
-	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 
 
@@ -736,12 +798,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r31_numModifier()
 	shiftModifier_keys := r31_shiftModifier()
-	expdModifier_keys := r31_expdModifier()
+	expd1Modifier_keys := r31_expd1Modifier()
+	expd2Modifier_keys := r31_expd2Modifier()
 	numLeader_keys := r31_numLeader(numModifier_keys)
 	shiftLeader_keys := r31_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r31_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r31_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r31_expd2Leader(expd2Modifier_keys)
 	r31_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["m", rawLeaderUp], (regSpacing): ["m", regSpacingUp], (capSpacing): ["M", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["m", rawLeaderUp], (regSpacing): ["m", regSpacingUp], (capSpacing): ["M", capSpacingUp]})
 	return
 *t::
 	if(vimMode)
@@ -755,12 +819,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r32_numModifier()
 	shiftModifier_keys := r32_shiftModifier()
-	expdModifier_keys := r32_expdModifier()
+	expd1Modifier_keys := r32_expd1Modifier()
+	expd2Modifier_keys := r32_expd2Modifier()
 	numLeader_keys := r32_numLeader(numModifier_keys)
 	shiftLeader_keys := r32_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r32_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r32_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r32_expd2Leader(expd2Modifier_keys)
 	r32_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["t", rawLeaderUp], (regSpacing): ["t", regSpacingUp], (capSpacing): ["T", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["t", rawLeaderUp], (regSpacing): ["t", regSpacingUp], (capSpacing): ["T", capSpacingUp]})
 	return
 *s::
 	if(vimMode)
@@ -774,12 +840,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r33_numModifier()
 	shiftModifier_keys := r33_shiftModifier()
-	expdModifier_keys := r33_expdModifier()
+	expd1Modifier_keys := r33_expd1Modifier()
+	expd2Modifier_keys := r33_expd2Modifier()
 	numLeader_keys := r33_numLeader(numModifier_keys)
 	shiftLeader_keys := r33_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r33_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r33_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r33_expd2Leader(expd2Modifier_keys)
 	r33_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["s", rawLeaderUp], (regSpacing): ["s", regSpacingUp], (capSpacing): ["S", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["s", rawLeaderUp], (regSpacing): ["s", regSpacingUp], (capSpacing): ["S", capSpacingUp]})
 	return
 *r::
 	if(vimMode)
@@ -793,12 +861,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r34_numModifier()
 	shiftModifier_keys := r34_shiftModifier()
-	expdModifier_keys := r34_expdModifier()
+	expd1Modifier_keys := r34_expd1Modifier()
+	expd2Modifier_keys := r34_expd2Modifier()
 	numLeader_keys := r34_numLeader(numModifier_keys)
 	shiftLeader_keys := r34_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r34_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r34_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r34_expd2Leader(expd2Modifier_keys)
 	r34_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["r", rawLeaderUp], (regSpacing): ["r", regSpacingUp], (capSpacing): ["R", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["r", rawLeaderUp], (regSpacing): ["r", regSpacingUp], (capSpacing): ["R", capSpacingUp]})
 	return
 *n::
 	if(vimMode)
@@ -812,12 +882,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r35_numModifier()
 	shiftModifier_keys := r35_shiftModifier()
-	expdModifier_keys := r35_expdModifier()
+	expd1Modifier_keys := r35_expd1Modifier()
+	expd2Modifier_keys := r35_expd2Modifier()
 	numLeader_keys := r35_numLeader(numModifier_keys)
 	shiftLeader_keys := r35_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r35_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r35_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r35_expd2Leader(expd2Modifier_keys)
 	r35_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["n", rawLeaderUp], (regSpacing): ["n", regSpacingUp], (capSpacing): ["N", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["n", rawLeaderUp], (regSpacing): ["n", regSpacingUp], (capSpacing): ["N", capSpacingUp]})
 	return
 *v::
 	if(Modifiers("r36", "v", "|"))
@@ -826,12 +898,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r36_numModifier()
 	shiftModifier_keys := r36_shiftModifier()
-	expdModifier_keys := r36_expdModifier()
+	expd1Modifier_keys := r36_expd1Modifier()
+	expd2Modifier_keys := r36_expd2Modifier()
 	numLeader_keys := r36_numLeader(numModifier_keys)
 	shiftLeader_keys := r36_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r36_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r36_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r36_expd2Leader(expd2Modifier_keys)
 	r36_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["v", rawLeaderUp], (regSpacing): ["v", regSpacingUp], (capSpacing): ["V", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["v", rawLeaderUp], (regSpacing): ["v", regSpacingUp], (capSpacing): ["V", capSpacingUp]})
 	return
 	
 
@@ -902,12 +976,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := l42_numModifier()
 	shiftModifier_keys := l42_shiftModifier()
-	expdModifier_keys := l42_expdModifier()
+	expd1Modifier_keys := l42_expd1Modifier()
+	expd2Modifier_keys := l42_expd2Modifier()
 	numLeader_keys := l42_numLeader(numModifier_keys)
 	shiftLeader_keys := l42_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l42_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l42_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l42_expd2Leader(expd2Modifier_keys)
 	l42_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["x", rawLeaderUp], (regSpacing): ["x", regSpacingUp], (capSpacing): ["X", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["x", rawLeaderUp], (regSpacing): ["x", regSpacingUp], (capSpacing): ["X", capSpacingUp]})
 	return
 */::
 	if(vimMode)
@@ -986,10 +1062,12 @@ global winLeaderUp := "VK8E Up"
 	
 	numModifier_keys := numModifierKeys_PuncCombinator(defaultKeys, regSpacingKeys, capSpacingKeys)
 	shiftModifier_keys := l43_shiftModifier()
-	expdModifier_keys := l43_expdModifier()
+	expd1Modifier_keys := l43_expd1Modifier()
+	expd2Modifier_keys := l43_expd2Modifier()
 	numLeader_keys := l43_numLeader(numModifier_keys)
 	shiftLeader_keys := l43_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l43_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l43_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l43_expd2Leader(expd2Modifier_keys)
 	afterNum_keys := AddKeyUp(shiftModifier_keys.Clone(), afterNumUp)
 	
 	; For correct capitalization of expansions following afterNum ?
@@ -1004,7 +1082,7 @@ global winLeaderUp := "VK8E Up"
 		IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
 	}
 	
-	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *;::
 	if(vimMode)
@@ -1071,10 +1149,12 @@ global winLeaderUp := "VK8E Up"
 
 	numModifier_keys := numModifierKeys_PuncCombinator(defaultKeys, regSpacingKeys, capSpacingKeys)
 	shiftModifier_keys := l44_shiftModifier()
-	expdModifier_keys := l44_expdModifier()
+	expd1Modifier_keys := l44_expd1Modifier()
+	expd2Modifier_keys := l44_expd2Modifier()
 	numLeader_keys := l44_numLeader(numModifier_keys)
 	shiftLeader_keys := l44_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l44_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l44_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l44_expd2Leader(expd2Modifier_keys)
 	afterNum_keys := AddKeyUp(shiftModifier_keys.Clone(), afterNumUp)
 	
 	; For correct capitalization of expansions following afterNum !
@@ -1089,7 +1169,7 @@ global winLeaderUp := "VK8E Up"
 		IniWrite, %capBecauseOfAfterNumPunc%, Status.ini, statusVars, capBecauseOfAfterNumPunc
 	}
 	
-	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *,::
 	if(vimMode)
@@ -1123,15 +1203,17 @@ global winLeaderUp := "VK8E Up"
 	numModifier_keys := numModifierKeys_PuncCombinator(defaultKeys, regSpacingKeys, capSpacingKeys)
 	; We want normal comma behavior when holding shift down (=for VARS_LIKE_THIS), not em dashes
 	; shiftModifier_keys := l45_shiftModifier()
-	expdModifier_keys := l45_expdModifier()
+	expd1Modifier_keys := l45_expd1Modifier()
+	expd2Modifier_keys := l45_expd2Modifier()
 	numLeader_keys := l45_numLeader(numModifier_keys)
 	; No modifier keys defined above = no arguments
 	shiftLeader_keys := l45_shiftLeader()
-	expdLeader_keys := l45_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l45_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l45_expd2Leader(expd2Modifier_keys)
 	; Want em dash behavior. Redefine separately to avoid sending an extra shiftLeaderUp
 	afterNum_keys := l45_afterNum()
 	
-	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *-::
 	if(vimMode)
@@ -1210,12 +1292,14 @@ global winLeaderUp := "VK8E Up"
 
 	numModifier_keys := numModifierKeys_PuncCombinator(defaultKeys, regSpacingKeys, capSpacingKeys)
 	shiftModifier_keys := l46_shiftModifier()
-	expdModifier_keys := l46_expdModifier()
+	expd1Modifier_keys := l46_expd1Modifier()
+	expd2Modifier_keys := l46_expd2Modifier()
 	numLeader_keys := l46_numLeader(numModifier_keys)
 	shiftLeader_keys := l46_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := l46_expdLeader(expdModifier_keys)
+	expd1Leader_keys := l46_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := l46_expd2Leader(expd2Modifier_keys)
 	
-	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 
 
@@ -1231,12 +1315,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r41_numModifier()
 	shiftModifier_keys := r41_shiftModifier()
-	expdModifier_keys := r41_expdModifier()
+	expd1Modifier_keys := r41_expd1Modifier()
+	expd2Modifier_keys := r41_expd2Modifier()
 	numLeader_keys := r41_numLeader(numModifier_keys)
 	shiftLeader_keys := r41_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r41_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r41_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r41_expd2Leader(expd2Modifier_keys)
 	r41_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["w", rawLeaderUp], (regSpacing): ["w", regSpacingUp], (capSpacing): ["W", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["w", rawLeaderUp], (regSpacing): ["w", regSpacingUp], (capSpacing): ["W", capSpacingUp]})
 	return
 *g::
 	if(vimMode)
@@ -1250,12 +1336,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r42_numModifier()
 	shiftModifier_keys := r42_shiftModifier()
-	expdModifier_keys := r42_expdModifier()
+	expd1Modifier_keys := r42_expd1Modifier()
+	expd2Modifier_keys := r42_expd2Modifier()
 	numLeader_keys := r42_numLeader(numModifier_keys)
 	shiftLeader_keys := r42_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r42_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r42_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r42_expd2Leader(expd2Modifier_keys)
 	r42_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["g", rawLeaderUp], (regSpacing): ["g", regSpacingUp], (capSpacing): ["G", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["g", rawLeaderUp], (regSpacing): ["g", regSpacingUp], (capSpacing): ["G", capSpacingUp]})
 	return
 *f::
 	if(vimMode)
@@ -1269,12 +1357,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r43_numModifier()
 	shiftModifier_keys := r43_shiftModifier()
-	expdModifier_keys := r43_expdModifier()
+	expd1Modifier_keys := r43_expd1Modifier()
+	expd2Modifier_keys := r43_expd2Modifier()
 	numLeader_keys := r43_numLeader(numModifier_keys)
 	shiftLeader_keys := r43_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r43_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r43_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r43_expd2Leader(expd2Modifier_keys)
 	r43_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["f", rawLeaderUp], (regSpacing): ["f", regSpacingUp], (capSpacing): ["F", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["f", rawLeaderUp], (regSpacing): ["f", regSpacingUp], (capSpacing): ["F", capSpacingUp]})
 	return
 *j::
 	if(vimMode)
@@ -1288,12 +1378,14 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r44_numModifier()
 	shiftModifier_keys := r44_shiftModifier()
-	expdModifier_keys := r44_expdModifier()
+	expd1Modifier_keys := r44_expd1Modifier()
+	expd2Modifier_keys := r44_expd2Modifier()
 	numLeader_keys := r44_numLeader(numModifier_keys)
 	shiftLeader_keys := r44_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r44_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r44_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r44_expd2Leader(expd2Modifier_keys)
 	r44_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["j", rawLeaderUp], (regSpacing): ["j", regSpacingUp], (capSpacing): ["J", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["j", rawLeaderUp], (regSpacing): ["j", regSpacingUp], (capSpacing): ["J", capSpacingUp]})
 	return
 *z::
 	if(vimMode)
@@ -1307,23 +1399,27 @@ global winLeaderUp := "VK8E Up"
 	}
 	numModifier_keys := r45_numModifier()
 	shiftModifier_keys := r45_shiftModifier()
-	expdModifier_keys := r45_expdModifier()
+	expd1Modifier_keys := r45_expd1Modifier()
+	expd2Modifier_keys := r45_expd2Modifier()
 	numLeader_keys := r45_numLeader(numModifier_keys)
 	shiftLeader_keys := r45_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := r45_expdLeader(expdModifier_keys)
+	expd1Leader_keys := r45_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := r45_expd2Leader(expd2Modifier_keys)
 	r45_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (rawLeader): ["z", rawLeaderUp], (regSpacing): ["z", regSpacingUp], (capSpacing): ["Z", capSpacingUp]})
+	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["z", rawLeaderUp], (regSpacing): ["z", regSpacingUp], (capSpacing): ["Z", capSpacingUp]})
 	return
 ; Mirrored Enter key: not needed twice	
 ;*Enter::
 ;	numModifier_keys := r46_numModifier()
 ;	shiftModifier_keys := r46_shiftModifier()
-;	expdModifier_keys := r46_expdModifier()
+;	expd1Modifier_keys := r46_expd1Modifier()
+;	expd2Modifier_keys := r46_expd2Modifier()
 ;	numLeader_keys := r46_numLeader(numModifier_keys)
 ;	shiftLeader_keys := r46_shiftLeader(shiftModifier_keys)
-;	expdLeader_keys := r46_expdLeader(expdModifier_keys)
+;	expd1Leader_keys := r46_expd1Leader(expd1Modifier_keys)
+;	expd2Leader_keys := r46_expd2Leader(expd2Modifier_keys)
 ;	r46_afterNum()
-;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 ;	return
 
 
@@ -1368,34 +1464,40 @@ global winLeaderUp := "VK8E Up"
 ;*LCtrl::
 ;	numModifier_keys := r52_numModifier()
 ;	shiftModifier_keys := r52_shiftModifier()
-;	expdModifier_keys := r52_expdModifier()
+;	expd1Modifier_keys := r52_expd1Modifier()
+;	expd2Modifier_keys := r52_expd2Modifier()
 ;	numLeader_keys := r52_numLeader(numModifier_keys)
 ;	shiftLeader_keys := r52_shiftLeader(shiftModifier_keys)
-;	expdLeader_keys := r52_expdLeader(expdModifier_keys)
+;	expd1Leader_keys := r52_expd1Leader(expd1Modifier_keys)
+;	expd2Leader_keys := r52_expd2Leader(expd2Modifier_keys)
 ;	r52_afterNum()
-;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 ;	return
 ; Mirrored Alt key: not needed twice
 ;*LAlt::
 ;	numModifier_keys := r53_numModifier()
 ;	shiftModifier_keys := r53_shiftModifier()
-;	expdModifier_keys := r53_expdModifier()
+;	expd1Modifier_keys := r53_expd1Modifier()
+;	expd2Modifier_keys := r53_expd2Modifier()
 ;	numLeader_keys := r53_numLeader(numModifier_keys)
 ;	shiftLeader_keys := r53_shiftLeader(shiftModifier_keys)
-;	expdLeader_keys := r53_expdLeader(expdModifier_keys)
+;	expd1Leader_keys := r53_expd1Leader(expd1Modifier_keys)
+;	expd2Leader_keys := r53_expd2Leader(expd2Modifier_keys)
 ;	r53_afterNum()
-;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 ;	return
 ; Mirrored Win key: not needed twice
 ;*RWin::
 ;	numModifier_keys := r54_numModifier()
 ;	shiftModifier_keys := r54_shiftModifier()
-;	expdModifier_keys := r54_expdModifier()
+;	expd1Modifier_keys := r54_expd1Modifier()
+;	expd2Modifier_keys := r54_expd2Modifier()
 ;	numLeader_keys := r54_numLeader(numModifier_keys)
 ;	shiftLeader_keys := r54_shiftLeader(shiftModifier_keys)
-;	expdLeader_keys := r54_expdLeader(expdModifier_keys)
+;	expd1Leader_keys := r54_expd1Leader(expd1Modifier_keys)
+;	expd2Leader_keys := r54_expd2Leader(expd2Modifier_keys)
 ;	r54_afterNum()
-;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+;	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 ;	return
 ; Custom behavior, want it consistent across layers
 *]::
@@ -1492,12 +1594,14 @@ justExitedVimMode := false
 	
 	numModifier_keys := lt1_numModifier()
 	shiftModifier_keys := lt1_shiftModifier()
-	expdModifier_keys := lt1_expdModifier()
+	expd1Modifier_keys := lt1_expd1Modifier()
+	expd2Modifier_keys := lt1_expd2Modifier()
 	numLeader_keys := lt1_numLeader(numModifier_keys)
 	shiftLeader_keys := lt1_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := lt1_expdLeader(expdModifier_keys)
+	expd1Leader_keys := lt1_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := lt1_expd2Leader(expd2Modifier_keys)
 	lt1_afterNum()
-	dual.comboKey(["Space", regSpacingDn], {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	dual.comboKey(["Space", regSpacingDn], {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 	
 *Space Up::
@@ -1525,11 +1629,13 @@ justExitedVimMode := false
 		lastRealKeyDown := Dual.cleanKey(lastKey)
 	}
 	numModifier_keys := numModifierUp
-	expdModifier_keys := lt2_expdModifier()
+	expd1Modifier_keys := lt2_expd1Modifier()
+	expd2Modifier_keys := lt2_expd2Modifier()
 	numLeader_keys := numModifierDn
-	expdLeader_keys := lt2_expdLeader(expdModifier_keys)
+	expd1Leader_keys := lt2_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := lt2_expd2Leader(expd2Modifier_keys)
 	lt2_afterNum()
-	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	
 	numDownNoUp := true
 	
@@ -1541,11 +1647,13 @@ justExitedVimMode := false
 		return
 	}
 	numModifier_keys := numModifierUp
-	expdModifier_keys := lt2_expdModifier()
+	expd1Modifier_keys := lt2_expd1Modifier()
+	expd2Modifier_keys := lt2_expd2Modifier()
 	numLeader_keys := numModifierDn
-	expdLeader_keys := lt2_expdLeader(expdModifier_keys)
+	expd1Leader_keys := lt2_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := lt2_expd2Leader(expd2Modifier_keys)
 	lt2_afterNum()
-	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	
 	; Activate afterNum layer on key-up to be able to type all punctuation after numbers
 	SendInput {%afterNumDn%}
@@ -1555,18 +1663,30 @@ justExitedVimMode := false
 	return
 	
 	
-;;;;;;;;;;;;;;;;;;;;; TODO: brief layer on left thumb. lt3	
-
-*5::
-	numModifier_keys := lt4_numModifier()
-	shiftModifier_keys := lt4_shiftModifier()
-	expdModifier_keys := lt4_expdModifier()
-	numLeader_keys := lt4_numLeader(numModifier_keys)
-	shiftLeader_keys := lt4_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := lt4_expdLeader(expdModifier_keys)
-	lt4_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+*0::
+	shiftModifier_keys := lt3_shiftModifier()
+	expd2Modifier_keys := lt3_expd2Modifier()
+	shiftLeader_keys := lt3_shiftLeader(shiftModifier_keys)
+	expd2Leader_keys := lt3_expd2Leader(expd2Modifier_keys)
+	lt3_afterNum()
+	dual.combine(expd1Modifier, expd1LeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+	
+	expd1DownNoUp := true
+	
 	return
+*0 Up::
+	shiftModifier_keys := lt3_shiftModifier()
+	expd2Modifier_keys := lt3_expd2Modifier()
+	shiftLeader_keys := lt3_shiftLeader(shiftModifier_keys)
+	expd2Leader_keys := lt3_expd2Leader(expd2Modifier_keys)
+	lt3_afterNum()
+	dual.combine(expd1Modifier, expd1LeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+	
+	expd1DownNoUp := false
+	
+	return
+
+
 	
 	
 	
@@ -1640,11 +1760,13 @@ colonKeys := false
 	}
 	
 	shiftModifier_keys := shiftModifierUp
-	expdModifier_keys := rt2_expdModifier()
+	expd1Modifier_keys := rt2_expd1Modifier()
+	expd2Modifier_keys := rt2_expd2Modifier()
 	shiftLeader_keys := shiftModifierDn
-	expdLeader_keys := rt2_expdLeader(expdModifier_keys)
+	expd1Leader_keys := rt2_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := rt2_expd2Leader(expd2Modifier_keys)
 	rt2_afterNum()
-	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	
 	shiftDownNoUp := true
 	
@@ -1658,11 +1780,13 @@ colonKeys := false
 	}
 
 	shiftModifier_keys := shiftModifierUp
-	expdModifier_keys := rt2_expdModifier()
+	expd1Modifier_keys := rt2_expd1Modifier()
+	expd2Modifier_keys := rt2_expd2Modifier()
 	shiftLeader_keys := shiftModifierDn
-	expdLeader_keys := rt2_expdLeader(expdModifier_keys)
+	expd1Leader_keys := rt2_expd1Leader(expd1Modifier_keys)
+	expd2Leader_keys := rt2_expd2Leader(expd2Modifier_keys)
 	rt2_afterNum()
-	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.combine(shiftModifier, shiftLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	
 	shiftDownNoUp := false
 	
@@ -1691,13 +1815,13 @@ semicolonKeys := ""
 	}
 
 	shiftModifier_keys := rt3_shiftModifier()
-	expdModifier_keys := rt3_expdModifier()
+	expd1Modifier_keys := rt3_expd1Modifier()
 	shiftLeader_keys := rt3_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := rt3_expdLeader(expdModifier_keys)
+	expd1Leader_keys := rt3_expd1Leader(expd1Modifier_keys)
 	rt3_afterNum()
-	dual.combine(expdModifier, expdLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.combine(expd2Modifier, expd2LeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys})
 	
-	expdDownNoUp := true
+	expd2DownNoUp := true
 	
 	return
 *1 Up::
@@ -1708,25 +1832,14 @@ semicolonKeys := ""
 	}
 
 	shiftModifier_keys := rt3_shiftModifier()
-	expdModifier_keys := rt3_expdModifier()
+	expd1Modifier_keys := rt3_expd1Modifier()
 	shiftLeader_keys := rt3_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := rt3_expdLeader(expdModifier_keys)
+	expd1Leader_keys := rt3_expd1Leader(expd1Modifier_keys)
 	rt3_afterNum()
-	dual.combine(expdModifier, expdLeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
+	dual.combine(expd2Modifier, expd2LeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys})
 	
-	expdDownNoUp := false
+	expd2DownNoUp := false
 	
-	return
-
-*6::
-	numModifier_keys := rt4_numModifier()
-	shiftModifier_keys := rt4_shiftModifier()
-	expdModifier_keys := rt4_expdModifier()
-	numLeader_keys := rt4_numLeader(numModifier_keys)
-	shiftLeader_keys := rt4_shiftLeader(shiftModifier_keys)
-	expdLeader_keys := rt4_expdLeader(expdModifier_keys)
-	rt4_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expdLeader): expdLeader_keys, (expdModifier): expdModifier_keys})
 	return
 
 

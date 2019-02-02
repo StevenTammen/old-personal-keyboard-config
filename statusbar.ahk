@@ -9,18 +9,21 @@ global numLeader := "VK0E"
 global numModifier := "VK0F"
 global shiftLeader := "VK16"
 global shiftModifier := "VK1A"
-global expdLeader := "VK3A"
-global expdModifier := "VK3B"
-global afterNum := "VK3C"
-global rawLeader := "VK3D"
-global rawState := "VK88"
-global regSpacing := "VK89"
-global capSpacing := "VK8A"
-global nestedPunctuation := "VK8B"
+global expd1Leader := "VK3A"
+global expd1Modifier := "VK3B"
+global expd2Leader := "VK3C"
+global expd2Modifier := "VK3D"
+global afterNum := "VK3E"
+global rawLeader := "VK3F"
+global rawState := "VK40"
+global regSpacing := "VK88"
+global capSpacing := "VK89"
+global nestedPunctuation := "VK8A"
 
-global ctrlLeader := "VK8C"
-global altLeader := "VK8D"
-global winLeader := "VK8E"
+global ctrlLeader := "VK8B"
+global altLeader := "VK8C"
+global winLeader := "VK8D"
+
 
 
 ; ---------------------- Global constants --------------------------
@@ -158,9 +161,13 @@ GetLayer()
 	{
 		layer := "Shift"
 	}
-	else if(GetKeyState(expdLeader) or GetKeyState(expdModifier))
+	else if(GetKeyState(expd1Leader) or GetKeyState(expd1Modifier))
 	{
-		layer := "Expd"
+		layer := "Expd1"
+	}
+	else if(GetKeyState(expd2Leader) or GetKeyState(expd2Modifier))
+	{
+		layer := "Expd2"
 	}
 	else if(GetKeyState(afterNum))
 	{
