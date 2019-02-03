@@ -1,25 +1,29 @@
-﻿; Number Row
+﻿; shiftber Row
 ;-------------------------------------------------
 
 l11_shiftLeader(shiftModifier_keys) {
 	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
 	return shiftLeader_keys
 }
-l12_shiftLeader(shiftModifier_keys) {
-	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
-	return shiftLeader_keys
+l12_shiftLeader() {
+	l12_shiftModifier()
+	SendInput {%shiftLeaderUp%}
+	return
 }
-l13_shiftLeader(shiftModifier_keys) {
-	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
-	return shiftLeader_keys
+l13_shiftLeader() {
+	l13_shiftModifier()
+	SendInput {%shiftLeaderUp%}
+	return
 }
-l14_shiftLeader(shiftModifier_keys) {
-	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
-	return shiftLeader_keys
+l14_shiftLeader() {
+	l14_shiftModifier()
+	SendInput {%shiftLeaderUp%}
+	return
 }
-l15_shiftLeader(shiftModifier_keys) {
-	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)
-	return shiftLeader_keys
+l15_shiftLeader() {
+	l15_shiftModifier()
+	SendInput {%shiftLeaderUp%}
+	return
 }
 l16_shiftLeader(shiftModifier_keys) {
 	shiftLeader_keys := AddKeyUp(shiftModifier_keys, shiftLeaderUp)

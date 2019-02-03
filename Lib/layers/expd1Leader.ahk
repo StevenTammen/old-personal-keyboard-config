@@ -5,21 +5,25 @@ l11_expd1Leader(expd1Modifier_keys) {
 	expd1Leader_keys := AddKeyUp(expd1Modifier_keys, expd1LeaderUp)
 	return expd1Leader_keys
 }
-l12_expd1Leader(expd1Modifier_keys) {
-	expd1Leader_keys := AddKeyUp(expd1Modifier_keys, expd1LeaderUp)
-	return expd1Leader_keys
+l12_expd1Leader() {
+	l12_expd1Modifier()
+	SendInput {%expd1LeaderUp%}
+	return
 }
-l13_expd1Leader(expd1Modifier_keys) {
-	expd1Leader_keys := AddKeyUp(expd1Modifier_keys, expd1LeaderUp)
-	return expd1Leader_keys
+l13_expd1Leader() {
+	l13_expd1Modifier()
+	SendInput {%expd1LeaderUp%}
+	return
 }
-l14_expd1Leader(expd1Modifier_keys) {
-	expd1Leader_keys := AddKeyUp(expd1Modifier_keys, expd1LeaderUp)
-	return expd1Leader_keys
+l14_expd1Leader() {
+	l14_expd1Modifier()
+	SendInput {%expd1LeaderUp%}
+	return
 }
-l15_expd1Leader(expd1Modifier_keys) {
-	expd1Leader_keys := AddKeyUp(expd1Modifier_keys, expd1LeaderUp)
-	return expd1Leader_keys
+l15_expd1Leader() {
+	l15_expd1Modifier()
+	SendInput {%expd1LeaderUp%}
+	return
 }
 l16_expd1Leader(expd1Modifier_keys) {
 	expd1Leader_keys := AddKeyUp(expd1Modifier_keys, expd1LeaderUp)

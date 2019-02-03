@@ -6,20 +6,20 @@ l11_expd1Modifier() {
 	return expd1Modifier_keys
 }
 l12_expd1Modifier() {
-	expd1Modifier_keys := [""]
-	return expd1Modifier_keys
+	FocusWindow("layered", "farLeft")
+	return
 }
 l13_expd1Modifier() {
-	expd1Modifier_keys := [""]
-	return expd1Modifier_keys
+	FocusWindow("layered", "midLeft")
+	return
 }
 l14_expd1Modifier() {
-	expd1Modifier_keys := [""]
-	return expd1Modifier_keys
+	FocusWindow("layered", "midRight")
+	return
 }
 l15_expd1Modifier() {
-	expd1Modifier_keys := [""]
-	return expd1Modifier_keys
+	FocusWindow("layered", "farRight")
+	return
 }
 l16_expd1Modifier() {
 	expd1Modifier_keys := [""]

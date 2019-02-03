@@ -19,17 +19,17 @@ SetWorkingDir %A_ScriptDir%
 
 #Include <dual/dual>
 #Include <functions>
-;#Include <virtualDesktops>
+#Include <virtualDesktops>
 
 #Include <layers/vim>
-#Include <layers/numLeader>
 #Include <layers/numModifier>
-#Include <layers/shiftLeader>
+#Include <layers/numLeader>
 #Include <layers/shiftModifier>
-#Include <layers/expd1Leader>
+#Include <layers/shiftLeader>
 #Include <layers/expd1Modifier>
-#Include <layers/expd2Leader>
+#Include <layers/expd1Leader>
 #Include <layers/expd2Modifier>
+#Include <layers/expd2Leader>
 #Include <layers/afterNum>
 
 #Include <layers/modifiers/Alt>
@@ -199,53 +199,129 @@ global winLeaderUp := "VK8D Up"
 	l11_afterNum()
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
-*LShift:
-	numModifier_keys := l12_numModifier()
-	shiftModifier_keys := l12_shiftModifier()
-	expd1Modifier_keys := l12_expd1Modifier()
-	expd2Modifier_keys := l12_expd2Modifier()
-	numLeader_keys := l12_numLeader(numModifier_keys)
-	shiftLeader_keys := l12_shiftLeader(shiftModifier_keys)
-	expd1Leader_keys := l12_expd1Leader(expd1Modifier_keys)
-	expd2Leader_keys := l12_expd2Leader(expd2Modifier_keys)
-	l12_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+	
+*LShift::
+	if(GetKeyState(shiftLeader))
+	{
+		l12_shiftLeader()
+	}
+	else if(shiftDownNoUp)
+	{
+		l12_shiftModifier()
+	}
+	else if(GetKeyState(expd2Leader))
+	{
+		l12_expd2Leader()
+	}
+	else if(expd2DownNoUp)
+	{
+		l12_expd2Modifier()
+	}
+	else if(GetKeyState(expd1Leader))
+	{
+		l12_expd1Leader()
+	}
+	else if(expd1DownNoUp)
+	{
+		l12_expd1Modifier()
+	}
+	else
+	{
+		FocusWindow("unlayered", "farLeft")
+	}
 	return
+	
 *RShift::
-	numModifier_keys := l13_numModifier()
-	shiftModifier_keys := l13_shiftModifier()
-	expd1Modifier_keys := l13_expd1Modifier()
-	expd2Modifier_keys := l13_expd2Modifier()
-	numLeader_keys := l13_numLeader(numModifier_keys)
-	shiftLeader_keys := l13_shiftLeader(shiftModifier_keys)
-	expd1Leader_keys := l13_expd1Leader(expd1Modifier_keys)
-	expd2Leader_keys := l13_expd2Leader(expd2Modifier_keys)
-	l13_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+	if(GetKeyState(shiftLeader))
+	{
+		l13_shiftLeader()
+	}
+	else if(shiftDownNoUp)
+	{
+		l13_shiftModifier()
+	}
+	else if(GetKeyState(expd2Leader))
+	{
+		l13_expd2Leader()
+	}
+	else if(expd2DownNoUp)
+	{
+		l13_expd2Modifier()
+	}
+	else if(GetKeyState(expd1Leader))
+	{
+		l13_expd1Leader()
+	}
+	else if(expd1DownNoUp)
+	{
+		l13_expd1Modifier()
+	}
+	else
+	{
+		FocusWindow("unlayered", "midLeft")
+	}
 	return
+	
 *Del::
-	numModifier_keys := l14_numModifier()
-	shiftModifier_keys := l14_shiftModifier()
-	expd1Modifier_keys := l14_expd1Modifier()
-	expd2Modifier_keys := l14_expd2Modifier()
-	numLeader_keys := l14_numLeader(numModifier_keys)
-	shiftLeader_keys := l14_shiftLeader(shiftModifier_keys)
-	expd1Leader_keys := l14_expd1Leader(expd1Modifier_keys)
-	expd2Leader_keys := l14_expd2Leader(expd2Modifier_keys)
-	l14_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+	if(GetKeyState(shiftLeader))
+	{
+		l14_shiftLeader()
+	}
+	else if(shiftDownNoUp)
+	{
+		l14_shiftModifier()
+	}
+	else if(GetKeyState(expd2Leader))
+	{
+		l14_expd2Leader()
+	}
+	else if(expd2DownNoUp)
+	{
+		l14_expd2Modifier()
+	}
+	else if(GetKeyState(expd1Leader))
+	{
+		l14_expd1Leader()
+	}
+	else if(expd1DownNoUp)
+	{
+		l14_expd1Modifier()
+	}
+	else
+	{
+		FocusWindow("unlayered", "midRight")
+	}
 	return
+	
 *4::
-	numModifier_keys := l15_numModifier()
-	shiftModifier_keys := l15_shiftModifier()
-	expd1Modifier_keys := l15_expd1Modifier()
-	expd2Modifier_keys := l15_expd2Modifier()
-	numLeader_keys := l15_numLeader(numModifier_keys)
-	shiftLeader_keys := l15_shiftLeader(shiftModifier_keys)
-	expd1Leader_keys := l15_expd1Leader(expd1Modifier_keys)
-	expd2Leader_keys := l15_expd2Leader(expd2Modifier_keys)
-	l15_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+	if(GetKeyState(shiftLeader))
+	{
+		l15_shiftLeader()
+	}
+	else if(shiftDownNoUp)
+	{
+		l15_shiftModifier()
+	}
+	else if(GetKeyState(expd2Leader))
+	{
+		l15_expd2Leader()
+	}
+	else if(expd2DownNoUp)
+	{
+		l15_expd2Modifier()
+	}
+	else if(GetKeyState(expd1Leader))
+	{
+		l15_expd1Leader()
+	}
+	else if(expd1DownNoUp)
+	{
+		l15_expd1Modifier()
+	}
+	else
+	{
+		FocusWindow("unlayered", "farRight")
+	}
 	return
 	
 ; Custom behavior, want it consistent across layers
@@ -264,12 +340,10 @@ global winLeaderUp := "VK8D Up"
 	if(GetKeyState(shiftLeader))
 	{
 		SendInput +{Esc}{%shiftLeaderUp%}
-		return
 	}
 	else if(shiftDownNoUp)
 	{
 		SendInput +{Esc}
-		return
 	}
 	; if no modifiers, proceed with default behavior, which is to
 	; disable autospacing and enter Vim mod
@@ -284,8 +358,14 @@ global winLeaderUp := "VK8D Up"
 			SendInput {%rawStateDn%}
 		}
 		
-		SendInput {Left}{Esc}
-		return
+		if(VimWindowActive())
+		{
+			SendInput {Esc}
+		}
+		else
+		{
+			SendInput {Left}
+		}
 	}
 	
 	return

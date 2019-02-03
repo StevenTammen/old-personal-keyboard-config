@@ -1,4 +1,4 @@
-﻿; Number Row
+﻿; shiftber Row
 ;-------------------------------------------------
 
 l11_shiftModifier() {
@@ -6,20 +6,20 @@ l11_shiftModifier() {
 	return shiftModifier_keys
 }
 l12_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
+	AssociateActiveWindowWithLocation("unlayered", "farLeft")
+	return
 }
 l13_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
+	AssociateActiveWindowWithLocation("unlayered", "midLeft")
+	return
 }
 l14_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
+	AssociateActiveWindowWithLocation("unlayered", "midRight")
+	return
 }
 l15_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
+	AssociateActiveWindowWithLocation("unlayered", "farRight")
+	return
 }
 l16_shiftModifier() {
 	shiftModifier_keys := [""]
@@ -337,7 +337,7 @@ lt1_shiftModifier() {
 		IniRead, nestLevel, Status.ini, nestVars, nestLevel
 		nestLevel := nestLevel + 1
 		
-		actuallyNeedToWrite := GetKeyState(shiftLeader) or shiftDownNoUp or (GetKeyState(numAfter) and !(GetKeyState(numLeader) or numDownNoUp))
+		actuallyNeedToWrite := GetKeyState(shiftLeader) or shiftDownNoUp or (GetKeyState(shiftAfter) and !(GetKeyState(shiftLeader) or shiftDownNoUp))
 
 		if(actuallyNeedToWrite)
 		{

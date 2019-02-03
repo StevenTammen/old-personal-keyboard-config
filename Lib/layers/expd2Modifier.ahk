@@ -6,20 +6,20 @@ l11_expd2Modifier() {
 	return expd2Modifier_keys
 }
 l12_expd2Modifier() {
-	expd2Modifier_keys := [""]
-	return expd2Modifier_keys
+	AssociateActiveWindowWithLocation("layered", "farLeft")
+	return
 }
 l13_expd2Modifier() {
-	expd2Modifier_keys := [""]
-	return expd2Modifier_keys
+	AssociateActiveWindowWithLocation("layered", "midLeft")
+	return
 }
 l14_expd2Modifier() {
-	expd2Modifier_keys := [""]
-	return expd2Modifier_keys
+	AssociateActiveWindowWithLocation("layered", "midRight")
+	return
 }
 l15_expd2Modifier() {
-	expd2Modifier_keys := [""]
-	return expd2Modifier_keys
+	AssociateActiveWindowWithLocation("layered", "farRight")
+	return
 }
 l16_expd2Modifier() {
 	expd2Modifier_keys := [""]
