@@ -651,7 +651,7 @@ IDEWindowActive()
 }
 
 
-TerminalFocused()
+TerminalActive()
 {
 	; List of terminal programs
 	programs := ["mintty.exe"]

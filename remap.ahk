@@ -833,7 +833,7 @@ global winLeaderUp := "VK8D Up"
 	{
 		return
 	}
-	if(GetKeyState(rawState) or TerminalFocused())
+	if(GetKeyState(rawState) or TerminalActive())
 	{
 		defaultKeys := ["."]
 		regSpacingKeys := ["."]
@@ -1031,7 +1031,7 @@ global winLeaderUp := "VK8D Up"
 		}
 		
 		; Don't capitalize the next letter in terminals
-		if(TerminalFocused())
+		if(TerminalActive())
 		{
 			defaultKeys := "Enter"
 		}
