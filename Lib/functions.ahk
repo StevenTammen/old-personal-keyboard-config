@@ -242,7 +242,7 @@ numModifierKeys_Number(num)
 {
 	numModifierKeys := GetSpecialCaseKeys()
 
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifierKeys := [num]
 	}
@@ -269,7 +269,7 @@ numModifierKeys_Number(num)
 
 numModifierKeys_Opening_PassThroughCap(openingChar, closingChar)
 {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifierKeys := [openingChar]
 	}
@@ -356,7 +356,7 @@ numModifierKeys_Opening_PassThroughCap(openingChar, closingChar)
 
 numModifierKeys_Opening_NoCap(openingChar, closingChar)
 {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifierKeys := [openingChar]
 	}

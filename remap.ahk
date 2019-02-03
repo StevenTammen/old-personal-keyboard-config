@@ -352,7 +352,7 @@ global winLeaderUp := "VK8D Up"
 		vimMode := true
 		IniWrite, %vimMode%, Status.ini, statusVars, vimMode
 		
-		autoSpacingBeforeVim := !(GetKeyState(rawState))
+		autoSpacingBeforeVim := !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 		if(autoSpacingBeforeVim)
 		{
 			SendInput {%rawStateDn%}
@@ -833,7 +833,7 @@ global winLeaderUp := "VK8D Up"
 	{
 		return
 	}
-	if(GetKeyState(rawState) or TerminalActive())
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		defaultKeys := ["."]
 		regSpacingKeys := ["."]
@@ -1075,7 +1075,7 @@ global winLeaderUp := "VK8D Up"
 	{
 		return
 	}
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		defaultKeys := [""""]
 		regSpacingKeys := [""""]
@@ -1174,7 +1174,7 @@ global winLeaderUp := "VK8D Up"
 	{
 		return
 	}
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		if(IDEWindowActive() and !vimMode)
 		{
@@ -1261,7 +1261,7 @@ global winLeaderUp := "VK8D Up"
 	{
 		return
 	}
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		defaultKeys := [","]
 		regSpacingKeys := [","]
@@ -1305,7 +1305,7 @@ global winLeaderUp := "VK8D Up"
 	{
 		return
 	}
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		defaultKeys := ["("]
 		regSpacingKeys := ["("]
@@ -1638,13 +1638,22 @@ justExitedVimMode := false
 			vimMode := true
 			IniWrite, %vimMode%, Status.ini, statusVars, vimMode
 			
-			autoSpacingBeforeVim := !(GetKeyState(rawState))
+			autoSpacingBeforeVim := !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 			if(autoSpacingBeforeVim)
 			{
 				SendInput {%rawStateDn%}
 			}
 			
-			SendInput {Backspace}{Left}{Esc}
+			SendInput {Backspace}
+			
+			if(VimWindowActive())
+			{
+				SendInput {Esc}
+			}
+			else
+			{
+				SendInput {Left}
+			}
 			
 			KeyWait Space
 			
@@ -1973,7 +1982,7 @@ LButtonUpY := 0
 			vimMode := true
 			IniWrite, %vimMode%, Status.ini, statusVars, vimMode
 			
-			autoSpacingBeforeVim := !(GetKeyState(rawState))
+			autoSpacingBeforeVim := !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 			if(autoSpacingBeforeVim)
 			{
 				SendInput {%rawStateDn%}

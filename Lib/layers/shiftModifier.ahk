@@ -178,7 +178,7 @@ l42_shiftModifier() {
 	return shiftModifier_keys
 }
 l43_shiftModifier() {
-	if(GetKeyState(rawState) or TerminalActive())
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		shiftModifier_keys := ["!"]
 	}
@@ -201,7 +201,7 @@ l43_shiftModifier() {
 	return shiftModifier_keys
 }
 l44_shiftModifier() {
-	if(GetKeyState(rawState) or TerminalActive())
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		shiftModifier_keys := ["?"]
 	}
@@ -229,7 +229,7 @@ l45_shiftModifier() {
 	return shiftModifier_keys
 }
 l46_shiftModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		shiftModifier_keys := ["–"]
 	}
@@ -324,7 +324,7 @@ r55_shiftModifier() {
 ;-------------------------------------------------
 
 lt1_shiftModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		shiftModifier_keys := ["_"]
 	}

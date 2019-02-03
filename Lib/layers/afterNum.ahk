@@ -266,7 +266,7 @@ l44_afterNum() {
 	}
 }
 l45_afterNum() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		afterNum_keys := ["—", afterNumUp]
 	}

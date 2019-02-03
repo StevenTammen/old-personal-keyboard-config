@@ -112,7 +112,7 @@ FocusWindow(layer, position)
 		vimMode := true
 		IniWrite, %vimMode%, Status.ini, statusVars, vimMode
 		
-		autoSpacingBeforeVim := !(GetKeyState(rawState))
+		autoSpacingBeforeVim := !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 		if(autoSpacingBeforeVim)
 		{
 			SendInput {%rawStateDn%}

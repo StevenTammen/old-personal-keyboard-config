@@ -190,7 +190,7 @@ l44_shiftLeader(shiftModifier_keys) {
 	return shiftLeader_keys
 }
 l45_shiftLeader() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		shiftLeader_keys := ["—", shiftLeaderUp]
 	}

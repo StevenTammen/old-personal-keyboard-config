@@ -103,7 +103,7 @@ l26_numModifier() {
 
 
 r21_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := ["%"]
 	}
@@ -133,7 +133,7 @@ r22_numModifier() {
 	return numModifier_keys
 }
 r23_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := ["-"]
 	}
@@ -143,15 +143,15 @@ r23_numModifier() {
 	}
 	else if(GetKeyState(regSpacing))
 	{			
-		numModifier_keys := ["Backspace", "-"]
+		numModifier_keys := ["Backspace", "-", regSpacingUp]
 	}
 	else if(GetKeyState(capSpacing))
 	{
-		numModifier_keys := ["Backspace", "-", regSpacingDn, capSpacingUp]
+		numModifier_keys := ["Backspace", "-", capSpacingUp]
 	}
 	else
 	{
-		numModifier_keys := ["-", regSpacingDn]
+		numModifier_keys := ["-"]
 	}
 	return numModifier_keys
 }
@@ -203,7 +203,7 @@ l35_numModifier() {
 	return numModifier_keys
 }
 l36_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := ["."]
 	}
@@ -248,7 +248,7 @@ r35_numModifier() {
 	return numModifier_keys
 }
 r36_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := ["|"]
 	}
@@ -281,7 +281,7 @@ l41_numModifier() {
 	return numModifier_keys
 }
 l42_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := ["$"]
 	}
@@ -337,7 +337,7 @@ r42_numModifier() {
 	return numModifier_keys
 }
 r43_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := ["<"]
 	}
@@ -360,7 +360,7 @@ r43_numModifier() {
 	return numModifier_keys
 }
 r44_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := [">"]
 	}
@@ -383,7 +383,7 @@ r44_numModifier() {
 	return numModifier_keys
 }
 r45_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := ["&"]
 	}
@@ -486,7 +486,7 @@ rt1_numModifier() {
 	return numModifier_keys
 }
 rt2_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := [":"]
 	}
@@ -509,7 +509,7 @@ rt2_numModifier() {
 	return numModifier_keys
 }
 rt3_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := [";"]
 	}
@@ -536,7 +536,7 @@ rt4_numModifier() {
 	return numModifier_keys
 }
 rt5_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := [":"]
 	}
@@ -559,7 +559,7 @@ rt5_numModifier() {
 	return numModifier_keys
 }
 rt6_numModifier() {
-	if(GetKeyState(rawState))
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		numModifier_keys := [";"]
 	}

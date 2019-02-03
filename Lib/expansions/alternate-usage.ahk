@@ -1,4 +1,4 @@
-﻿#If (!GetKeyState(rawState))
+﻿#If !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 
 ; ------------------- _{Spc} -------------------
 

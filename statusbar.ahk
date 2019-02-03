@@ -3,6 +3,8 @@ SendMode Input
 #SingleInstance force
 SetWorkingDir %A_ScriptDir%
 
+#Include <functions>
+
 ; ---------------------- Key aliases --------------------------
 
 global numLeader := "VK0E"
@@ -180,7 +182,7 @@ GetLayer()
 GetSpacing()
 {
 	spacing := "NoSpacing"
-	if(GetKeyState(rawLeader) or GetKeyState(rawState))
+	if(GetKeyState(rawLeader) or GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		spacing := "Raw"
 	}
