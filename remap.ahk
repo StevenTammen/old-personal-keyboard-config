@@ -57,7 +57,7 @@ dual := new Dual
 
 ; Use a variable to keep track of what sort of nesting behavior is enabled.
 ; Options: "paired", "unpaired"
-nestingType := "unpaired"
+nestingType := "paired"
 IniWrite, %nestingType%, Status.ini, nestVars, nestingType
 
 ; Store the nest level in an .ini file so it is accessible in the expand script
@@ -1662,7 +1662,11 @@ justExitedVimMode := false
 	}
 	else
 	{
-		lastSpaceDown := A_TickCount
+		; Underscore presses (underscore is the shift layer Space key) should not 
+		; trigger double tap Vim behavior.
+		if(!(GetKeyState(shiftLeader) or shiftDownNoUp)) {
+			lastSpaceDown := A_TickCount
+		}
 		justExitedVimMode := false
 	}
 	

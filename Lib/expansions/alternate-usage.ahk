@@ -2,7 +2,7 @@
 
 ; ------------------- _{Spc} -------------------
 
-Hotstring("[^\\]2; ", "f_subscript", 3, 0)
+Hotstring("[^\\]2  ", "f_subscript", 3, 0)
 f_subscript(matchObj)
 {
 	if(GetKeyState(regSpacing))
