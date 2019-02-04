@@ -1,4 +1,4 @@
-﻿Hotstring("(\\paired)1", "f_paired", 3, 0)
+﻿Hotstring("3u(paired)1", "f_paired", 3, 0)
 f_paired(matchObj)
 {
 	CommandBrief(matchObj)

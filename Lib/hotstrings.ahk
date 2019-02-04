@@ -195,6 +195,10 @@ NamedEntity(matchObj, replacement)
 		SendInput {Left}
 	}
 	
+	; Extra backspace to get rid of \ leader
+	SendInput {Backspace}
+	
+	; Backspacing brief
 	Loop % StrLen(brief)
 	{
 		SendInput {Backspace}
@@ -295,6 +299,10 @@ CommandBrief(matchObj)
 	KeyWait 1
 	SendInput {%expdLeaderUp%}
 
+	; Extra backspace to get rid of \ leader
+	SendInput {Backspace}
+	
+	; Backspacing brief
 	Loop % StrLen(matchObj[1])
 	{
 		SendInput {Backspace}
@@ -311,6 +319,10 @@ CodeBrief_language(matchObj, newLanguage)
 
 	language := newLanguage
 
+	; Extra backspace to get rid of \ leader
+	SendInput {Backspace}
+	
+	; Backspacing brief
 	Loop % StrLen(matchObj[1])
 	{
 		SendInput {Backspace}
@@ -325,6 +337,10 @@ CodeBrief(matchObj, replacement)
 	KeyWait 1
 	SendInput {%expdLeaderUp%}
 
+	; Extra backspace to get rid of \ leader
+	SendInput {Backspace}
+	
+	; Backspacing brief
 	Loop % StrLen(matchObj[1])
 	{
 		SendInput {Backspace}

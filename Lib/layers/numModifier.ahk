@@ -10,41 +10,55 @@ l12_numModifier() {
 	return numModifier_keys
 }
 l13_numModifier() {
-	numModifier_keys := [""]
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel - 1
+	IniRead, closingChars, Status.ini, nestVars, closingChars
+	closingChar := GetClosingCharFromStack(closingChars)
+	WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
+	numModifier_keys := numModifierKeys_Closing("}", closingChar, nestLevel)
 	return numModifier_keys
 }
 l14_numModifier() {
-	numModifier_keys := [""]
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel - 1
+	IniRead, closingChars, Status.ini, nestVars, closingChars
+	closingChar := GetClosingCharFromStack(closingChars)
+	WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
+	numModifier_keys := numModifierKeys_Closing("]", closingChar, nestLevel)
 	return numModifier_keys
 }
 l15_numModifier() {
-	numModifier_keys := [""]
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestVarsIfApplicable_Opening(nestLevel, ")")
+	numModifier_keys := numModifierKeys_Opening_PassThroughCap("(", ")")
 	return numModifier_keys
 }
 l16_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := ["``"]
 	return numModifier_keys
 }
 
 
 r11_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := ["#"]
 	return numModifier_keys
 }
 r12_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := ["="]
 	return numModifier_keys
 }
 r13_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := ["<", "-"]
 	return numModifier_keys
 }
 r14_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := ["-", ">"]
 	return numModifier_keys
 }
 r15_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := ["#", "+"]
+	SendInput {%shiftLeaderUp%}{%shiftModifierDn%}
 	return numModifier_keys
 }
 r16_numModifier() {
@@ -58,40 +72,41 @@ r16_numModifier() {
 ;-------------------------------------------------
 
 l21_numModifier() {
-	numModifier_keys := [""]
+	numModifier_keys := ["@"]
 	return numModifier_keys
 }
 l22_numModifier() {
+	IniRead, nestLevel, Status.ini, nestVars, nestLevel
+	nestLevel := nestLevel + 1
+	WriteNestVarsIfApplicable_Opening(nestLevel, "~")
+	numModifier_keys := numModifierKeys_Opening_NoCap("~", "~")
+	return numModifier_keys
+}
+l23_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel + 1
 	WriteNestVarsIfApplicable_Opening(nestLevel, "}")
 	numModifier_keys := numModifierKeys_Opening_NoCap("{", "}")
 	return numModifier_keys
 }
-l23_numModifier() {
+l24_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel + 1
 	WriteNestVarsIfApplicable_Opening(nestLevel, "]")
 	numModifier_keys := numModifierKeys_Opening_PassThroughCap("[", "]")
 	return numModifier_keys
 }
-l24_numModifier() {
-	IniRead, nestLevel, Status.ini, nestVars, nestLevel
-	nestLevel := nestLevel - 1
-	IniRead, closingChars, Status.ini, nestVars, closingChars
-	closingChar := GetClosingCharFromStack(closingChars)
-	WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
-	numModifier_keys := numModifierKeys_Closing("]", closingChar, nestLevel)
-	return numModifier_keys
-}
 l25_numModifier() {
-	IniRead, nestLevel, Status.ini, nestVars, nestLevel
-	nestLevel := nestLevel - 1
-	IniRead, closingChars, Status.ini, nestVars, closingChars
-	closingChar := GetClosingCharFromStack(closingChars)
-	WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
-	numModifier_keys := numModifierKeys_Closing("}", closingChar, nestLevel)
-	return numModifier_keys
+
+	; Clear autospacing/autocapitalization when backslash escaping stuff
+	SendInput {%regSpacingUp%}
+	SendInput {%capSpacingUp%}
+	
+	; Also reset afterNum to allow for proper \-escaping
+	SendInput {%afterNumUp%}
+	
+	dual.comboKey(["\", rawLeaderDn], {(rawState): "\", (rawLeader): ["\", rawLeaderUp]})
+	return
 }
 l26_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel

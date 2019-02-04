@@ -548,7 +548,9 @@ numModifierKeys_PuncCombinator(defaultKeys, regSpacingKeys, capSpacingKeys)
 
 WriteNestVarsIfApplicable_Opening(nestLevel, closingChar)
 {	
-	actuallyNeedToWrite := (GetKeyState(numLeader) or numDownNoUp)
+	; TODO: roll rawLeader and rawState checks into opening() and closing() functions, as well as WriteNestVarsIfApplicable() functions
+	; Former necessary to prevent unwanted nesting stuff when in rawLeader/rawState with a nonzero nestLevel. Latter to keep code DRY.
+	actuallyNeedToWrite := ((GetKeyState(numLeader) or numDownNoUp) and !(GetKeyState(rawLeader) or GetKeyState(rawState)))
 	
 	if(actuallyNeedToWrite)
 	{
@@ -563,8 +565,10 @@ WriteNestVarsIfApplicable_Opening(nestLevel, closingChar)
 }
 
 WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
-{	
-	actuallyNeedToWrite := (GetKeyState(numLeader) or numDownNoUp)
+{
+	; TODO: roll rawLeader and rawState checks into opening() and closing() functions, as well as WriteNestVarsIfApplicable() functions
+	; Former necessary to prevent unwanted nesting stuff when in rawLeader/rawState with a nonzero nestLevel. Latter to keep code DRY.
+	actuallyNeedToWrite := ((GetKeyState(numLeader) or numDownNoUp) and !(GetKeyState(rawLeader) or GetKeyState(rawState)))
 	
 	if(actuallyNeedToWrite)
 	{

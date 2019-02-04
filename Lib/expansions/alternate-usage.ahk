@@ -2,7 +2,7 @@
 
 ; ------------------- _{Spc} -------------------
 
-Hotstring("[^\\]2  ", "f_subscript", 3, 0)
+Hotstring("(?<!3u)2  ", "f_subscript", 3, 0)
 f_subscript(matchObj)
 {
 	if(GetKeyState(regSpacing))
@@ -25,7 +25,7 @@ f_subscript(matchObj)
 
 ; ------------------- ^{Spc} -------------------
 
-Hotstring("[^\\]3q ", "f_superscript", 3, 0)
+Hotstring("(?<!3u)3q ", "f_superscript", 3, 0)
 f_superscript(matchObj)
 {
 	if(GetKeyState(regSpacing))
@@ -98,9 +98,9 @@ f_superscript(matchObj)
 
 ; ------------------- {Spc}~ -------------------
 
-:*?b0: 1.::
+:*?b0: 3b::
 	
-	KeyWait .
+	KeyWait b
 	
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
@@ -112,11 +112,11 @@ f_superscript(matchObj)
 
 	if(nestLevel > 0)
 	{
-		SendInput {Backspace 2}{Right}
+		SendInput {Backspace}{Right}
 	}
 	else
 	{
-		SendInput {Backspace 2}{Right}{%nestedPunctuationUp%}
+		SendInput {Backspace}{Right}{%nestedPunctuationUp%}
 	}
 
 	return
