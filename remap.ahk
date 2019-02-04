@@ -350,6 +350,25 @@ global winLeaderUp := "VK8D Up"
 	
 ; Custom behavior, want it consistent across layers
 *Esc::
+
+	; Don't want any Vim behavior if interacting with Keypirinha or iswitchw
+	if(KeyPirinhaActive())
+	{
+		; Exit KP on this side's {Esc}
+		SendInput {Esc}{Esc}
+		return
+	}
+	else if(IswitchwActive())
+	{
+		; Only exit iswitchw on this side, since it only works with the {Esc}
+		; key. Might be a way to use input levels to get it to work with the
+		; other trigger key that's not {Esc}, but not really worth it. Left 
+		; {Esc} is better for exiting anyway: no same-finger if you quickly 
+		; change your mind.
+		SendInput {Esc}
+		return
+	}
+
 	if(vimMode)
 	{
 		l16_vim()
@@ -405,6 +424,15 @@ global winLeaderUp := "VK8D Up"
 ; different keys on number layer. Custom behavior, want it consistent 
 ; across layers
 *Left::
+
+	; Don't want any Vim behavior if interacting with Keypirinha
+	if(KeyPirinhaActive())
+	{
+		; Just clear input on this side's {Esc}
+		SendInput {Esc}
+		return
+	}
+	
 	if(vimMode)
 	{
 		r11_vim()
@@ -457,52 +485,16 @@ global winLeaderUp := "VK8D Up"
 	return
 	
 *7::
-	numModifier_keys := r12_numModifier()
-	shiftModifier_keys := r12_shiftModifier()
-	expd1Modifier_keys := r12_expd1Modifier()
-	expd2Modifier_keys := r12_expd2Modifier()
-	numLeader_keys := r12_numLeader(numModifier_keys)
-	shiftLeader_keys := r12_shiftLeader(shiftModifier_keys)
-	expd1Leader_keys := r12_expd1Leader(expd1Modifier_keys)
-	expd2Leader_keys := r12_expd2Leader(expd2Modifier_keys)
-	r12_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+	SendInput ^!+1
 	return
 *8::
-	numModifier_keys := r13_numModifier()
-	shiftModifier_keys := r13_shiftModifier()
-	expd1Modifier_keys := r13_expd1Modifier()
-	expd2Modifier_keys := r13_expd2Modifier()
-	numLeader_keys := r13_numLeader(numModifier_keys)
-	shiftLeader_keys := r13_shiftLeader(shiftModifier_keys)
-	expd1Leader_keys := r13_expd1Leader(expd1Modifier_keys)
-	expd2Leader_keys := r13_expd2Leader(expd2Modifier_keys)
-	r13_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+	SendInput ^#kOrg{:}{Space}
 	return
 *9::
-	numModifier_keys := r14_numModifier()
-	shiftModifier_keys := r14_shiftModifier()
-	expd1Modifier_keys := r14_expd1Modifier()
-	expd2Modifier_keys := r14_expd2Modifier()
-	numLeader_keys := r14_numLeader(numModifier_keys)
-	shiftLeader_keys := r14_shiftLeader(shiftModifier_keys)
-	expd1Leader_keys := r14_expd1Leader(expd1Modifier_keys)
-	expd2Leader_keys := r14_expd2Leader(expd2Modifier_keys)
-	r14_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+	SendInput ^#kCode{:}{Space}
 	return
 *Right::
-	numModifier_keys := r15_numModifier()
-	shiftModifier_keys := r15_shiftModifier()
-	expd1Modifier_keys := r15_expd1Modifier()
-	expd2Modifier_keys := r15_expd2Modifier()
-	numLeader_keys := r15_numLeader(numModifier_keys)
-	shiftLeader_keys := r15_shiftLeader(shiftModifier_keys)
-	expd1Leader_keys := r15_expd1Leader(expd1Modifier_keys)
-	expd2Leader_keys := r15_expd2Leader(expd2Modifier_keys)
-	r15_afterNum()
-	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+	SendInput ^#kDesktops{:}{Space}
 	return
 *`::
 	numModifier_keys := r16_numModifier()

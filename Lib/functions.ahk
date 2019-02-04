@@ -673,6 +673,41 @@ TerminalActive()
 }
 
 
+KeyPirinhaActive()
+{
+	programs := ["keypirinha-x64.exe"]
+	
+	for index, executable in programs
+	{
+		window := "ahk_exe " . executable
+		if(WinActive(window))
+		{
+			return true
+		}
+	}
+	
+	return false
+}
+
+
+IswitchwActive()
+{
+	; Autohotkey.exe is for iswitchw.
+	programs := ["AutoHotkey.exe"]
+	
+	for index, executable in programs
+	{
+		window := "ahk_exe " . executable
+		if(WinActive(window))
+		{
+			return true
+		}
+	}
+	
+	return false
+}
+
+
 NeedToDragNonText()
 {
 	; List of programs that need to drag things that aren't 
