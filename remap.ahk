@@ -57,7 +57,7 @@ dual := new Dual
 
 ; Use a variable to keep track of what sort of nesting behavior is enabled.
 ; Options: "paired", "unpaired"
-nestingType := "paired"
+nestingType := "unpaired"
 IniWrite, %nestingType%, Status.ini, nestVars, nestingType
 
 ; Store the nest level in an .ini file so it is accessible in the expand script
@@ -1880,13 +1880,32 @@ justExitedVimMode := false
 			nestLevel := nestLevel - 1
 			IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
 			
-			if(nestLevel > 0)
+			IniRead, closingChars, Status.ini, nestVars, closingChars	
+			closingChars := RemoveClosingCharFromStack(closingChars)
+			IniWrite, %closingChars%, Status.ini, nestVars, closingChars
+			
+			if(nestingType = "paired")
 			{
-				SendInput {Backspace}{Delete}
+				if(nestLevel > 0)
+				{
+					SendInput {Backspace}{Delete}
+				}
+				else
+				{
+					SendInput {Backspace}{Delete}{%nestedPunctuationUp%}
+				}
 			}
-			else
+			
+			else ; nestingType = "unpaired"
 			{
-				SendInput {Backspace}{Delete}{%nestedPunctuationUp%}
+				if(nestLevel > 0)
+				{
+					SendInput {Backspace}
+				}
+				else
+				{
+					SendInput {Backspace}{%nestedPunctuationUp%}
+				}
 			}
 		
 			return

@@ -55,9 +55,6 @@ for i, desktop in desktops
 	}
 }
 
-PrintDebugArrays()
-
-
 
 ; Define an associatative array for storing location information for
 ; all windows being tracked by the script.

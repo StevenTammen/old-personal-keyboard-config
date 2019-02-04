@@ -5,21 +5,47 @@
 Hotstring("(?<!3u)2  ", "f_subscript", 3, 0)
 f_subscript(matchObj)
 {
-	if(GetKeyState(regSpacing))
+	if(nestingType = "paired")
 	{
-		SendInput {Backspace 2}{Right}{{}{}}{Left}
+		if(GetKeyState(regSpacing))
+		{
+			SendInput {Backspace 2}{Right}{{}{}}{Left}
+		}
+		else if(GetKeyState(capSpacing))
+		{
+			SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}{%capSpacingUp%}
+			subscript_PassThroughCap := true
+			IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
+		}
+		else
+		{
+			SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}
+		}
 	}
-	else if(GetKeyState(capSpacing))
+	
+	else ; nestingType = "unpaired"
 	{
-		SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}{%capSpacingUp%}
-		subscript_PassThroughCap := true
-		IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
+		IniRead, closingChars, Status.ini, nestVars, closingChars
+		closingChars := RemoveClosingCharFromStack(closingChars)
+		closingChars := AddClosingCharToStack("}", closingChars)
+		IniWrite, %closingChars%, Status.ini, nestVars, closingChars
+		
+		if(GetKeyState(regSpacing))
+		{
+			SendInput {Left}{BackSpace}{Right}{{}}
+		}
+		else if(GetKeyState(capSpacing))
+		{
+			SendInput {Left}{BackSpace}{Right}{{}}{%regSpacingDn%}{%capSpacingUp%}
+			subscript_PassThroughCap := true
+			IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
+		}
+		else
+		{
+			SendInput {Left}{BackSpace}{Right}{{}}{%regSpacingDn%}
+		}
 	}
-	else
-	{
-		SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}
-	}
-
+	
 	return
 }
 
@@ -28,19 +54,45 @@ f_subscript(matchObj)
 Hotstring("(?<!3u)3q ", "f_superscript", 3, 0)
 f_superscript(matchObj)
 {
-	if(GetKeyState(regSpacing))
+	if(nestingType = "paired")
 	{
-		SendInput {Backspace 2}{Right}{{}{}}{Left}
+		if(GetKeyState(regSpacing))
+		{
+			SendInput {Backspace 2}{Right}{{}{}}{Left}
+		}
+		else if(GetKeyState(capSpacing))
+		{
+			SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}{%capSpacingUp%}
+			superscript_PassThroughCap := true
+			IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap
+		}
+		else
+		{
+			SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}
+		}
 	}
-	else if(GetKeyState(capSpacing))
+	
+	else ; nestingType = "unpaired"
 	{
-		SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}{%capSpacingUp%}
-		superscript_PassThroughCap := true
-		IniWrite, %superscript_PassThroughCap%, Status.ini, nestVars, superscript_PassThroughCap
-	}
-	else
-	{
-		SendInput {Backspace 2}{Right}{{}{}}{Left}{%regSpacingDn%}
+		IniRead, closingChars, Status.ini, nestVars, closingChars
+		closingChars := RemoveClosingCharFromStack(closingChars)
+		closingChars := AddClosingCharToStack("}", closingChars)
+		IniWrite, %closingChars%, Status.ini, nestVars, closingChars
+		
+		if(GetKeyState(regSpacing))
+		{
+			SendInput {Left}{BackSpace}{Right}{{}}
+		}
+		else if(GetKeyState(capSpacing))
+		{
+			SendInput {Left}{BackSpace}{Right}{{}}{%regSpacingDn%}{%capSpacingUp%}
+			subscript_PassThroughCap := true
+			IniWrite, %subscript_PassThroughCap%, Status.ini, nestVars, subscript_PassThroughCap
+		}
+		else
+		{
+			SendInput {Left}{BackSpace}{Right}{{}}{%regSpacingDn%}
+		}
 	}
 
 	return
@@ -60,13 +112,28 @@ f_superscript(matchObj)
 	closingChars := RemoveClosingCharFromStack(closingChars)
 	IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 
-	if(nestLevel > 0)
+	if(nestingType = "paired")
 	{
-		SendInput {Backspace}{Right}{Space}
+		if(nestLevel > 0)
+		{
+			SendInput {Backspace}{Right}{Space}
+		}
+		else
+		{
+			SendInput {Backspace}{Right}{Space}{%nestedPunctuationUp%}
+		}
 	}
-	else
+	
+	else ; nestingType = "unpaired"
 	{
-		SendInput {Backspace}{Right}{Space}{%nestedPunctuationUp%}
+		if(nestLevel > 0)
+		{
+			SendInput {Space}
+		}
+		else
+		{
+			SendInput {Space}{%nestedPunctuationUp%}
+		}
 	}
 
 	return
@@ -85,13 +152,28 @@ f_superscript(matchObj)
 	closingChars := RemoveClosingCharFromStack(closingChars)
 	IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 
-	if(nestLevel > 0)
+	if(nestingType = "paired")
 	{
-		SendInput {Backspace}{Right}{Space}
+		if(nestLevel > 0)
+		{
+			SendInput {Backspace}{Right}{Space}
+		}
+		else
+		{
+			SendInput {Backspace}{Right}{Space}{%nestedPunctuationUp%}
+		}
 	}
-	else
+	
+	else ; nestingType = "unpaired"
 	{
-		SendInput {Backspace}{Right}{Space}{%nestedPunctuationUp%}
+		if(nestLevel > 0)
+		{
+			SendInput {Space}
+		}
+		else
+		{
+			SendInput {Space}{%nestedPunctuationUp%}
+		}
 	}
 
 	return
@@ -110,13 +192,24 @@ f_superscript(matchObj)
 	closingChars := RemoveClosingCharFromStack(closingChars)
 	IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 
-	if(nestLevel > 0)
+	if(nestingType = "paired")
 	{
-		SendInput {Backspace}{Right}
+		if(nestLevel > 0)
+		{
+			SendInput {Backspace}{Right}
+		}
+		else
+		{
+			SendInput {Backspace}{Right}{%nestedPunctuationUp%}
+		}
 	}
-	else
+	
+	else ; nestingType = "unpaired"
 	{
-		SendInput {Backspace}{Right}{%nestedPunctuationUp%}
+		if(nestLevel <= 0)
+		{
+			SendInput {%nestedPunctuationUp%}
+		}
 	}
 
 	return
