@@ -1,5 +1,19 @@
 ﻿#If !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 
+; ------------------- {Enter}-{Spc} -------------------
+
+/*
+This is to correctly allow for unordered lists using - as the list marker.
+You start new list items on new lines, preceded by -{Space}. We would like 
+to pass through the capitalization from {Enter}, hence this hotstring.
+*/
+Hotstring("[\n]3c ", "f_listitem", 3, 0)
+f_listitem(matchObj)
+{
+	SendInput {Space}{%regSpacingUp%}{%capSpacingDn%}
+	return
+}
+
 ; ------------------- _{Spc} -------------------
 
 Hotstring("(?<!3u)2  ", "f_subscript", 3, 0)

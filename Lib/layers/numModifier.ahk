@@ -158,11 +158,11 @@ r23_numModifier() {
 	}
 	else if(GetKeyState(regSpacing))
 	{			
-		numModifier_keys := ["Backspace", "-", regSpacingUp]
+		numModifier_keys := ["-", regSpacingUp]
 	}
 	else if(GetKeyState(capSpacing))
 	{
-		numModifier_keys := ["Backspace", "-", capSpacingUp]
+		numModifier_keys := ["-", capSpacingUp]
 	}
 	else
 	{
