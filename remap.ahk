@@ -1766,13 +1766,16 @@ justExitedVimMode := false
 	}
 	
 	return
+
 	
+justExitedVim_Num := false
 ; We want the number layer to function normally on the shift layers so that we can mix numbers/symbols with words with all caps.
 ; This is why these combinators have been removed.
 *3::
 	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		lt2_vim()
+		justExitedVim_Num := true
 		return
 	}
 	lastKey := A_PriorHotkey
@@ -1793,35 +1796,49 @@ justExitedVimMode := false
 	
 	return
 *3 Up::
-	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
+	if(justExitedVim_Num)
 	{
-		lt2_vim()
-		return
+		justExitedVim_Num := false
 	}
-	numModifier_keys := numModifierUp
-	expd1Modifier_keys := lt2_expd1Modifier()
-	expd2Modifier_keys := lt2_expd2Modifier()
-	numLeader_keys := numModifierDn
-	expd1Leader_keys := lt2_expd1Leader(expd1Modifier_keys)
-	expd2Leader_keys := lt2_expd2Leader(expd2Modifier_keys)
-	lt2_afterNum()
-	dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+	else
+	{
+		if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
+		{
+			lt2_vim()
+			return
+		}
+		numModifier_keys := numModifierUp
+		expd1Modifier_keys := lt2_expd1Modifier()
+		expd2Modifier_keys := lt2_expd2Modifier()
+		numLeader_keys := numModifierDn
+		expd1Leader_keys := lt2_expd1Leader(expd1Modifier_keys)
+		expd2Leader_keys := lt2_expd2Leader(expd2Modifier_keys)
+		lt2_afterNum()
+		dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 
-	
-	; Activate afterNum layer on key-up to be able to type all punctuation after numbers.
-	; Don't send it after *u, i.e., when \-prefixing things while holding down numModifier.
-	lastKey := A_PriorHotkey
-	if(lastKey != "*u")
-	{
-		SendInput {%afterNumDn%}
+		
+		; Activate afterNum layer on key-up to be able to type all punctuation after numbers.
+		; Don't send it after *u, i.e., when \-prefixing things while holding down numModifier.
+		lastKey := A_PriorHotkey
+		if(lastKey != "*u")
+		{
+			SendInput {%afterNumDn%}
+		}
+		
+		numDownNoUp := false
 	}
-	
-	numDownNoUp := false
 	
 	return
 	
-	
+
+justExitedVim_Expd1 := false
 *0::
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
+	{
+		lt3_vim()
+		justExitedVim_Expd1 := true
+		return
+	}
 	shiftModifier_keys := lt3_shiftModifier()
 	expd2Modifier_keys := lt3_expd2Modifier()
 	shiftLeader_keys := lt3_shiftLeader(shiftModifier_keys)
@@ -1833,14 +1850,26 @@ justExitedVimMode := false
 	
 	return
 *0 Up::
-	shiftModifier_keys := lt3_shiftModifier()
-	expd2Modifier_keys := lt3_expd2Modifier()
-	shiftLeader_keys := lt3_shiftLeader(shiftModifier_keys)
-	expd2Leader_keys := lt3_expd2Leader(expd2Modifier_keys)
-	lt3_afterNum()
-	dual.combine(expd1Modifier, expd1LeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
-	
-	expd1DownNoUp := false
+	if(justExitedVim_Expd1)
+	{
+		justExitedVim_Expd1 := false
+	}
+	else
+	{
+		if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
+		{
+			lt3_vim()
+			return
+		}
+		shiftModifier_keys := lt3_shiftModifier()
+		expd2Modifier_keys := lt3_expd2Modifier()
+		shiftLeader_keys := lt3_shiftLeader(shiftModifier_keys)
+		expd2Leader_keys := lt3_expd2Leader(expd2Modifier_keys)
+		lt3_afterNum()
+		dual.combine(expd1Modifier, expd1LeaderDn, settings = false, {(shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
+		
+		expd1DownNoUp := false
+	}
 	
 	return
 
