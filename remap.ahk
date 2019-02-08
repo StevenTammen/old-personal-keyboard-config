@@ -99,6 +99,10 @@ IniWrite, %vimMode%, Status.ini, statusVars, vimMode
 ; so that it can be properly restored.
 global autoSpacingBeforeVim := true
 
+; Use variables to implement undo/redo transient state in Vim mode.
+global undoTransientState := false
+global undoCombines := false
+
 ; Track key downs to deal with GetKeyState() being unreliable when handling dual-role keys' down states
 ; for times close to initial actuation
 global shiftDownNoUp := false
@@ -528,7 +532,14 @@ global winLeaderUp := "VK8D Up"
 *y::
 	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
-		l23_vim()
+		undoTransientState := true
+		KeyWait y
+		if(!undoCombines)
+		{
+			l23_vim()
+		}
+		undoTransientState := false
+		undoCombines := false
 		return
 	}
 	if(Modifiers("l23", "y", "["))

@@ -451,11 +451,19 @@ l23_vim() {
 	return
 }
 l24_vim() {
-	visualMode := "visual"
-	IniWrite, %visualMode%, Status.ini, statusVars, visualMode
-	initialVisualPress := true
-	visualDirection := ""
-	BasicVimKey("v", "")
+	if(undoTransientState)
+	{
+		BasicVimKey("u", "^z")
+		undoCombines := true
+	}
+	else
+	{
+		visualMode := "visual"
+		IniWrite, %visualMode%, Status.ini, statusVars, visualMode
+		initialVisualPress := true
+		visualDirection := ""
+		BasicVimKey("v", "")
+	}
 	return
 }
 l25_vim() {
@@ -509,7 +517,15 @@ l33_vim() {
 	return
 }
 l34_vim() {
-	ActionVimKey("delete", """zd", "{Backspace}", false)
+	if(undoTransientState)
+	{
+		BasicVimKey("^r", "^y")
+		undoCombines := true
+	}
+	else
+	{
+		ActionVimKey("delete", """zd", "{Backspace}", false)
+	}
 	return
 }
 l35_vim() {
