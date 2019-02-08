@@ -53,6 +53,9 @@ ExitVimMode()
 	vimMode := false
 	IniWrite, %vimMode%, Status.ini, statusVars, vimMode
 	
+	; Always reset action if an action prefix is active when exiting
+	action := ""
+	
 	autoSpacingBeforeVim := autoSpacingBeforeVim or !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	
 	if(autoSpacingBeforeVim)
