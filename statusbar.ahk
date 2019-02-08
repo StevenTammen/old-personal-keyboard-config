@@ -181,8 +181,18 @@ GetLayer()
 
 GetSpacing()
 {
+	IniRead, autoSpacedChrome, Status.ini, statusVars, autoSpacedChrome
 	spacing := "NoSpacing"
-	if(GetKeyState(rawLeader) or GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
+	
+	if(ChromeActive() and autoSpacedChrome)
+	{
+		spacing := "AS-Chrome"
+	}
+	else if(IDEWindowActive() or TerminalActive() or ChromeActive())
+	{
+		spacing := "Unspaced"
+	}
+	else if(GetKeyState(rawLeader) or GetKeyState(rawState))
 	{
 		spacing := "Raw"
 	}

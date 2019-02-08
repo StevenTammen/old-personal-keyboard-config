@@ -9,8 +9,7 @@
 	; mode picking up when you exit it.
 	SendInput {%regSpacingUp%}{%capSpacingUp%}
 	
-	autoSpacingBeforeVim := !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
-	if(autoSpacingBeforeVim)
+	if(!GetKeyState(rawState))
 	{
 		SendInput {%rawStateDn%}
 	}
@@ -19,10 +18,14 @@
 	{
 		SendInput {Esc}
 	}
-	else
+	
+	; If not in a text window, do not want to send a {Left} since it can mess things up.
+	; This is why this an Elseif not just an Else.
+	else if(NonVimTextWindowActive())
 	{
 		SendInput {Left}
 	}
+	
 	return
 }
 
@@ -34,7 +37,7 @@ ExitVimMode()
 		{
 			SendInput {Esc}
 		}
-		else
+		else if(NonVimTextWindowActive())
 		{
 			if(visualDirection == "before")
 			{
@@ -53,12 +56,28 @@ ExitVimMode()
 	vimMode := false
 	IniWrite, %vimMode%, Status.ini, statusVars, vimMode
 	
-	; Always reset action if an action prefix is active when exiting
+	; Always reset Vim action if an action prefix is active when exiting
 	action := ""
 	
-	autoSpacingBeforeVim := autoSpacingBeforeVim or !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	
-	if(autoSpacingBeforeVim)
+	; Chrome is a special case. Most of the the time, we don't want autospaced behavior 
+	; in Chrome (http://www.example.com needs raw : / . ), but sometimes we do, as when 
+	; typing a quick email in Gmail. We can manually toggle autospacing on to enable Vim
+	; behavior, and in this instance, we should keep the autospacing on. Otherwise,
+	; we should have Chrome be raw, as when being switched to.
+	
+	; Keep autospacing when exiting Vim mode if Chrome is being used with Vim mode capabilities
+	; and autospaced text
+	if(ChromeActive() and autoSpacedChrome)
+	{
+		SendInput {%rawStateUp%}
+	}
+	
+	; Otherwise disable autospacing if Chrome is not being autospaced, as when being 
+	; switched to.
+	
+	
+	else if(!(IDEWindowActive() or TerminalActive() or ChromeActive()))
 	{
 		SendInput {%rawStateUp%}
 	}

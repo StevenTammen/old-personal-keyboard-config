@@ -266,7 +266,33 @@ r55_expd2Modifier() {
 ;-------------------------------------------------
 
 lt1_expd2Modifier() {
-	expd2Modifier_keys := [""]
+	; To be able to turn on and off raw state
+	if(GetKeyState(rawState))
+	{
+		expd2Modifier_keys := [rawStateUp]
+		
+		; Only change state if actually going to send the keys in either leader or modifier form. 
+		; This sort of behavior is confusing and bug-prone, but will be eliminated in the refactor.
+		; TODO.
+		if((GetKeyState(expd2Leader) or expd2DownNoUp) and ChromeActive())
+		{
+			autoSpacedChrome := true
+			IniWrite, %autoSpacedChrome%, Status.ini, statusVars, autoSpacedChrome
+		}
+	}
+	else
+	{
+		expd2Modifier_keys := [rawStateDn]
+		
+		; Only change state if actually going to send the keys in either leader or modifier form. 
+		; This sort of behavior is confusing and bug-prone, but will be eliminated in the refactor.
+		; TODO.
+		if((GetKeyState(expd2Leader) or expd2DownNoUp) and ChromeActive())
+		{
+			autoSpacedChrome := false
+			IniWrite, %autoSpacedChrome%, Status.ini, statusVars, autoSpacedChrome
+		}
+	}	
 	return expd2Modifier_keys
 }
 lt2_expd2Modifier() {

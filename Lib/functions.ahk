@@ -622,7 +622,7 @@ VimWindowActive()
 	; List of executable files (ahk_exe) that implement Vim behavior.
 	; Vim mode will pass through appropriate keypresses and let these programs
 	; handle the actual behavior.
-	vimExecutables := ["emacs.exe", "mintty.exe", "clion64.exe", "idea64.exe", "pycharm64.exe"]
+	vimExecutables := ["emacs.exe", "clion64.exe", "idea64.exe", "pycharm64.exe"]
 	
 	for index, executable in vimExecutables
 	{
@@ -637,10 +637,35 @@ VimWindowActive()
 }
 
 
+NonVimTextWindowActive()
+{
+	; List of executable files (ahk_exe) that are text based (E.g., Microsoft Word) but do not
+	; themselves implement Vim behavior. These windows will use this program's Vim emulation.
+	textWinExecutables := ["notepad++.exe", "WINWORD.EXE"]
+	
+	for index, executable in textWinExecutables
+	{
+		window := "ahk_exe " . executable
+		if(WinActive(window))
+		{
+			return true
+		}
+	}
+	
+	; Only count Chrome as a text window if autospacing is active
+	if(ChromeActive() and autoSpacedChrome)
+	{
+		return true
+	}
+	
+	return false
+}
+
+
 IDEWindowActive()
 {
 	; List of IDE programs
-	IDEs := ["clion64.exe", "idea64.exe", "pycharm64.exe", "notepad++.exe"]
+	IDEs := ["clion64.exe", "idea64.exe", "notepad++.exe", "pycharm64.exe"]
 	
 	for index, executable in IDEs
 	{
@@ -654,14 +679,16 @@ IDEWindowActive()
 	return false
 }
 
-NotepadPlusPlusActive()
+
+TerminalActive()
 {
-	return WinActive("ahk_exe notepad++.exe")
+	return WinActive("ahk_exe mintty.exe")
 }
 
-IntelliJActive()
+
+ChromeActive()
 {
-	return WinActive("ahk_exe idea64.exe")
+	return WinActive("ahk_exe chrome.exe")
 }
 
 
@@ -671,15 +698,21 @@ CLionActive()
 }
 
 
-PyCharmActive()
+IntelliJActive()
 {
-	return WinActive("ahk_exe pycharm64.exe")
+	return WinActive("ahk_exe idea64.exe")
 }
 
 
-TerminalActive()
+NotepadPlusPlusActive()
 {
-	return WinActive("ahk_exe mintty.exe")
+	return WinActive("ahk_exe notepad++.exe")
+}
+
+
+PyCharmActive()
+{
+	return WinActive("ahk_exe pycharm64.exe")
 }
 
 
