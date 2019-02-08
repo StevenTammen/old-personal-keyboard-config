@@ -550,7 +550,7 @@ WriteNestVarsIfApplicable_Opening(nestLevel, closingChar)
 {	
 	; TODO: roll rawLeader and rawState checks into opening() and closing() functions, as well as WriteNestVarsIfApplicable() functions
 	; Former necessary to prevent unwanted nesting stuff when in rawLeader/rawState with a nonzero nestLevel. Latter to keep code DRY.
-	actuallyNeedToWrite := ((GetKeyState(numLeader) or numDownNoUp) and !(GetKeyState(rawLeader) or GetKeyState(rawState)))
+	actuallyNeedToWrite := ((GetKeyState(numLeader) or numDownNoUp) and !(GetKeyState(rawLeader) or GetKeyState(rawState) or IDEWindowActive() or TerminalActive()))
 	
 	if(actuallyNeedToWrite)
 	{
@@ -568,7 +568,7 @@ WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
 {
 	; TODO: roll rawLeader and rawState checks into opening() and closing() functions, as well as WriteNestVarsIfApplicable() functions
 	; Former necessary to prevent unwanted nesting stuff when in rawLeader/rawState with a nonzero nestLevel. Latter to keep code DRY.
-	actuallyNeedToWrite := ((GetKeyState(numLeader) or numDownNoUp) and !(GetKeyState(rawLeader) or GetKeyState(rawState)))
+	actuallyNeedToWrite := ((GetKeyState(numLeader) or numDownNoUp) and !(GetKeyState(rawLeader) or GetKeyState(rawState) or IDEWindowActive() or TerminalActive()))
 	
 	if(actuallyNeedToWrite)
 	{
@@ -640,7 +640,7 @@ VimWindowActive()
 IDEWindowActive()
 {
 	; List of IDE programs
-	IDEs := ["clion64.exe", "idea64.exe", "pycharm64.exe"]
+	IDEs := ["clion64.exe", "idea64.exe", "pycharm64.exe", "notepad++.exe"]
 	
 	for index, executable in IDEs
 	{
@@ -654,57 +654,44 @@ IDEWindowActive()
 	return false
 }
 
+NotepadPlusPlusActive()
+{
+	return WinActive("ahk_exe notepad++.exe")
+}
+
+IntelliJActive()
+{
+	return WinActive("ahk_exe idea64.exe")
+}
+
+
+CLionActive()
+{
+	return WinActive("ahk_exe clion64.exe")
+}
+
+
+PyCharmActive()
+{
+	return WinActive("ahk_exe pycharm64.exe")
+}
+
 
 TerminalActive()
 {
-	; List of terminal programs
-	programs := ["mintty.exe"]
-	
-	for index, executable in programs
-	{
-		window := "ahk_exe " . executable
-		if(WinActive(window))
-		{
-			return true
-		}
-	}
-	
-	return false
+	return WinActive("ahk_exe mintty.exe")
 }
 
 
 KeyPirinhaActive()
 {
-	programs := ["keypirinha-x64.exe"]
-	
-	for index, executable in programs
-	{
-		window := "ahk_exe " . executable
-		if(WinActive(window))
-		{
-			return true
-		}
-	}
-	
-	return false
+	return WinActive("ahk_exe keypirinha-x64.exe")
 }
 
 
 IswitchwActive()
 {
-	; Autohotkey.exe is for iswitchw.
-	programs := ["AutoHotkey.exe"]
-	
-	for index, executable in programs
-	{
-		window := "ahk_exe " . executable
-		if(WinActive(window))
-		{
-			return true
-		}
-	}
-	
-	return false
+	return WinActive("ahk_exe AutoHotkey.exe")
 }
 
 

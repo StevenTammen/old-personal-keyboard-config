@@ -1066,6 +1066,50 @@ global winLeaderUp := "VK8D Up"
 	}
 	else
 	{
+	
+		; Normal Enter behavior if Vim mode is active or using numLeader
+		if(vimMode or GetKeyState(numLeader))
+		{
+			SendInput {Enter}
+			return
+		}
+		
+		; Complete statement in IntelliJ/CLion and send an extra {Enter} if the completion added a semicolon
+		else if(IntelliJActive() or CLionActive())
+		{
+			SendInput ^+{Enter}
+			sleep 50
+			SendInput {Esc}yla
+			sleep 50
+			if(Clipboard == ";")
+			{
+				SendInput {Enter}
+			}
+			return
+		}
+		
+		; Complete statement in PyCharm and reformat code since Ctrl+Shift+Enter doesn't for some reason in PyCharm...
+		else if(PyCharmActive())
+		{
+		
+			; Double pressing Enter in PyCharm (not in Vim mode) should add
+			; a blank line. This extra bit is necessary since reformatting typically
+			; removes trailing whitespace.
+			lastKey := A_PriorHotkey
+			if(lastKey == "*Enter")
+			{
+				SendInput {Enter}
+				return
+			}
+			else
+			{
+				SendInput ^+{Enter}
+				SendInput ^!l
+				return
+			}
+		}
+	
+	
 		; By default, Enter gets rid of trailing spaces from autospacing, and capitalizes the next letter.
 		; Repeated Enter presses get around the default capSpacing behavior by using A_PriorHotkey.
 		; Backslash escaping is supported if one wishes to send an Enter without autospacing behavior
@@ -1082,8 +1126,8 @@ global winLeaderUp := "VK8D Up"
 			capSpacingKeys := ["Backspace", "Enter"]
 		}
 		
-		; Don't capitalize the next letter in terminals
-		if(TerminalActive())
+		; Don't capitalize the next letter in terminals or Notepad++
+		if(TerminalActive() or NotepadPlusPlusActive())
 		{
 			defaultKeys := "Enter"
 		}

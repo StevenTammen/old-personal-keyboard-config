@@ -1,5 +1,5 @@
 ﻿; Map uu to qu to be able to type q. Match on . to always trigger, but still include the
-; verbose beginnings at higher priority for calculating capitalization.
+; verbose beginnings at higher priority for calculating capitalization."
 Hotstring("(3[\ta-z'.\/;,\-21]|2|2[\t'.\/;,\- ]|[^123][\t.\/;,\- \n]|.)uu", "f_q", 3, 0)
 f_q(matchObj)
 {
@@ -19,6 +19,9 @@ f_q(matchObj)
 		SendInput qu
 	}
 }
+
+
+#If !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 
 ; -----------------------------------------------------------------------------
 
@@ -150,3 +153,5 @@ f_kb(matchObj)
 	TextBrief(matchObj, "keyboard", "Keyboard")
 	return
 }
+
+#If

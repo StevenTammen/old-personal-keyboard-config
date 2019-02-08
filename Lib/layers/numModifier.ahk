@@ -97,16 +97,27 @@ l24_numModifier() {
 	return numModifier_keys
 }
 l25_numModifier() {
-
-	; Clear autospacing/autocapitalization when backslash escaping stuff
-	SendInput {%regSpacingUp%}
-	SendInput {%capSpacingUp%}
-	
-	; Also reset afterNum to allow for proper \-escaping
-	SendInput {%afterNumUp%}
-	
-	dual.comboKey(["\", rawLeaderDn], {(rawState): "\", (rawLeader): ["\", rawLeaderUp]})
-	return
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
+	{
+		numModifier_keys := ["\", afterNumUp]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		numModifier_keys := ["\", rawLeaderDn, afterNumUp]
+	}
+	else if(GetKeyState(regSpacing))
+	{			
+		numModifier_keys := ["\", rawLeaderDn, afterNumUp, regSpacingUp]
+	}
+	else if(GetKeyState(capSpacing))
+	{
+		numModifier_keys := ["\", rawLeaderDn, afterNumUp, capSpacingUp]
+	}
+	else
+	{
+		numModifier_keys := ["\", rawLeaderDn, afterNumUp]
+	}
+	return numModifier_keys
 }
 l26_numModifier() {
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
