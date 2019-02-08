@@ -106,24 +106,8 @@ FocusWindow(layer, position)
 	if(window_id != "")
 	{
 		; Switch into Vim mode when switching windows
-		vimMode := true
-		IniWrite, %vimMode%, Status.ini, statusVars, vimMode
+		EnterVimMode()
 		
-		autoSpacingBeforeVim := !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
-		if(autoSpacingBeforeVim)
-		{
-			SendInput {%rawStateDn%}
-		}
-		
-		if(VimWindowActive())
-		{
-			SendInput {Esc}
-		}
-		else
-		{
-			SendInput {Left}
-		}
-	
 		WinActivate, ahk_id %window_id%
 	}
 	

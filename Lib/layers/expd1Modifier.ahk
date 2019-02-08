@@ -6,18 +6,22 @@ l11_expd1Modifier() {
 	return expd1Modifier_keys
 }
 l12_expd1Modifier() {
+	EnterVimMode()
 	FocusWindow("layered", "farLeft")
 	return
 }
 l13_expd1Modifier() {
+	EnterVimMode()
 	FocusWindow("layered", "midLeft")
 	return
 }
 l14_expd1Modifier() {
+	EnterVimMode()
 	FocusWindow("layered", "midRight")
 	return
 }
 l15_expd1Modifier() {
+	EnterVimMode()
 	FocusWindow("layered", "farRight")
 	return
 }

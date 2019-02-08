@@ -233,6 +233,7 @@ global winLeaderUp := "VK8D Up"
 	}
 	else
 	{
+		EnterVimMode()
 		FocusWindow("unlayered", "farLeft")
 	}
 	return
@@ -270,6 +271,7 @@ global winLeaderUp := "VK8D Up"
 	}
 	else
 	{
+		EnterVimMode()
 		FocusWindow("unlayered", "midLeft")
 	}
 	return
@@ -307,6 +309,7 @@ global winLeaderUp := "VK8D Up"
 	}
 	else
 	{
+		EnterVimMode()
 		FocusWindow("unlayered", "midRight")
 	}
 	return
@@ -344,6 +347,7 @@ global winLeaderUp := "VK8D Up"
 	}
 	else
 	{
+		EnterVimMode()
 		FocusWindow("unlayered", "farRight")
 	}
 	return
@@ -369,7 +373,7 @@ global winLeaderUp := "VK8D Up"
 		return
 	}
 
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l16_vim()
 		return
@@ -399,23 +403,7 @@ global winLeaderUp := "VK8D Up"
 	; which is to disable autospacing and enter Vim mod
 	else
 	{
-		vimMode := true
-		IniWrite, %vimMode%, Status.ini, statusVars, vimMode
-		
-		autoSpacingBeforeVim := !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
-		if(autoSpacingBeforeVim)
-		{
-			SendInput {%rawStateDn%}
-		}
-		
-		if(VimWindowActive())
-		{
-			SendInput {Esc}
-		}
-		else
-		{
-			SendInput {Left}
-		}
+		EnterVimMode()
 	}
 	
 	return
@@ -433,7 +421,7 @@ global winLeaderUp := "VK8D Up"
 		return
 	}
 	
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r11_vim()
 		return
@@ -463,37 +451,25 @@ global winLeaderUp := "VK8D Up"
 	; which is to disable autospacing and enter Vim mod
 	else
 	{
-		vimMode := true
-		IniWrite, %vimMode%, Status.ini, statusVars, vimMode
-		
-		autoSpacingBeforeVim := !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
-		if(autoSpacingBeforeVim)
-		{
-			SendInput {%rawStateDn%}
-		}
-		
-		if(VimWindowActive())
-		{
-			SendInput {Esc}
-		}
-		else
-		{
-			SendInput {Left}
-		}
+		EnterVimMode()
 	}
 	
 	return
 	
 *7::
+	EnterVimMode()
 	SendInput ^!+1
 	return
 *8::
+	EnterVimMode()
 	SendInput ^#kOrg{:}{Space}
 	return
 *9::
+	EnterVimMode()
 	SendInput ^#kCode{:}{Space}
 	return
 *Right::
+	EnterVimMode()
 	SendInput ^#kDesktops{:}{Space}
 	return
 *`::
@@ -529,7 +505,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
 *b::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l22_vim()
 		return
@@ -550,7 +526,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["b", rawLeaderUp], (rawLeader): ["b", rawLeaderUp], (regSpacing): ["b", regSpacingUp], (capSpacing): ["B", capSpacingUp]})
 	return
 *y::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l23_vim()
 		return
@@ -572,7 +548,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["y", rawLeaderUp], (rawLeader): ["y", rawLeaderUp], (regSpacing): ["y", regSpacingUp], (capSpacing): ["Y", capSpacingUp]})
 	return
 *o::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l24_vim()
 		return
@@ -593,7 +569,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["o", rawLeaderUp], (regSpacing): ["o", regSpacingUp], (capSpacing): ["O", capSpacingUp]})
 	return
 *u::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l25_vim()
 		return
@@ -614,7 +590,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["u", rawLeaderUp], (regSpacing): ["u", regSpacingUp], (capSpacing): ["U", capSpacingUp]})
 	return
 *'::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l26_vim()
 		return
@@ -638,7 +614,7 @@ global winLeaderUp := "VK8D Up"
 
 
 *k::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r21_vim()
 		return
@@ -659,7 +635,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["k", rawLeaderUp], (regSpacing): ["k", regSpacingUp], (capSpacing): ["K", capSpacingUp]})
 	return
 *d::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r22_vim()
 		return
@@ -680,7 +656,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["d", rawLeaderUp], (regSpacing): ["d", regSpacingUp], (capSpacing): ["D", capSpacingUp]})
 	return
 *c::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r23_vim()
 		return
@@ -701,7 +677,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["c", rawLeaderUp], (regSpacing): ["c", regSpacingUp], (capSpacing): ["C", capSpacingUp]})
 	return
 *l::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r24_vim()
 		return
@@ -722,7 +698,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["l", rawLeaderUp], (regSpacing): ["l", regSpacingUp], (capSpacing): ["L", capSpacingUp]})
 	return
 *p::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r25_vim()
 		return
@@ -789,7 +765,7 @@ global winLeaderUp := "VK8D Up"
 		return
 	}
 *h::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l32_vim()
 		return
@@ -811,7 +787,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["h", rawLeaderUp], (regSpacing): ["h", regSpacingUp], (capSpacing): ["H", capSpacingUp]})
 	return
 *i::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l33_vim()
 		return
@@ -833,7 +809,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["i", rawLeaderUp], (regSpacing): ["i", regSpacingUp], (capSpacing): ["I", capSpacingUp]})
 	return
 *e::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l34_vim()
 		return
@@ -854,7 +830,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["e", rawLeaderUp], (regSpacing): ["e", regSpacingUp], (capSpacing): ["E", capSpacingUp]})
 	return
 *a::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l35_vim()
 		return
@@ -876,7 +852,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["a", rawLeaderUp], (regSpacing): ["a", regSpacingUp], (capSpacing): ["A", capSpacingUp]})
 	return
 *.::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l36_vim()
 		return
@@ -919,7 +895,7 @@ global winLeaderUp := "VK8D Up"
 
 
 *m::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r31_vim()
 		return
@@ -940,7 +916,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["m", rawLeaderUp], (regSpacing): ["m", regSpacingUp], (capSpacing): ["M", capSpacingUp]})
 	return
 *t::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r32_vim()
 		return
@@ -961,7 +937,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["t", rawLeaderUp], (regSpacing): ["t", regSpacingUp], (capSpacing): ["T", capSpacingUp]})
 	return
 *s::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r33_vim()
 		return
@@ -982,7 +958,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["s", rawLeaderUp], (regSpacing): ["s", regSpacingUp], (capSpacing): ["S", capSpacingUp]})
 	return
 *r::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r34_vim()
 		return
@@ -1003,7 +979,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["r", rawLeaderUp], (regSpacing): ["r", regSpacingUp], (capSpacing): ["R", capSpacingUp]})
 	return
 *n::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r35_vim()
 		return
@@ -1141,7 +1117,7 @@ global winLeaderUp := "VK8D Up"
 	}
 
 *x::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l42_vim()
 		return
@@ -1162,7 +1138,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["x", rawLeaderUp], (regSpacing): ["x", regSpacingUp], (capSpacing): ["X", capSpacingUp]})
 	return
 */::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l43_vim()
 		return
@@ -1261,7 +1237,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *;::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l44_vim()
 		return
@@ -1348,7 +1324,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *,::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l45_vim()
 		return
@@ -1392,7 +1368,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (afterNum): afterNum_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 *-::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		l46_vim()
 		return
@@ -1480,7 +1456,7 @@ global winLeaderUp := "VK8D Up"
 
 
 *w::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r41_vim()
 		return
@@ -1501,7 +1477,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["w", rawLeaderUp], (regSpacing): ["w", regSpacingUp], (capSpacing): ["W", capSpacingUp]})
 	return
 *g::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r42_vim()
 		return
@@ -1522,7 +1498,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["g", rawLeaderUp], (regSpacing): ["g", regSpacingUp], (capSpacing): ["G", capSpacingUp]})
 	return
 *f::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r43_vim()
 		return
@@ -1543,7 +1519,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["f", rawLeaderUp], (regSpacing): ["f", regSpacingUp], (capSpacing): ["F", capSpacingUp]})
 	return
 *j::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r44_vim()
 		return
@@ -1564,7 +1540,7 @@ global winLeaderUp := "VK8D Up"
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (rawLeader): ["j", rawLeaderUp], (regSpacing): ["j", regSpacingUp], (capSpacing): ["J", capSpacingUp]})
 	return
 *z::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		r45_vim()
 		return
@@ -1705,7 +1681,7 @@ justExitedVimMode := false
 	
 	currSpaceDown := A_TickCount
 
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		lt1_vim()
 		return
@@ -1731,25 +1707,12 @@ justExitedVimMode := false
 		else
 		{
 			vimModifier := true
-			vimMode := true
-			IniWrite, %vimMode%, Status.ini, statusVars, vimMode
 			
-			autoSpacingBeforeVim := !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
-			if(autoSpacingBeforeVim)
-			{
-				SendInput {%rawStateDn%}
-			}
-			
+			; To get rid of the unwanted Space generated when using the double tap to
+			; enter Vim mode.
 			SendInput {Backspace}
 			
-			if(VimWindowActive())
-			{
-				SendInput {Esc}
-			}
-			else
-			{
-				SendInput {Left}
-			}
+			EnterVimMode()
 			
 			KeyWait Space
 			
@@ -1807,7 +1770,7 @@ justExitedVimMode := false
 ; We want the number layer to function normally on the shift layers so that we can mix numbers/symbols with words with all caps.
 ; This is why these combinators have been removed.
 *3::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		lt2_vim()
 		return
@@ -1830,7 +1793,7 @@ justExitedVimMode := false
 	
 	return
 *3 Up::
-	if(vimMode)
+	if(vimMode and !(KeyPirinhaActive() or IswitchwActive()))
 	{
 		lt2_vim()
 		return
@@ -2106,6 +2069,12 @@ LButtonUpY := 0
 		{
 			vimMode := true
 			IniWrite, %vimMode%, Status.ini, statusVars, vimMode
+			
+			; Always reset autospacing when entering Vim mode, since you probably won't exit it
+			; in exactly the same place you entered it, and you don't want extra spaces or
+			; weird unpredictable behavior caused by autospacing from before you entered Vim
+			; mode picking up when you exit it.
+			SendInput {%regSpacingUp%}{%capSpacingUp%}
 			
 			autoSpacingBeforeVim := !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 			if(autoSpacingBeforeVim)

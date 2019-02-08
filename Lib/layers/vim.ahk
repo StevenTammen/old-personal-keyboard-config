@@ -1,4 +1,32 @@
-﻿ExitVimMode()
+﻿EnterVimMode()
+{
+	vimMode := true
+	IniWrite, %vimMode%, Status.ini, statusVars, vimMode
+	
+	; Always reset autospacing when entering Vim mode, since you probably won't exit it
+	; in exactly the same place you entered it, and you don't want extra spaces or
+	; weird unpredictable behavior caused by autospacing from before you entered Vim
+	; mode picking up when you exit it.
+	SendInput {%regSpacingUp%}{%capSpacingUp%}
+	
+	autoSpacingBeforeVim := !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
+	if(autoSpacingBeforeVim)
+	{
+		SendInput {%rawStateDn%}
+	}
+	
+	if(VimWindowActive())
+	{
+		SendInput {Esc}
+	}
+	else
+	{
+		SendInput {Left}
+	}
+	return
+}
+
+ExitVimMode()
 {
 	if(visualMode != "")
 	{
@@ -24,6 +52,9 @@
 
 	vimMode := false
 	IniWrite, %vimMode%, Status.ini, statusVars, vimMode
+	
+	autoSpacingBeforeVim := autoSpacingBeforeVim or !(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
+	
 	if(autoSpacingBeforeVim)
 	{
 		SendInput {%rawStateUp%}
