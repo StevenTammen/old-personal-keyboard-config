@@ -2098,6 +2098,7 @@ justExitedVim_Expd1 := false
 
 ; Custom behavior, want it consistent across layers
 *Backspace::
+	lastKey := A_PriorHotkey
 	if(Modifiers("rt1", "{Backspace}", "{Backspace}"))
 	{
 		return
@@ -2155,8 +2156,17 @@ justExitedVim_Expd1 := false
 		
 			return
 		}
+		
+		if((lastKey = "*Space") or (lastKey = "*Space Up"))
+		{
+			regSpacing_keys := ["Backspace", regSpacingUp]
+		}
+		else
+		{
+			regSpacing_keys := ["Backspace", "Backspace", regSpacingUp]
+		}
 
-		dual.comboKey({(regSpacing): ["Backspace", "Backspace", regSpacingUp], (capSpacing): ["Backspace", "Backspace", capSpacingUp]})
+		dual.comboKey({(regSpacing): regSpacing_keys, (capSpacing): ["Backspace", "Backspace", capSpacingUp]})
 		return
 	}
 
