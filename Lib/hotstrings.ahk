@@ -278,6 +278,7 @@ NeedsCap(beginning)
 		}
 	}
 	
+	/*
 	; Deal with afterNum ?! capitalization
 	if(SubStr(beginning, 2, 1) == "/" or SubStr(beginning, 2, 1) == ";")
 	{
@@ -289,6 +290,7 @@ NeedsCap(beginning)
 			return true
 		}
 	}
+	*/
 	
 	return false
 }

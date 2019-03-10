@@ -2022,7 +2022,7 @@ justExitedVim_Num := false
 		lt2_afterNum()
 		dual.combine(numModifier, numLeaderDn, settings = false, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 
-		
+		/*
 		; Activate afterNum layer on key-up to be able to type all punctuation after numbers.
 		; Don't send it after *u, i.e., when \-prefixing things while holding down numModifier.
 		lastKey := A_PriorHotkey
@@ -2030,6 +2030,7 @@ justExitedVim_Num := false
 		{
 			SendInput {%afterNumDn%}
 		}
+		*/
 		
 		numDownNoUp := false
 	}
