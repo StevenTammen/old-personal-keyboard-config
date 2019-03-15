@@ -364,6 +364,8 @@ SelectLineIfDoubleTap()
 		initialVisualPress := true
 		visualDirection := ""
 		BasicVimKey("V", "{Home}+{End}")
+		
+		action := ""
 	}
 	return
 }
