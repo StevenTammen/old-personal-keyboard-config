@@ -10,7 +10,30 @@ to pass through the capitalization from {Enter}, hence this hotstring.
 Hotstring("[\n]3c ", "f_listitem", 3, 0)
 f_listitem(matchObj)
 {
-	SendInput {Space}{%regSpacingUp%}{%capSpacingDn%}
+	KeyWait Space
+	SendInput {%regSpacingUp%}{%capSpacingDn%}
+	return
+}
+
+/*
+Same thing except for one nest level in
+*/
+Hotstring("[\n] 3c ", "f_listitem1", 3, 0)
+f_listitem1(matchObj)
+{
+	KeyWait Space
+	SendInput {Left 2}{Space 2}{Right 2}{%regSpacingUp%}{%capSpacingDn%}
+	return
+}
+
+/*
+Same thing except for two nest levels in
+*/
+Hotstring("[\n]  3c ", "f_listitem2", 3, 0)
+f_listitem2(matchObj)
+{
+	KeyWait Space
+	SendInput {Left 2}{Space 6}{Right 2}{%regSpacingUp%}{%capSpacingDn%}
 	return
 }
 
