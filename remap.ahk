@@ -1402,7 +1402,14 @@ global winLeaderUp := "VK8D Up"
 	{
 		return
 	}
-	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
+
+	if(GetKeyState(rawLeader))
+	{
+		defaultKeys := ["Backspace", ")", rawLeaderUp]
+		regSpacingKeys := ["Backspace", ")", rawLeaderUp]
+		capSpacingKeys := ["Backspace", ")", rawLeaderUp]
+	}
+	else if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
 		if(IDEWindowActive() and !vimMode)
 		{
@@ -1416,12 +1423,6 @@ global winLeaderUp := "VK8D Up"
 			regSpacingKeys := [")"]
 			capSpacingKeys := [")"]
 		}
-	}
-	else if(GetKeyState(rawLeader))
-	{
-		defaultKeys := ["Backspace", ")", rawLeaderUp]
-		regSpacingKeys := ["Backspace", ")", rawLeaderUp]
-		capSpacingKeys := ["Backspace", ")", rawLeaderUp]
 	}
 	else if(GetKeyState(nestedPunctuation))
 	{

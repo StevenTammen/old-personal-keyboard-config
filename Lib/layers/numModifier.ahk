@@ -97,15 +97,7 @@ l24_numModifier() {
 	return numModifier_keys
 }
 l25_numModifier() {
-	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
-	{
-		numModifier_keys := ["\", afterNumUp]
-	}
-	else if(GetKeyState(rawLeader))
-	{
-		numModifier_keys := ["\", rawLeaderDn, afterNumUp]
-	}
-	else if(GetKeyState(regSpacing))
+	if(GetKeyState(regSpacing))
 	{			
 		numModifier_keys := ["\", rawLeaderDn, afterNumUp, regSpacingUp]
 	}
