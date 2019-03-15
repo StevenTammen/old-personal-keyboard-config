@@ -353,6 +353,22 @@ MovementVimKey(direction, vimKeys, nonVimKeys, nonVimKeysVisual, nonVimKeysVisua
 	return
 }
 
+
+SelectLineIfDoubleTap()
+{
+	lastKey := A_PriorHotkey
+	if(lastKey == A_ThisHotkey)
+	{
+		visualMode := "linewise visual"
+		IniWrite, %visualMode%, Status.ini, statusVars, visualMode
+		initialVisualPress := true
+		visualDirection := ""
+		BasicVimKey("V", "{Home}+{End}")
+	}
+	return
+}
+
+
 ; A variable to track the visual mode state
 ; Options: "", "visual", "linewise visual", "blockwise visual"
 global visualMode := ""
@@ -535,10 +551,12 @@ l31_vim() {
 	return
 }
 l32_vim() {
+	SelectLineIfDoubleTap()
 	ActionVimKey("copy", "y", "^c{Left}", false)
 	return
 }
 l33_vim() {
+	SelectLineIfDoubleTap()
 	ActionVimKey("cut", "d", "^x", false)
 	return
 }
@@ -550,6 +568,7 @@ l34_vim() {
 	}
 	else
 	{
+		SelectLineIfDoubleTap()
 		ActionVimKey("delete", """zd", "{Backspace}", false)
 	}
 	return
@@ -602,10 +621,12 @@ l42_vim() {
 	return
 }
 l43_vim() {
+	SelectLineIfDoubleTap()
 	ActionVimKey("cut and insert", "c", "^x", true)
 	return
 }
 l44_vim() {
+	SelectLineIfDoubleTap()
 	ActionVimKey("delete and insert", """zc", "{Backspace}", true)
 	return
 }
