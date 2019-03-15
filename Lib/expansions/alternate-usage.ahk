@@ -37,6 +37,37 @@ f_listitem2(matchObj)
 	return
 }
 
+/*
+Same thing except for three nest levels in
+*/
+Hotstring("[\n]   3c ", "f_listitem3", 3, 0)
+f_listitem3(matchObj)
+{
+	KeyWait Space
+	SendInput {Left 2}{Space 8}{Right 2}{%regSpacingUp%}{%capSpacingDn%}
+	return
+}
+
+
+; Similar to hotstrings for Org headlines (see below)
+
+:*?b0:`n3ca::
+	KeyWait a
+	SendInput {Backspace}{Space}{%capSpacingDn%}
+	return
+:*?b0:`n3ce::
+	KeyWait e
+	SendInput {Backspace}{Left}{Space 3}{Right}{Space}{%capSpacingDn%}
+	return
+:*?b0:`n3ci::
+	KeyWait i
+	SendInput {Backspace}{Left}{Space 6}{Right}{Space}{%capSpacingDn%}
+	return
+:*?b0:`n3ch::
+	KeyWait h
+	SendInput {Backspace}{Left}{Space 9}{Right}{Space}{%capSpacingDn%}
+	return
+
 ; ------------------- _{Spc} -------------------
 
 Hotstring("(?<!3u)2  ", "f_subscript", 3, 0)
@@ -135,12 +166,10 @@ f_superscript(matchObj)
 	return
 }
 
-; ------------------- *{Spc} -------------------
-	
-:*?b0:3l ::
+; ------------------- Org headlines -------------------
 
-	KeyWait Space
-
+RemoveAsteriskPairing()
+{
 	IniRead, nestLevel, Status.ini, nestVars, nestLevel
 	nestLevel := nestLevel - 1
 	IniWrite, %nestLevel%, Status.ini, nestVars, nestLevel
@@ -153,26 +182,74 @@ f_superscript(matchObj)
 	{
 		if(nestLevel > 0)
 		{
-			SendInput {Backspace}{Right}{Space}
+			SendInput {Backspace}{Right}
 		}
 		else
 		{
-			SendInput {Backspace}{Right}{Space}{%nestedPunctuationUp%}
+			SendInput {Backspace}{Right}{%nestedPunctuationUp%}
 		}
 	}
 	
 	else ; nestingType = "unpaired"
 	{
-		if(nestLevel > 0)
+		if(nestLevel <= 0)
 		{
-			SendInput {Space}
-		}
-		else
-		{
-			SendInput {Space}{%nestedPunctuationUp%}
+			SendInput {%nestedPunctuationUp%}
 		}
 	}
+}
 
+:*?b0:`n3la::
+	KeyWait a
+	SendInput {Backspace}
+	RemoveAsteriskPairing()
+	SendInput {Space}{%capSpacingDn%}
+	return
+
+:*?b0:`n3le::
+	KeyWait e
+	SendInput {Backspace}
+	RemoveAsteriskPairing()
+	SendInput {*}{Space}{%capSpacingDn%}
+	return
+	
+:*?b0:`n3li::
+	KeyWait i
+	SendInput {Backspace}
+	RemoveAsteriskPairing()
+	SendInput {*}{*}{Space}{%capSpacingDn%}
+	return
+	
+:*?b0:`n3lh::
+	KeyWait h
+	SendInput {Backspace}
+	RemoveAsteriskPairing()
+	SendInput {*}{*}{*}{Space}{%capSpacingDn%}
+	return
+	
+; Can also use for getting ****.
+:*?b0:3l    ::
+	KeyWait Space
+	SendInput {Backspace}{*}{Space}
+	return
+
+; Can also use for getting ***.
+:*?b0:3l   ::
+	KeyWait Space
+	SendInput {Backspace}{*}{Space}
+	return
+	
+; Can also use for getting **.
+:*?b0:3l  ::
+	KeyWait Space
+	SendInput {Backspace}{*}{Space}
+	return
+	
+; Can also use for getting *.
+:*?b0:3l ::
+	KeyWait Space
+	RemoveAsteriskPairing()
+	SendInput {Space}
 	return
 	
 ; ------------------- ={Spc} -------------------
