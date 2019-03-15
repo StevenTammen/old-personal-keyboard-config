@@ -680,12 +680,6 @@ IDEWindowActive()
 }
 
 
-TerminalActive()
-{
-	return WinActive("ahk_exe mintty.exe")
-}
-
-
 ChromeActive()
 {
 	return WinActive("ahk_exe chrome.exe")
@@ -698,9 +692,27 @@ CLionActive()
 }
 
 
+EmacsActive()
+{
+	return WinActive("ahk_exe emacs.exe")
+}
+
+
 IntelliJActive()
 {
 	return WinActive("ahk_exe idea64.exe")
+}
+
+
+IswitchwActive()
+{
+	return WinActive("ahk_exe AutoHotkey.exe")
+}
+
+
+KeyPirinhaActive()
+{
+	return WinActive("ahk_exe keypirinha-x64.exe")
 }
 
 
@@ -716,15 +728,9 @@ PyCharmActive()
 }
 
 
-KeyPirinhaActive()
+TerminalActive()
 {
-	return WinActive("ahk_exe keypirinha-x64.exe")
-}
-
-
-IswitchwActive()
-{
-	return WinActive("ahk_exe AutoHotkey.exe")
+	return WinActive("ahk_exe mintty.exe")
 }
 
 

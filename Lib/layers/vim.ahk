@@ -33,24 +33,7 @@ ExitVimMode()
 {
 	if(visualMode != "")
 	{
-		if(VimWindowActive())
-		{
-			SendInput {Esc}
-		}
-		else if(NonVimTextWindowActive())
-		{
-			if(visualDirection == "before")
-			{
-				SendInput {Left}
-			}
-			else if(visualDirection == "after")
-			{
-				SendInput {Right}{Left}
-			}
-		}
-		
-		visualMode := ""
-		IniWrite, %visualMode%, Status.ini, statusVars, visualMode
+		ExitVisualMode()
 	}
 
 	vimMode := false
@@ -81,6 +64,30 @@ ExitVimMode()
 	{
 		SendInput {%rawStateUp%}
 	}
+	return
+}
+
+
+ExitVisualMode()
+{
+	if(VimWindowActive())
+	{
+		SendInput {Esc}
+	}
+	else if(NonVimTextWindowActive())
+	{
+		if(visualDirection == "before")
+		{
+			SendInput {Left}
+		}
+		else if(visualDirection == "after")
+		{
+			SendInput {Right}{Left}
+		}
+	}
+	
+	visualMode := ""
+	IniWrite, %visualMode%, Status.ini, statusVars, visualMode
 	return
 }
 

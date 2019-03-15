@@ -2288,6 +2288,8 @@ LButtonDownY := 0
 LButtonUpX := 0
 LButtonUpY := 0
 
+mouseVim := ""
+
 *LButton::
 
 	LButtonDownTime := A_TickCount
@@ -2309,6 +2311,68 @@ LButtonUpY := 0
 	}
 	else
 	{
+		if((VimWindowActive() or NonVimTextWindowActive()))
+		{
+			mouseVim := "visual"
+		
+			; Activate Vim mode if it is not already activated. Somewhat custom entry here since
+			; we want the selection points (e.g., include the char under cursor?) for mouse selection
+			; to be consistent across applications.
+			if(!vimMode)
+			{
+				mouseVim := "vim + visual"
+			
+				vimMode := true
+				IniWrite, %vimMode%, Status.ini, statusVars, vimMode
+				
+				; Always reset autospacing when entering Vim mode, since you probably won't exit it
+				; in exactly the same place you entered it, and you don't want extra spaces or
+				; weird unpredictable behavior caused by autospacing from before you entered Vim
+				; mode picking up when you exit it.
+				SendInput {%regSpacingUp%}{%capSpacingUp%}
+				
+				if(!GetKeyState(rawState))
+				{
+					SendInput {%rawStateDn%}
+				}
+				
+				if(VimWindowActive())
+				{
+					SendInput {Esc}
+				}
+				
+				; If NonVimTextWindowActive(), we don't need to do anything else, since mouse select will
+				; work correctly out of the box.
+			}
+			
+			
+			
+			; For whatever reason, the Vim mode in Jetbrains' IDEs doesn't include the character under
+			; the cursor in mouse selections. Since Emacs does, and it makes more sense to me,
+			; the {Right} here will force the Jetbrains IDEs to do it too.
+			if(CLionActive() or IntelliJActive() or PyCharmActive())
+			{
+				SendInput {Right}
+			}
+			
+			; Activate visual mode (basic visual mode, not linewise or 
+			; blockwise)
+			visualMode := "visual"
+			IniWrite, %visualMode%, Status.ini, statusVars, visualMode
+			
+			; We will already have something selected, so don't want the initial
+			; behavior if we decide to select more with the keyboard
+			initialVisualPress := false
+			
+			; Initial value for the visual direction. We'll set it with the
+			; differential of mouse position in the UpKey.
+			visualDirection := ""
+			
+			BasicVimKey("v", "")
+		}
+		
+		; Otherwise, if not in an application with Vim behavior/emulated behavior, do nothing
+		
 		SendInput {LButton Down}
 	}
 	return
@@ -2320,37 +2384,12 @@ LButtonUpY := 0
 	; Activate visual mode upon mouse selection of text
 	if( ((LButtonUpTime - LButtonDownTime) > 200) and !(NeedToDragNonText()) )
 	{
-		; Activate Vim mode if it is not already activated
-		if(!vimMode)
-		{
-			vimMode := true
-			IniWrite, %vimMode%, Status.ini, statusVars, vimMode
-			
-			; Always reset autospacing when entering Vim mode, since you probably won't exit it
-			; in exactly the same place you entered it, and you don't want extra spaces or
-			; weird unpredictable behavior caused by autospacing from before you entered Vim
-			; mode picking up when you exit it.
-			SendInput {%regSpacingUp%}{%capSpacingUp%}
-			
-			if(!GetKeyState(rawState))
-			{
-				SendInput {%rawStateDn%}
-			}
-		}
-		
-		; Activate visual mode (basic visual mode, not linewise or 
-		; blockwise)
-		visualMode := "visual"
-		IniWrite, %visualMode%, Status.ini, statusVars, visualMode
-		
-		; We will already have something selected, so don't want the initial
-		; behavior if we decide to select more with the keyboard
-		initialVisualPress := false
+		; Don't deactivate Vim mode -- we want to stay in Vim mode after a selection.
+		; Do reset the toggle, however.
+		mouseVim := ""
 		
 		; Get visual direction based off of differential in
 		; mouse position
-		visualDirection := ""
-		
 		difX := LButtonUpX - LButtonDownX
 		difY := LButtonUpY - LButtonDownY
 		
@@ -2388,8 +2427,34 @@ LButtonUpY := 0
 				visualDirection := "before"
 			}
 		}
+	}
+	
+	; If not activating visual mode = just a normal click
+	else
+	{
+		; If need to exit both vim mode and visual mode to undo DownKey
+		if(mouseVim == "vim + visual")
+		{
+			mouseVim := ""
+			ExitVimMode()
 		
-		BasicVimKey("v", "")
+			; Customized exiting behavior
+			if(CLionActive() or IntelliJActive() or PyCharmActive())
+			{
+				SendInput {i}
+			}
+			else if(TerminalActive() or EmacsActive())
+			{
+				SendInput {a}
+			}
+		}
+		
+		; If need to exit only visual mode to undo DownKey
+		else if(mouseVim == "visual")
+		{
+			mouseVim := ""
+			ExitVisualMode()
+		}
 	}
 	
 	SendInput {%regSpacingUp%}{%capSpacingUp%}{LButton Up}
