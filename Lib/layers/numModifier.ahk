@@ -159,13 +159,41 @@ r23_numModifier() {
 	{
 		numModifier_keys := ["Backspace", "-", rawLeaderUp]
 	}
+	; regSpacing after hyphen if after number, no spacing otherwise
 	else if(GetKeyState(regSpacing))
 	{			
-		numModifier_keys := ["-", regSpacingUp]
+		lastKey := A_PriorHotkey
+	
+		if((lastKey = "*3") or (lastKey = "*3 Up"))
+		{
+			lastKey := lastRealKeyDown
+		}
+		else
+		{
+			lastKey := Dual.cleanKey(lastKey)
+		}
+		
+		lastKeyIsNumber := False
+		for i, value in ["h", "i", "e", "a", "w", "m", "t", "s", "r", "n"]
+		{
+			if(lastKey = value)
+			{
+				lastKeyIsNumber := True
+			}
+		}
+		
+		if(lastKeyIsNumber)
+		{
+			numModifier_keys := ["Backspace", "-"]
+		}
+		else
+		{
+			numModifier_keys := ["Backspace", "-", regSpacingUp]
+		}
 	}
 	else if(GetKeyState(capSpacing))
 	{
-		numModifier_keys := ["-", capSpacingUp]
+		numModifier_keys := ["Backspace", "-", capSpacingUp]
 	}
 	else
 	{

@@ -240,7 +240,16 @@ shiftModifierKeys_Letter(letter)
 
 numModifierKeys_Number(num)
 {
-	numModifierKeys := GetSpecialCaseKeys()
+	lastKey := A_PriorHotkey
+	
+	if((lastKey = "*3") or (lastKey = "*3 Up"))
+	{
+		lastKey := lastRealKeyDown
+	}
+	else
+	{
+		lastKey := Dual.cleanKey(lastKey)
+	}
 
 	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
 	{
@@ -251,16 +260,42 @@ numModifierKeys_Number(num)
 		numModifierKeys := ["Backspace", num, rawLeaderUp]
 	}
 	else if(GetKeyState(regSpacing))
-	{			
+	{
+		numModifierKeys := []
+		
+		; turn hyphens with regSpacing (those after numbers) into en-dashes = have en-dashes *between* numbers
+		if(lastKey = "c")
+		{
+			numModifierKeys.Push("Backspace", "–")
+		}
+		else
+		{
+			for i, value in ["h", "i", "e", "a", "w", "m", "t", "s", "r", "n", "2"]
+			{
+				if(lastKey = value) ; The keys above will only be a number/colon if regSpacing is down. We don't want a leading space for these.
+				{
+					numModifierKeys.Push("Backspace")
+				}
+			}
+		}
 		numModifierKeys.Push(num, "Space")
 	}
 	else if(GetKeyState(capSpacing))
 	{
-		numModifierKeys.Push(num, "Space", regSpacingDn, capSpacingUp)
+		numModifierKeys := [num, "Space", regSpacingDn, capSpacingUp]
 	}
 	else
 	{
-		numModifierKeys.Push("Space", num, "Space", regSpacingDn)
+		; TODO: handle case when you backspace a letter and then want a leading space before a number.
+		; Implement this once a proper backspacing/entry queue has been implemented.
+		if(lastKey = "Backspace")
+		{
+			numModifierKeys := [num, "Space", regSpacingDn]
+		}
+		else
+		{
+			numModifierKeys := ["Space", num, "Space", regSpacingDn]
+		}
 	}
 
 	return numModifierKeys
@@ -578,42 +613,6 @@ WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
 		closingChars := RemoveClosingCharFromStack(closingChars)
 		IniWrite, %closingChars%, Status.ini, nestVars, closingChars
 	}
-}
-
-
-GetSpecialCaseKeys()
-{
-	lastKey := A_PriorHotkey
-	
-	if((lastKey = "*3") or (lastKey = "*3 Up"))
-	{
-		lastKey := lastRealKeyDown
-	}
-	else
-	{
-		lastKey := Dual.cleanKey(lastKey)
-	}
-
-	regSpacingIsDown := GetKeyState(regSpacing)
-
-
-	specialCaseKeys := []
-
-	if((lastKey = "c") and regSpacingIsDown)
-	{
-		specialCaseKeys.Push("Backspace", "–")   ; replace hyphens with en dashes between numbers
-	}
-	else
-	{
-		for i, value in ["h", "i", "e", "a", "w", "m", "t", "s", "r", "n", "2"]
-		{
-			if((lastKey = value) and regSpacingIsDown) ; The keys above will only be a number if regSpacing is down. We don't want a leading space for these
-			{
-				specialCaseKeys.Push("Backspace")
-			}
-		}
-	}
-	return specialCaseKeys
 }
 
 
