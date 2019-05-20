@@ -206,7 +206,23 @@ global winLeaderUp := "VK8D Up"
 ; Number Row
 ;-------------------------------------------------
 
+; Temporary location for link creation
 *=::
+	
+	; Get values for the link's URL and text
+	link_url := Clipboard
+	Clipboard := ""
+	SendInput d
+	ExitVisualMode()
+	ClipWait ; Wait until new text arrives
+	link_text := Clipboard
+	
+	; Create link, and end up in Vim mode
+	Clipboard := "[[" link_url "][" link_text "]]"
+	SendInput P
+	return
+	
+	/*
 	numModifier_keys := l11_numModifier()
 	shiftModifier_keys := l11_shiftModifier()
 	expd1Modifier_keys := l11_expd1Modifier()
@@ -218,6 +234,7 @@ global winLeaderUp := "VK8D Up"
 	l11_afterNum()
 	dual.comboKey({(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys})
 	return
+	*/
 	
 *LShift::
 	if(GetKeyState(numLeader) or numDownNoUp)
