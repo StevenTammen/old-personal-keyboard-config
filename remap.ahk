@@ -508,15 +508,21 @@ global winLeaderUp := "VK8D Up"
 	return
 *8::
 	EnterVimMode()
-	SendInput ^#kOrg{:}{Space}
+	SendInput ^#k
+	WinWaitActive, ahk_exe keypirinha-x64.exe
+	SendInput Org{:}{Space}
 	return
 *9::
 	EnterVimMode()
-	SendInput ^#kCode{:}{Space}
+	SendInput ^#k
+	WinWaitActive, ahk_exe keypirinha-x64.exe
+	SendInput Code{:}{Space}
 	return
 *Right::
 	EnterVimMode()
-	SendInput ^#kDesktops{:}{Space}
+	SendInput ^#k
+	WinWaitActive, ahk_exe keypirinha-x64.exe
+	SendInput Desktops{:}{Space}
 	return
 *`::
 	numModifier_keys := r16_numModifier()
