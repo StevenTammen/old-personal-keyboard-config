@@ -61,9 +61,12 @@ r15_numModifier() {
 	SendInput {%shiftLeaderUp%}{%shiftModifierDn%}
 	return numModifier_keys
 }
+; Temporary location for partial stopping behavior
 r16_numModifier() {
-	numModifier_keys := [""]
-	return numModifier_keys
+	; Exit everything but KP and iswitchw
+	ExitAllAHK()
+	Run C:\Users\steve\Desktop\Projects\personal-keyboard-config\iswitchw.ahk
+	ExitApp
 }
 
 

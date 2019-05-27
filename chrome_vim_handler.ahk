@@ -1,6 +1,7 @@
 ﻿#NoEnv
 SendMode Input
 #SingleInstance force
+SetWorkingDir %A_ScriptDir%
 
 #Include <functions>
 #Include <layers/vim>

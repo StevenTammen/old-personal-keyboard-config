@@ -715,10 +715,6 @@ lt2_vim() {
 	return
 }
 lt3_vim() {
-	BasicVimKey("s", "{Del}")
-	visualMode := ""
-	IniWrite, %visualMode%, Status.ini, statusVars, visualMode
-	ExitVimMode()
 	return
 }
 lt4_vim() {

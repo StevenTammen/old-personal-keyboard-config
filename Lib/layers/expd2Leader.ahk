@@ -277,8 +277,10 @@ lt2_expd2Leader(expd2Modifier_keys) {
 	expd2Leader_keys := AddKeyUp(expd2Modifier_keys, expd2LeaderUp)
 	return expd2Leader_keys
 }
+; This is Expd1. We don't want anything to happen here because Expd2 + Expd1 + top row keys
+; place windows into the layered positions
 lt3_expd2Leader(expd2Modifier_keys) {
-	expd2Leader_keys := AddKeyUp(expd2Modifier_keys, expd2LeaderUp)
+	expd2Leader_keys := []
 	return expd2Leader_keys
 }
 lt4_expd2Leader(expd2Modifier_keys) {

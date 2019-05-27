@@ -6,24 +6,69 @@ l11_expd2Modifier() {
 	return expd2Modifier_keys
 }
 l12_expd2Modifier() {
-	AssociateActiveWindowWithLocation("layered", "farLeft")
+	lastKey := A_PriorHotkey
+	; If layering with Expd1
+	if(lastKey == "*0" or lastKey == "*0 Up")
+	{
+		Place_Layered_FarLeft()
+	}
+	else
+	{
+		Place_FarLeft()
+	}
 	return
 }
 l13_expd2Modifier() {
-	AssociateActiveWindowWithLocation("layered", "midLeft")
+	lastKey := A_PriorHotkey
+	; If layering with Expd1
+	if(lastKey == "*0" or lastKey == "*0 Up")
+	{
+		Place_Layered_MidLeft()
+	}
+	else
+	{
+		Place_MidLeft()
+	}
 	return
 }
 l14_expd2Modifier() {
-	AssociateActiveWindowWithLocation("layered", "midRight")
+	lastKey := A_PriorHotkey
+	; If layering with Expd1
+	if(lastKey == "*0" or lastKey == "*0 Up")
+	{
+		Place_Layered_MidRight()
+	}
+	else
+	{
+		Place_MidRight()
+	}
 	return
 }
 l15_expd2Modifier() {
-	AssociateActiveWindowWithLocation("layered", "farRight")
+	lastKey := A_PriorHotkey
+	; If layering with Expd1
+	if(lastKey == "*0" or lastKey == "*0 Up")
+	{
+		Place_Layered_FarRight()
+	}
+	else
+	{
+		Place_FarRight()
+	}
 	return
 }
 l16_expd2Modifier() {
-	expd2Modifier_keys := [""]
-	return expd2Modifier_keys
+	lastKey := A_PriorHotkey
+	; If layering with Expd1
+	if(lastKey == "*0" or lastKey == "*0 Up")
+	{
+		Place_Layered_Mid()
+	}
+	else
+	{
+		Place_Mid()
+	}
+	return
 }
 
 

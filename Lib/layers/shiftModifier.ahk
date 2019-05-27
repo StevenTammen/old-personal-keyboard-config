@@ -1,29 +1,52 @@
-﻿; shiftber Row
+﻿; Number Row
 ;-------------------------------------------------
 
+; Temp location for setup behavior
 l11_shiftModifier() {
+
+	Loop, 17
+	{
+		SendInput ^#d
+		Sleep, 50
+	}
+
+	Sleep, 500
+	DllCall(GoToDesktopNumberProc, UInt, 1) ; Communication
+	Sleep, 500
+	CreateCommunication()
+	Sleep, 500
+
+	DllCall(GoToDesktopNumberProc, UInt, 2) ; Writing 1
+	Sleep, 500
+	CreateWriting1()
+	Sleep, 500
+
+	DllCall(GoToDesktopNumberProc, UInt, 0) ; Tasks
+	Sleep, 500
+	CreateTasks()
+	
 	shiftModifier_keys := [""]
 	return shiftModifier_keys
 }
 l12_shiftModifier() {
-	AssociateActiveWindowWithLocation("unlayered", "farLeft")
+	Move_FarLeft()
 	return
 }
 l13_shiftModifier() {
-	AssociateActiveWindowWithLocation("unlayered", "midLeft")
+	Move_MidLeft()
 	return
 }
 l14_shiftModifier() {
-	AssociateActiveWindowWithLocation("unlayered", "midRight")
+	Move_MidRight()
 	return
 }
 l15_shiftModifier() {
-	AssociateActiveWindowWithLocation("unlayered", "farRight")
+	Move_FarRight()
 	return
 }
 l16_shiftModifier() {
-	shiftModifier_keys := [""]
-	return shiftModifier_keys
+	Move_Mid()
+	return
 }
 
 

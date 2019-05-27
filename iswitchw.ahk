@@ -86,7 +86,7 @@ Gui, Add, ListView, w854 h510 x4 y40 -VScroll -HScroll -Hdr -Multi Count10 AltSu
 
 ;----------------------------------------------------------------------
 ;
-; Ctrl + Alt + Shift + 1 to activate. Send this with another AHK script.
+; Win + Space to activate. Send this with another AHK script.
 ;
 ^!+1::
 

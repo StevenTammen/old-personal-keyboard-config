@@ -616,6 +616,21 @@ WriteNestVarsIfApplicable_Closing(nestLevel, closingChars)
 }
 
 
+; From https://autohotkey.com/board/topic/47050-how-to-close-all-running-scripts/?p=293304
+ExitAllAHK()
+{
+	DetectHiddenWindows, % ( ( DHW:=A_DetectHiddenWindows ) + 0 ) . "On"
+
+	WinGet, L, List, ahk_class AutoHotkey
+
+	Loop %L%
+		If ( L%A_Index% <> WinExist( A_ScriptFullPath " ahk_class AutoHotkey" ) )
+			PostMessage, 0x111, 65405, 0,, % "ahk_id " L%A_Index%
+
+	DetectHiddenWindows, %DHW%
+}
+
+
 VimWindowActive()
 {
 	; List of executable files (ahk_exe) that implement Vim behavior.

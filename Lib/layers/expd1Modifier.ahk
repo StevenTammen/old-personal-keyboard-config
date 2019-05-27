@@ -51,9 +51,48 @@ r15_expd1Modifier() {
 	expd1Modifier_keys := [""]
 	return expd1Modifier_keys
 }
+
+CloseVirtualDesktopWindows()
+{
+	; Do for all 17 virtual desktops after the first
+	Loop, 17
+	{
+		; Go to the virtual desktop
+		DllCall(GoToDesktopNumberProc, UInt, 1)
+		Sleep, 500
+		
+		; Close all the windows on the virtual desktop
+		WinGet, id, list, , , Program Manager
+		
+		Loop, %id%
+		{
+			StringTrimRight, wid, id%A_Index%, 0
+			WinGetTitle, title, ahk_id %wid%
+			StringTrimRight, title, title, 0
+
+			; don't add windows not in current virtual desktop
+			isOnDesktop := DllCall(IsWindowOnCurrentVirtualDesktopProc, UInt, wid, UInt)
+			if (!isOnDesktop)
+				continue
+				
+			; FIXME: windows with empty titles?
+			if title =
+				continue
+
+			WinClose, ahk_id %wid%
+		}
+	
+		; Close the virtual desktop
+		SendInput ^#{F4}
+	}
+}
+
 r16_expd1Modifier() {
-	expd1Modifier_keys := [""]
-	return expd1Modifier_keys
+	CloseVirtualDesktopWindows()
+	; Exit everything keyboard related but KP and iswitchw
+	ExitAllAHK()
+	Run C:\Users\steve\Desktop\Projects\personal-keyboard-config\iswitchw.ahk
+	ExitApp
 }
 
 
