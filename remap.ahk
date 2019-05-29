@@ -2160,10 +2160,8 @@ justExitedVim_Num := false
 	
 	return
 *5::
-	ExitVimMode()
+	EnterVimMode()
 	SendInput {Esc}{Space}fs
-	Sleep, 50
-	SendInput a
 	return
 
 	
@@ -2352,6 +2350,10 @@ semicolonKeys := ""
 *6::
 	ExitVimMode()
 	SendInput {Esc}{Space}fr
+	return
+*PgDn::
+	EnterVimMode()
+	SendInput {Esc}{Space}bd
 	return
 
 
