@@ -1589,7 +1589,6 @@ global winLeaderUp := "VK8D Up"
 	{
 		ExitVimMode()
 	}
-
 	if(Modifiers("l45", ",", ","))
 	{
 		return
@@ -2160,7 +2159,12 @@ justExitedVim_Num := false
 	expd1DownNoUp := false
 	
 	return
-
+*5::
+	ExitVimMode()
+	SendInput {Esc}{Space}fs
+	Sleep, 50
+	SendInput a
+	return
 
 	
 	
@@ -2344,6 +2348,10 @@ semicolonKeys := ""
 	
 	expd2DownNoUp := false
 	
+	return
+*6::
+	ExitVimMode()
+	SendInput {Esc}{Space}fr
 	return
 
 
