@@ -10,11 +10,11 @@ l12_expd2Modifier() {
 	; If layering with Expd1
 	if(lastKey == "*0" or lastKey == "*0 Up")
 	{
-		Place_Layered_FarLeft()
+		Place_FarLeft("layered")
 	}
 	else
 	{
-		Place_FarLeft()
+		Place_FarLeft("unlayered")
 	}
 	return
 }
@@ -23,11 +23,11 @@ l13_expd2Modifier() {
 	; If layering with Expd1
 	if(lastKey == "*0" or lastKey == "*0 Up")
 	{
-		Place_Layered_MidLeft()
+		Place_MidLeft("layered")
 	}
 	else
 	{
-		Place_MidLeft()
+		Place_MidLeft("unlayered")
 	}
 	return
 }
@@ -36,11 +36,11 @@ l14_expd2Modifier() {
 	; If layering with Expd1
 	if(lastKey == "*0" or lastKey == "*0 Up")
 	{
-		Place_Layered_MidRight()
+		Place_MidRight("layered")
 	}
 	else
 	{
-		Place_MidRight()
+		Place_MidRight("unlayered")
 	}
 	return
 }
@@ -49,11 +49,11 @@ l15_expd2Modifier() {
 	; If layering with Expd1
 	if(lastKey == "*0" or lastKey == "*0 Up")
 	{
-		Place_Layered_FarRight()
+		Place_FarRight("layered")
 	}
 	else
 	{
-		Place_FarRight()
+		Place_FarRight("unlayered")
 	}
 	return
 }
@@ -62,11 +62,11 @@ l16_expd2Modifier() {
 	; If layering with Expd1
 	if(lastKey == "*0" or lastKey == "*0 Up")
 	{
-		Place_Layered_Mid()
+		Place_Mid("layered")
 	}
 	else
 	{
-		Place_Mid()
+		Place_Mid("unlayered")
 	}
 	return
 }

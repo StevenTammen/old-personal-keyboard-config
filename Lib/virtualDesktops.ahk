@@ -73,7 +73,7 @@ CreateTasks()
 {
 	Run chrome.exe
 	Sleep, 2000
-	Place_FarLeft()
+	Place_FarLeft("unlayered")
 	SendInput {Raw}https://www.meistertask.com/app/project/dfvI3LQ8/daily-tasks
 	Sleep, 1000
 	SendInput {Enter}
@@ -83,12 +83,12 @@ CreateTasks()
 	Sleep, 6000
 	Run C:\Users\steve\Desktop\Projects\steventammen.com\org\drafts\braindump.org
 	Sleep, 8000
-	Place_MidLeft()
+	Place_MidLeft("unlayered")
 
 	
 	Run chrome.exe
 	Sleep, 3000
-	Place_FarRight()
+	Place_FarRight("unlayered")
 	SendInput {Raw}https://calendar.google.com/calendar/r
 	Sleep, 1000
 	SendInput {Enter}
@@ -96,7 +96,7 @@ CreateTasks()
 	
 	Run chrome.exe
 	Sleep, 3000
-	Place_MidRight()
+	Place_MidRight("unlayered")
 	SendInput {Raw}https://www.meistertask.com/app/project/9mWV72TC/life
 	Sleep, 1000
 	SendInput {Enter}
@@ -120,20 +120,20 @@ CreateCommunication()
 {
 	Run C:\Program Files (x86)\Microsoft\Skype for Desktop\Skype.exe
 	Sleep 20000
-	Place_Layered_FarLeft()
+	Place_FarLeft("layered")
 
 	phoneApp := A_ScriptDir . "\YourPhone.lnk"
 	Run %phoneApp%
 	Sleep, 2000
-	Place_FarRight()
+	Place_FarRight("unlayered")
 
 	Run %ComSpec% /c C:\Users\steve\AppData\Local\Discord\Update.exe --processStart Discord.exe
 	Sleep, 20000
-	Place_FarLeft()
+	Place_FarLeft("unlayered")
 
 	Run chrome.exe
 	Sleep, 5000
-	Place_Mid()
+	Place_Mid("unlayered")
 	SendInput {Raw}https://mail.google.com/mail/u/0/#inbox
 	Sleep, 1000
 	SendInput {Enter}
@@ -151,34 +151,34 @@ CreateWriting1()
 {
 	Run C:\Users\steve\Desktop\WSL Terminal.lnk
 	Sleep, 8000
-	Place_Layered_FarLeft()
+	Place_FarLeft("layered")
 	
 	Run %ComSpec% /c C:\Users\steve\AppData\Local\emacs\bin\emacsclientw.exe -c -n -a ""
 	Sleep, 17000
-	Place_MidRight()
+	Place_MidRight("unlayered")
 	
 	Run %ComSpec% /c C:\Users\steve\AppData\Local\emacs\bin\emacsclientw.exe -c -n -a ""
 	Sleep, 5000
-	Place_MidLeft()
+	Place_MidLeft("unlayered")
 	
 	Run explorer.exe
 	Sleep, 3000
-	Place_Layered_Mid()
+	Place_Mid("layered")
 	
 	Run chrome.exe
 	Sleep, 3000
-	Place_Layered_FarRight()
+	Place_FarRight("layered")
 	SendInput {Raw}http://localhost:1313/drafts/
 	Sleep, 1000
 	SendInput {Enter}
 	Sleep, 200
 	Run chrome.exe
 	Sleep, 3000
-	Place_FarRight()
+	Place_FarRight("unlayered")
 	
 	Run chrome.exe
 	Sleep, 3000
-	Place_FarLeft()
+	Place_FarLeft("unlayered")
 }
 
 
@@ -215,22 +215,10 @@ Win__Fling(WinID, Position)
    ; Here's where we find out just how many monitors we're dealing with
    SysGet, MonitorCount, MonitorCount
 
-   if (MonitorCount != 3)
+   if (MonitorCount > 3)
    {
-      ; Require 3 monitors for this script. Less or more is an error.
+      ; Require less than 3 monitors for this script. More is an error.
       return 0
-   }
-
-   ; For each active monitor, we get Top, Bottom, Left, Right of the monitor's
-   ;  'Work Area' (i.e., excluding taskbar, etc.). From these values we compute Width and Height.
-   ;  Results get put into variables named like "Monitor1Top" and "Monitor2Width", etc.,
-   ;  with the monitor number embedded in the middle of the variable name.
-
-   Loop, %MonitorCount%
-   {
-      SysGet, Monitor%A_Index%, MonitorWorkArea, %A_Index%
-      Monitor%A_Index%Width  := Monitor%A_Index%Right  - Monitor%A_Index%Left
-      Monitor%A_Index%Height := Monitor%A_Index%Bottom - Monitor%A_Index%Top
    }
 
    ; Retrieve the target window's original minimized / maximized state
@@ -242,204 +230,291 @@ Win__Fling(WinID, Position)
       ; Debatable as to whether or not this should be flagged as an error
       return 0
    }
-
-   ; Retrieve the target window's original (non-maximized) dimensions
-   WinGetPos, WinX, WinY, WinW, WinH, ahk_id %WinID%
-
-   ; Find the point at the centre of the target window then use it
-   ; to determine the monitor to which the target window belongs
-   ; (windows don't have to be entirely contained inside any one monitor's area).
    
-   WinCentreX := WinX + WinW / 2
-   WinCentreY := WinY + WinH / 2
+   ; For each active monitor, we get Top, Bottom, Left, Right of the monitor's
+   ;  'Work Area' (i.e., excluding taskbar, etc.). From these values we compute Width and Height.
+   ;  Results get put into variables named like "Monitor1Top" and "Monitor2Width", etc.,
+   ;  with the monitor number embedded in the middle of the variable name.
 
-   CurrMonitor = 0
    Loop, %MonitorCount%
    {
-      if (    (WinCentreX >= Monitor%A_Index%Left) and (WinCentreX < Monitor%A_Index%Right )
-          and (WinCentreY >= Monitor%A_Index%Top ) and (WinCentreY < Monitor%A_Index%Bottom))
-      {
-         CurrMonitor = %A_Index%
-         break
-      }
+      SysGet, Monitor%A_Index%, MonitorWorkArea, %A_Index%
+      Monitor%A_Index%Width  := Monitor%A_Index%Right  - Monitor%A_Index%Left
+      Monitor%A_Index%Height := Monitor%A_Index%Bottom - Monitor%A_Index%Top
    }
    
-   ; Here assume only three monitors.
-	if(CurrMonitor == 2)
+	; One monitor. Assuming it is 1920x1080. Will add 4k behavior later.
+	if(MonitorCount == 1)
 	{
-		if(Position == "Left")
+		if(Position == "farLeft" or Position == "midLeft")
 		{
-			NextMonitor := 3
+			MoveWindow(WinID, "Left")
 		}
-		else if(Position == "Center")
+		else if(Position == "mid")
 		{
-			; Maximize the window on the monitor, in case it isn't already
-			WinMaximize, ahk_id %WinID%
-			return 1
+			MoveWindow(WinID)
 		}
-		else if(Position == "Right")
+		else ; Position == "midRight" or Position == "farRight"
 		{
-			NextMonitor := 1
+			MoveWindow(WinID, "Right")
 		}
 	}
-	else if(CurrMonitor == 1)
+	
+	else
 	{
-		if(Position == "Left")
-		{
-			NextMonitor := 3
-		}
-		else if(Position == "Center")
-		{
-			NextMonitor := 2
-		}
-		else if(Position == "Right")
-		{
-			; Maximize the window on the monitor, in case it isn't already
-			WinMaximize, ahk_id %WinID%
-			return 1
-		}
-	}
-	else ; (CurrMonitor == 3)
-	{
-		if(Position == "Left")
-		{
-			; Maximize the window on the monitor, in case it isn't already
-			WinMaximize, ahk_id %WinID%
-			return 1
-		}
-		else if(Position == "Center")
-		{
-			NextMonitor := 2
-		}
-		else if(Position == "Right")
-		{
-			NextMonitor := 1
-		}
-	}
+		; Retrieve the target window's original dimensions
+		WinGetPos, WinX, WinY, WinW, WinH, ahk_id %WinID%
 
+		; Find the point at the centre of the target window then use it
+		; to determine the monitor to which the target window belongs
+		; (windows don't have to be entirely contained inside any one monitor's area).
 
-   WinFlingX := Monitor%NextMonitor%Left
-   WinFlingY := Monitor%NextMonitor%Top
-   
-   WinFlingW := Monitor%NextMonitor%Width
-   WinFlingH := Monitor%NextMonitor%Height
-  
-   ; It's time for the target window to make its big move
-   WinMove, ahk_id %WinID%,, WinFlingX, WinFlingY, WinFlingW, WinFlingH
-   
-   Sleep, 500
-   
-   WinMaximize, ahk_id %WinID%
-   
-   Sleep, 500
+		WinCentreX := WinX + WinW / 2
+		WinCentreY := WinY + WinH / 2
+
+		CurrMonitor = 0
+		Loop, %MonitorCount%
+		{
+			if (    (WinCentreX >= Monitor%A_Index%Left) and (WinCentreX < Monitor%A_Index%Right )
+			and (WinCentreY >= Monitor%A_Index%Top ) and (WinCentreY < Monitor%A_Index%Bottom))
+			{
+				CurrMonitor = %A_Index%
+				break
+			}
+		}
+		
+		; Two monitors
+		if(MonitorCount == 2)
+		{
+			if(Monitor1Left < Monitor2Left)
+			{
+				LeftMonitor := 1
+				RightMonitor := 2
+			}
+			else ;(Monitor2Left < Monitor1Left)
+			{
+				LeftMonitor := 2
+				RightMonitor := 1
+			}
+			
+			if(CurrMonitor == LeftMonitor)
+			{
+				if(Position == "farLeft" or Position == "midLeft")
+				{
+					MoveWindow(WinID)
+				}
+				; There is no middle position with only 2 monitors. Rather than throwing
+				; an error, just stick the window on the monitor it starts on
+				else if(Position == "mid")
+				{
+					MoveWindow(WinID)
+				}
+				else ; Position == "midRight" or Position == "farRight"
+				{
+					MoveWindow(WinID, "FullWidth", RightMonitor, Monitor%RightMonitor%Left, Monitor%RightMonitor%Top, Monitor%RightMonitor%Width, Monitor%RightMonitor%Height)
+				}
+			}
+			else ; CurrMonitor == RightMonitor
+			{
+				if(Position == "farLeft" or Position == "midLeft")
+				{
+					MoveWindow(WinID, "FullWidth", LeftMonitor, Monitor%LeftMonitor%Left, Monitor%LeftMonitor%Top, Monitor%LeftMonitor%Width, Monitor%LeftMonitor%Height)
+				}
+				; There is no middle position with only 2 monitors. Rather than throwing
+				; an error, just stick the window on the monitor it starts on
+				else if(Position == "mid")
+				{
+					MoveWindow(WinID)
+				}
+				else ; Position == "midRight" or Position == "farRight"
+				{
+					MoveWindow(WinID)
+				}
+			}
+		}
+	   
+		; Three monitors
+		else
+		{
+
+			if(Monitor1Left < Monitor2Left and Monitor1Left < Monitor3Left)
+			{
+				LeftMonitor := 1
+				if(Monitor2Left < Monitor3Left)
+				{
+					CenterMonitor := 2
+					RightMonitor := 3
+				}
+				else ; Monitor3Left < Monitor2Left
+				{
+					CenterMonitor := 3
+					RightMonitor := 2
+				}
+			}
+			else if(Monitor2Left < Monitor1Left and Monitor2Left < Monitor3Left)
+			{
+				LeftMonitor := 2
+				if(Monitor1Left < Monitor3Left)
+				{
+					CenterMonitor := 1
+					RightMonitor := 3
+				}
+				else ; Monitor3Left < Monitor1Left
+				{
+					CenterMonitor := 3
+					RightMonitor := 1
+				}
+			}
+			else ;(Monitor3Left < Monitor1Left and Monitor3Left < Monitor2Left)
+			{
+				LeftMonitor := 3
+				if(Monitor1Left < Monitor2Left)
+				{
+					CenterMonitor := 1
+					RightMonitor := 2
+				}
+				else ; Monitor2Left < Monitor1Left
+				{
+					CenterMonitor := 2
+					RightMonitor := 1
+				}
+			}
+		
+		
+			if(CurrMonitor == LeftMonitor)
+			{
+				if(Position == "farLeft")
+				{
+					MoveWindow(WinID)
+				}
+				else if(Position == "midLeft")
+				{
+					MoveWindow(WinID, "Left", CenterMonitor, Monitor%CenterMonitor%Left, Monitor%CenterMonitor%Top, Monitor%CenterMonitor%Width, Monitor%CenterMonitor%Height)
+				}
+				else if(Position == "mid")
+				{
+					MoveWindow(WinID, "FullWidth", CenterMonitor, Monitor%CenterMonitor%Left, Monitor%CenterMonitor%Top, Monitor%CenterMonitor%Width, Monitor%CenterMonitor%Height)
+				}
+				else if(Position == "midRight")
+				{
+					MoveWindow(WinID, "Right", CenterMonitor, Monitor%CenterMonitor%Left, Monitor%CenterMonitor%Top, Monitor%CenterMonitor%Width, Monitor%CenterMonitor%Height)
+				}
+				else ;(Position == "farRight")
+				{
+					MoveWindow(WinID, "FullWidth", RightMonitor, Monitor%RightMonitor%Left, Monitor%RightMonitor%Top, Monitor%RightMonitor%Width, Monitor%RightMonitor%Height)
+				}
+			}
+			else if(CurrMonitor == CenterMonitor)
+			{
+				if(Position == "farLeft")
+				{
+					MoveWindow(WinID, "FullWidth", LeftMonitor, Monitor%LeftMonitor%Left, Monitor%LeftMonitor%Top, Monitor%LeftMonitor%Width, Monitor%LeftMonitor%Height)
+				}
+				else if(Position == "midLeft")
+				{
+					MoveWindow(WinID, "Left")
+				}
+				else if(Position == "mid")
+				{
+					MoveWindow(WinID)
+				}
+				else if(Position == "midRight")
+				{
+					MoveWindow(WinID, "Right")
+				}
+				else ;(Position == "farRight")
+				{
+					MoveWindow(WinID, "FullWidth", RightMonitor, Monitor%RightMonitor%Left, Monitor%RightMonitor%Top, Monitor%RightMonitor%Width, Monitor%RightMonitor%Height)
+				}
+			}
+			else ; (CurrMonitor == RightMonitor)
+			{
+				if(Position == "farLeft")
+				{
+					MoveWindow(WinID, "FullWidth", LeftMonitor, Monitor%LeftMonitor%Left, Monitor%LeftMonitor%Top, Monitor%LeftMonitor%Width, Monitor%LeftMonitor%Height)
+				}
+				else if(Position == "midLeft")
+				{
+					MoveWindow(WinID, "Left", CenterMonitor, Monitor%CenterMonitor%Left, Monitor%CenterMonitor%Top, Monitor%CenterMonitor%Width, Monitor%CenterMonitor%Height)
+				}
+				else if(Position == "mid")
+				{
+					MoveWindow(WinID, "FullWidth", CenterMonitor, Monitor%CenterMonitor%Left, Monitor%CenterMonitor%Top, Monitor%CenterMonitor%Width, Monitor%CenterMonitor%Height)
+				}
+				else if(Position == "midRight")
+				{
+					MoveWindow(WinID, "Right", CenterMonitor, Monitor%CenterMonitor%Left, Monitor%CenterMonitor%Top, Monitor%CenterMonitor%Width, Monitor%CenterMonitor%Height)
+				}
+				else ;(Position == "farRight")
+				{
+					MoveWindow(WinID)
+				}
+			}
+		}
+	}
 
    return 1
 }
 
 
-Move_FarLeft()
+MoveWindow(WinID, ScreenSide = "FullWidth", NextMonitor = 0, WinFlingX = 0, WinFlingY = 0, WinFlingW = 0, WinFlingH = 0)
 {
-	Win__Fling("A", "Left")
-}
+	if(NextMonitor != 0)
+	{
+		WinMove, ahk_id %WinID%,, WinFlingX, WinFlingY, WinFlingW, WinFlingH
+		Sleep, 500
+	}
 
+	WinMaximize, ahk_id %WinID%
 
-Move_MidLeft()
-{
-	Win__Fling("A", "Center")
-	SendInput #{Left}
+	if(ScreenSide == "Left")
+	{
+		Sleep, 500
+		SendInput #{Left}
+	}
+	else if(ScreenSide == "Right")
+	{
+		Sleep, 500
+		SendInput #{Right}
+	}
+	
 	Sleep, 500
 }
 
 
-Move_Mid()
+Place_FarLeft(layerState)
 {
-	Win__Fling("A", "Center")
+	Win__Fling("A", "farLeft")
+	AssociateActiveWindowWithLocation(layerState, "farLeft")
 }
 
 
-Move_MidRight()
+Place_MidLeft(layerState)
 {
-	Win__Fling("A", "Center")
-	SendInput #{Right}
-	Sleep, 500
+	Win__Fling("A", "midLeft")
+	AssociateActiveWindowWithLocation(layerState, "midLeft")
 }
 
 
-Move_FarRight()
+Place_Mid(layerState)
 {
-	Win__Fling("A", "Right")
+	Win__Fling("A", "mid")
+	AssociateActiveWindowWithLocation(layerState, "midLeft")
+	AssociateActiveWindowWithLocation(layerState, "midRight")
 }
 
 
-Place_FarLeft()
+Place_MidRight(layerState)
 {
-	Move_FarLeft()
-	AssociateActiveWindowWithLocation("unlayered", "farLeft")
+	Win__Fling("A", "midRight")
+	AssociateActiveWindowWithLocation(layerState, "midRight")
 }
 
 
-Place_MidLeft()
+Place_FarRight(layerState)
 {
-	Move_MidLeft()
-	AssociateActiveWindowWithLocation("unlayered", "midLeft")
-}
-
-
-Place_Mid()
-{
-	Move_Mid()
-	AssociateActiveWindowWithLocation("unlayered", "midLeft")
-	AssociateActiveWindowWithLocation("unlayered", "midRight")
-}
-
-
-Place_MidRight()
-{
-	Move_MidRight()
-	AssociateActiveWindowWithLocation("unlayered", "midRight")
-}
-
-
-Place_FarRight()
-{
-	Move_FarRight()
-	AssociateActiveWindowWithLocation("unlayered", "farRight")
-}
-
-
-Place_Layered_FarLeft()
-{
-	Move_FarLeft()
-	AssociateActiveWindowWithLocation("layered", "farLeft")
-}
-
-
-Place_Layered_MidLeft()
-{
-	Move_MidLeft()
-	AssociateActiveWindowWithLocation("layered", "midLeft")
-}
-
-
-Place_Layered_Mid()
-{
-	Move_Mid()
-	AssociateActiveWindowWithLocation("layered", "midLeft")
-	AssociateActiveWindowWithLocation("layered", "midRight")
-}
-
-
-Place_Layered_MidRight()
-{
-	Move_MidRight()
-	AssociateActiveWindowWithLocation("layered", "midRight")
-}
-
-
-Place_Layered_FarRight()
-{
-	Move_FarRight()
-	AssociateActiveWindowWithLocation("layered", "farRight")
+	Win__Fling("A", "farRight")
+	AssociateActiveWindowWithLocation(layerState, "farRight")
 }
 
 

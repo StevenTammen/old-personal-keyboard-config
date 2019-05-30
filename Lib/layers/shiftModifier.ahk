@@ -29,23 +29,23 @@ l11_shiftModifier() {
 	return shiftModifier_keys
 }
 l12_shiftModifier() {
-	Move_FarLeft()
+	Win__Fling("A", "farLeft")
 	return
 }
 l13_shiftModifier() {
-	Move_MidLeft()
+	Win__Fling("A", "midLeft")
 	return
 }
 l14_shiftModifier() {
-	Move_MidRight()
+	Win__Fling("A", "midRight")
 	return
 }
 l15_shiftModifier() {
-	Move_FarRight()
+	Win__Fling("A", "farRight")
 	return
 }
 l16_shiftModifier() {
-	Move_Mid()
+	Win__Fling("A", "mid")
 	return
 }
 
