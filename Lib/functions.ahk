@@ -679,7 +679,7 @@ NonVimTextWindowActive()
 IDEWindowActive()
 {
 	; List of IDE programs
-	IDEs := ["clion64.exe", "idea64.exe", "notepad++.exe", "pycharm64.exe"]
+	IDEs := ["clion64.exe", "idea64.exe", "notepad++.exe", "pycharm64.exe", "explorer.exe"]
 	
 	for index, executable in IDEs
 	{
