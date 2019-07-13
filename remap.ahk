@@ -2045,7 +2045,7 @@ justExitedVimMode := false
 	expd2Modifier_keys := lt1_expd2Modifier()
 	numLeader_keys := lt1_numLeader(numModifier_keys)
 	shiftLeader_keys := lt1_shiftLeader(shiftModifier_keys)
-	expd1Leader_keys := lt1_expd1Leader(expd1Modifier_keys)
+	expd1Leader_keys := lt1_expd1Leader(expd1Modifier_keys)a
 	expd2Leader_keys := lt1_expd2Leader(expd2Modifier_keys)
 	lt1_afterNum()
 	dual.comboKey(["Space", regSpacingDn], {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
@@ -2257,7 +2257,7 @@ colonKeys := false
 		dual.comboKey({(numModifier): numModifier_keys})
 		return
 	}
-	else if((lastKey = "*3") or (lastKey = "*3 Up")) {
+	else if(GetKeyState(numLeader)){
 		colonKeys := true
 		numModifier_keys := rt2_numModifier()
 		numLeader_keys := rt2_numLeader(numModifier_keys)
