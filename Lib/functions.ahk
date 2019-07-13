@@ -268,6 +268,13 @@ numModifierKeys_Number(num)
 		{
 			numModifierKeys.Push("Backspace", "–")
 		}
+		else if(lastKey = ",")
+		{
+			if (numDownNoUp)
+			{
+				numModifierKeys.Push("Backspace", "Backspace", ",")
+			}
+		}
 		else
 		{
 			for i, value in ["h", "i", "e", "a", "w", "m", "t", "s", "r", "n", "2"]
