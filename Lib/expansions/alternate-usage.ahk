@@ -48,24 +48,34 @@ f_listitem3(matchObj)
 	return
 }
 
+/*
+Same thing except for four nest levels in
+*/
+Hotstring("[\n]    3c ", "f_listitem4", 3, 0)
+f_listitem4(matchObj)
+{
+	KeyWait Space
+	SendInput {Left 2}{Space 12}{Right 2}{%regSpacingUp%}{%capSpacingDn%}
+	return
+}
 
 ; Similar to hotstrings for Org headlines (see below)
 
 :*?b0:`n3ca::
 	KeyWait a
-	SendInput {Backspace}{Space}{%capSpacingDn%}
+	SendInput {Backspace}{Left}{Space 3}{Right}{Space}{%capSpacingDn%}
 	return
 :*?b0:`n3ce::
 	KeyWait e
-	SendInput {Backspace}{Left}{Space 3}{Right}{Space}{%capSpacingDn%}
+	SendInput {Backspace}{Left}{Space 6}{Right}{Space}{%capSpacingDn%}
 	return
 :*?b0:`n3ci::
 	KeyWait i
-	SendInput {Backspace}{Left}{Space 6}{Right}{Space}{%capSpacingDn%}
+	SendInput {Backspace}{Left}{Space 9}{Right}{Space}{%capSpacingDn%}
 	return
 :*?b0:`n3ch::
 	KeyWait h
-	SendInput {Backspace}{Left}{Space 9}{Right}{Space}{%capSpacingDn%}
+	SendInput {Backspace}{Left}{Space 12}{Right}{Space}{%capSpacingDn%}
 	return
 
 ; ------------------- _{Spc} -------------------
@@ -203,28 +213,34 @@ RemoveAsteriskPairing()
 	KeyWait a
 	SendInput {Backspace}
 	RemoveAsteriskPairing()
-	SendInput {Space}{%capSpacingDn%}
+	SendInput {*}{Space}{%capSpacingDn%}
 	return
 
 :*?b0:`n3le::
 	KeyWait e
 	SendInput {Backspace}
 	RemoveAsteriskPairing()
-	SendInput {*}{Space}{%capSpacingDn%}
+	SendInput {*}{*}{Space}{%capSpacingDn%}
 	return
 	
 :*?b0:`n3li::
 	KeyWait i
 	SendInput {Backspace}
 	RemoveAsteriskPairing()
-	SendInput {*}{*}{Space}{%capSpacingDn%}
+	SendInput {*}{*}{*}{Space}{%capSpacingDn%}
 	return
 	
 :*?b0:`n3lh::
 	KeyWait h
 	SendInput {Backspace}
 	RemoveAsteriskPairing()
-	SendInput {*}{*}{*}{Space}{%capSpacingDn%}
+	SendInput {*}{*}{*}{*}{Space}{%capSpacingDn%}
+	return
+	
+; Can also use for getting ****.
+:*?b0:3l     ::
+	KeyWait Space
+	SendInput {Backspace}{*}{Space}
 	return
 	
 ; Can also use for getting ****.
