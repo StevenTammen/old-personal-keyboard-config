@@ -2385,11 +2385,17 @@ mouseVim := ""
 	}
 	
 	; Handle Shift+LButton separate from Dual
+	; Allow for num to stand in for shift when
+	; mousing with right hand.
 	if(GetKeyState(shiftLeader))
 	{
 		SendInput +{LButton Down}{%shiftLeaderUp%}
+	}	
+	else if(GetKeyState(numLeader))
+	{
+		SendInput +{LButton Down}{%numLeaderUp%}
 	}
-	else if(shiftDownNoUp)
+	else if(shiftDownNoUp or numDownNoUp)
 	{
 		SendInput +{LButton Down}
 	}
