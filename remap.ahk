@@ -2049,6 +2049,19 @@ spaceUpPriorKey := "*Space"
 		regSpacingKeys := ""
 	}
 	
+	if(GetKeyState(rawState) or IDEWindowActive() or TerminalActive())
+	{
+		defaultKeys := ["Space"]
+	}
+	else if(GetKeyState(rawLeader))
+	{
+		defaultKeys := ["Backspace", "Space", rawLeaderUp]
+	}
+	else
+	{
+		defaultKeys := ["Space", regSpacingDn]
+	}
+	
 	numModifier_keys := lt1_numModifier()
 	shiftModifier_keys := lt1_shiftModifier()
 	expd1Modifier_keys := lt1_expd1Modifier()
@@ -2058,7 +2071,7 @@ spaceUpPriorKey := "*Space"
 	expd1Leader_keys := lt1_expd1Leader(expd1Modifier_keys)a
 	expd2Leader_keys := lt1_expd2Leader(expd2Modifier_keys)
 	lt1_afterNum()
-	dual.comboKey(["Space", regSpacingDn], {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
+	dual.comboKey(defaultKeys, {(numLeader): numLeader_keys, (numModifier): numModifier_keys, (shiftLeader): shiftLeader_keys, (shiftModifier): shiftModifier_keys, (expd1Leader): expd1Leader_keys, (expd1Modifier): expd1Modifier_keys, (expd2Leader): expd2Leader_keys, (expd2Modifier): expd2Modifier_keys, (regSpacing): regSpacingKeys, (capSpacing): capSpacingKeys})
 	return
 	
 *Space Up::
