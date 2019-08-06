@@ -1965,6 +1965,8 @@ lastSpaceDown := 0
 vimModifier := false
 justExitedVimMode := false
 
+spaceUpPriorKey := "*Space"
+
 ; We want the number layer to function normally on the shift layers so that we can mix numbers/symbols with words with all caps.
 ; This is why these combinators have been removed.
 *Space::
@@ -1986,7 +1988,15 @@ justExitedVimMode := false
 		return
 	}
 	
+	
 	lastKey := A_PriorHotkey
+	if(lastKey == "*Space Up")
+	{
+		if(spaceUpPriorKey != "*Space")
+		{
+			lastKey := spaceUpPriorKey
+		}
+	}
 	
 	; Tap and hold for temporary Vim access. This is extremely efficient:
 	; double tapping space is faster than pressing the Vim key then holding
@@ -2052,6 +2062,9 @@ justExitedVimMode := false
 	return
 	
 *Space Up::
+
+	spaceUpPriorKey := A_PriorHotkey
+	
 	if(vimModifier) {
 		vimModifier := false
 		ExitVimMode()
