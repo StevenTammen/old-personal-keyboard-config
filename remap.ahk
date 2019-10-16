@@ -2390,6 +2390,113 @@ semicolonKeys := ""
 ; Mouse
 ;-------------------------------------------------
 
+
+*LButton::
+	if(Modifiers("lmb", "{LButton Down}", "{LButton Down}"))
+	{
+		return
+	}
+	
+	; Handle Shift+LButton separate from Dual
+	; Allow for num to stand in for shift when
+	; mousing with right hand.
+	if(GetKeyState(shiftLeader))
+	{
+		; shiftLeaderUp sent in upkey
+		SendInput +{LButton Down}
+	}	
+	else if(GetKeyState(numLeader))
+	{
+		; numLeaderUp sent in upkey
+		SendInput +{LButton Down}
+	}
+	else if(shiftDownNoUp or numDownNoUp)
+	{
+		SendInput +{LButton Down}
+	}
+	else
+	{
+		SendInput {%regSpacingUp%}{%capSpacingUp%}{LButton Down}
+	}
+	return
+	
+*LButton Up::
+	if(Modifiers("lmb", "{LButton Up}", "{LButton Up}"))
+	{
+		return
+	}
+	
+	; Handle Shift+LButton separate from Dual
+	; Allow for num to stand in for shift when
+	; mousing with right hand.
+	if(GetKeyState(shiftLeader))
+	{
+		SendInput +{LButton Up}{%shiftLeaderUp%}
+	}	
+	else if(GetKeyState(numLeader))
+	{
+		SendInput +{LButton Up}{%numLeaderUp%}
+	}
+	else if(shiftDownNoUp or numDownNoUp)
+	{
+		SendInput +{LButton Up}
+	}
+	else
+	{
+		SendInput {%regSpacingUp%}{%capSpacingUp%}{LButton Up}
+	}
+	return
+	
+	
+*RButton::
+	if(Modifiers("rmb", "{RButton Down}", "{RButton Down}"))
+	{
+		return
+	}
+	
+	; Handle Shift+RButton separate from Dual
+	if(GetKeyState(shiftLeader))
+	{
+		; shiftLeaderUp sent in upkey
+		SendInput +{RButton Down}
+	}
+	else if(shiftDownNoUp)
+	{
+		SendInput +{RButton Down}
+	}
+	else
+	{
+		SendInput {%regSpacingUp%}{%capSpacingUp%}{RButton Down}
+	}
+	return
+	
+*RButton Up::
+	if(Modifiers("rmb", "{RButton Up}", "{RButton Up}"))
+	{
+		return
+	}
+	
+	; Handle Shift+RButton separate from Dual
+	if(GetKeyState(shiftLeader))
+	{
+		SendInput +{RButton Up}{%shiftLeaderUp%}
+	}
+	else if(shiftDownNoUp)
+	{
+		SendInput +{RButton Up}
+	}
+	else
+	{
+		SendInput {RButton Up}
+	}
+	return
+
+
+	
+; Complicated mousing entering visual mode implementation. 
+; For now just enter manually in time it takes to move mouse
+; to text being selected.
+/*
 LButtonDownTime := 0
 LButtonUpTime := 0
 
@@ -2601,3 +2708,4 @@ mouseVim := ""
 *RButton Up::
 	SendInput {%regSpacingUp%}{%capSpacingUp%}{RButton Up}
 	return
+*/
