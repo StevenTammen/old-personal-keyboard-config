@@ -2078,6 +2078,7 @@ spaceUpPriorKey := "*Space"
 
 	spaceUpPriorKey := A_PriorHotkey
 	
+	/*
 	if(vimModifier) {
 		vimModifier := false
 		ExitVimMode()
@@ -2085,6 +2086,7 @@ spaceUpPriorKey := "*Space"
 		justExitedVimMode := true
 		return
 	}
+	*/
 	
 	return
 
@@ -2390,8 +2392,19 @@ semicolonKeys := ""
 ; Mouse
 ;-------------------------------------------------
 
+LButtonDownTime := 0
+LButtonUpTime := 0
+
+LButtonDownX := 0
+LButtonDownY := 0
+LButtonUpX := 0
+LButtonUpY := 0
 
 *LButton::
+
+	LButtonDownTime := A_TickCount
+	MouseGetPos, LButtonDownX, LButtonDownY
+
 	if(Modifiers("lmb", "{LButton Down}", "{LButton Down}"))
 	{
 		return
@@ -2402,13 +2415,11 @@ semicolonKeys := ""
 	; mousing with right hand.
 	if(GetKeyState(shiftLeader))
 	{
-		; shiftLeaderUp sent in upkey
-		SendInput +{LButton Down}
+		SendInput +{LButton Down}{%shiftLeaderUp%}
 	}	
 	else if(GetKeyState(numLeader))
 	{
-		; numLeaderUp sent in upkey
-		SendInput +{LButton Down}
+		SendInput +{LButton Down}{%numLeaderUp%}
 	}
 	else if(shiftDownNoUp or numDownNoUp)
 	{
@@ -2416,39 +2427,100 @@ semicolonKeys := ""
 	}
 	else
 	{
+		if(vimMode)
+		{
+			
+			SendInput {%regSpacingUp%}{%capSpacingUp%}
+			
+			; Activate visual mode (basic visual mode, not linewise or 
+			; blockwise)
+			visualMode := "visual"
+			IniWrite, %visualMode%, Status.ini, statusVars, visualMode
+			
+			; We will already have something selected, so don't want the initial
+			; behavior if we decide to select more with the keyboard
+			initialVisualPress := false
+			
+			; Initial value for the visual direction. We'll set it with the
+			; differential of mouse position in the UpKey.
+			visualDirection := ""
+			
+			; Actually don't want to formally enter visual mode in Vim applications since 
+			; they handle mouse-based selection for copy, cut, etc. just fine out of the box.
+			;BasicVimKey("v", "")
+		}
+		
+		; Otherwise, if not in an application with Vim behavior/emulated behavior, do nothing
+		
 		SendInput {%regSpacingUp%}{%capSpacingUp%}{LButton Down}
 	}
 	return
 	
 *LButton Up::
-	if(Modifiers("lmb", "{LButton Up}", "{LButton Up}"))
+	
+	if(vimMode)
 	{
-		return
+	
+		LButtonUpTime := A_TickCount
+		MouseGetPos, LButtonUpX, LButtonUpY
+	
+		; Activate visual mode upon mouse selection of text
+		if( ((LButtonUpTime - LButtonDownTime) > 200) and !(NeedToDragNonText()) )
+		{
+			; Get visual direction based off of differential in
+			; mouse position
+			difX := LButtonUpX - LButtonDownX
+			difY := LButtonUpY - LButtonDownY
+			
+			; If probably on same line = difference in Y height is less than 12 pixels.
+			; (A somewhat arbitrary value: lines with big fonts and more spacing will 
+			; work with this quite comfortably, while smaller fonts with tight spacing
+			; may be somewhat of a toss-up. Trying to select straight through the middle
+			; of lines helps).
+			if(Abs(difY) < 12)
+			{
+				; A positive difference means the up value is more to the right than 
+				; the down value, since (0, 0) is the top left corner.
+				if(difX >= 0)
+				{
+					visualDirection := "after"
+				}
+				else
+				{
+					visualDirection := "before"
+				}
+			}
+			
+			; If we have selected up or down a line = difference in Y height is greater than 
+			; or equal to 12 pixels
+			else
+			{
+				; A positive difference means the up value is more downwards than
+				; the down value, since (0, 0) is the top left corner.
+				if(difY >= 0)
+				{
+					visualDirection := "after"
+				}
+				else
+				{
+					visualDirection := "before"
+				}
+			}
+		}
+		
+		; If not activating visual mode = just a normal click
+		else
+		{
+			ExitVisualMode()
+		}
 	}
 	
-	; Handle Shift+LButton separate from Dual
-	; Allow for num to stand in for shift when
-	; mousing with right hand.
-	if(GetKeyState(shiftLeader))
-	{
-		SendInput +{LButton Up}{%shiftLeaderUp%}
-	}	
-	else if(GetKeyState(numLeader))
-	{
-		SendInput +{LButton Up}{%numLeaderUp%}
-	}
-	else if(shiftDownNoUp or numDownNoUp)
-	{
-		SendInput +{LButton Up}
-	}
-	else
-	{
-		SendInput {%regSpacingUp%}{%capSpacingUp%}{LButton Up}
-	}
+	SendInput {LButton Up}
 	return
 	
 	
 *RButton::
+
 	if(Modifiers("rmb", "{RButton Down}", "{RButton Down}"))
 	{
 		return
@@ -2457,8 +2529,7 @@ semicolonKeys := ""
 	; Handle Shift+RButton separate from Dual
 	if(GetKeyState(shiftLeader))
 	{
-		; shiftLeaderUp sent in upkey
-		SendInput +{RButton Down}
+		SendInput +{RButton Down}{%shiftLeaderUp%}
 	}
 	else if(shiftDownNoUp)
 	{
@@ -2469,33 +2540,14 @@ semicolonKeys := ""
 		SendInput {%regSpacingUp%}{%capSpacingUp%}{RButton Down}
 	}
 	return
-	
 *RButton Up::
-	if(Modifiers("rmb", "{RButton Up}", "{RButton Up}"))
-	{
-		return
-	}
-	
-	; Handle Shift+RButton separate from Dual
-	if(GetKeyState(shiftLeader))
-	{
-		SendInput +{RButton Up}{%shiftLeaderUp%}
-	}
-	else if(shiftDownNoUp)
-	{
-		SendInput +{RButton Up}
-	}
-	else
-	{
-		SendInput {RButton Up}
-	}
+	SendInput {RButton Up}
 	return
 
-
 	
-; Complicated mousing entering visual mode implementation. 
-; For now just enter manually in time it takes to move mouse
-; to text being selected.
+; More complicated mousing entering vim+visual mode implementation. 
+; For now just enter vim manually in the time it takes to grab mouse and
+; move the cursor to the text being selected.
 /*
 LButtonDownTime := 0
 LButtonUpTime := 0
