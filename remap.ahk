@@ -1967,6 +1967,8 @@ justExitedVimMode := false
 
 spaceUpPriorKey := "*Space"
 
+autoAddedSpace := false
+
 ; We want the number layer to function normally on the shift layers so that we can mix numbers/symbols with words with all caps.
 ; This is why these combinators have been removed.
 *Space::
@@ -2015,7 +2017,10 @@ spaceUpPriorKey := "*Space"
 			
 			; To get rid of the unwanted Space generated when using the double tap to
 			; enter Vim mode.
-			SendInput {Backspace}
+			if(!autoAddedSpace)
+			{
+				SendInput {Backspace}
+			}
 			
 			EnterVimMode()
 			
@@ -2061,6 +2066,16 @@ spaceUpPriorKey := "*Space"
 	{
 		defaultKeys := ["Space", regSpacingDn]
 	}
+	
+	if(GetKeyState(regSpacing) or GetKeyState(capSpacing))
+	{
+		autoAddedSpace := true
+	}
+	else
+	{
+		autoAddedSpace := false
+	}
+	
 	
 	numModifier_keys := lt1_numModifier()
 	shiftModifier_keys := lt1_shiftModifier()
