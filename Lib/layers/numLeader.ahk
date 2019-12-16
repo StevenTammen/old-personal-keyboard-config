@@ -186,7 +186,7 @@ l44_numLeader(numModifier_keys) {
 	return numLeader_keys
 }
 l45_numLeader(numModifier_keys) {
-	numLeader_keys := AddKeyUp(numModifier_keys, numLeaderUp)
+	numLeader_keys := ["#", numLeaderUp]
 	return numLeader_keys
 }
 l46_numLeader(numModifier_keys) {

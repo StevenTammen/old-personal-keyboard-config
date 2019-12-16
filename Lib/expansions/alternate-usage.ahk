@@ -268,6 +268,37 @@ RemoveAsteriskPairing()
 	SendInput {Space}
 	return
 	
+; ------------------- Markdown headers -------------------
+
+:*?b0:`n3,2::
+	KeyWait 2
+	SendInput {Space}{%capSpacingDn%}
+	return
+
+:*?b0:`n3,t::
+	KeyWait t
+	SendInput {Backspace}
+	SendInput {#}{Space}{%capSpacingDn%}
+	return
+
+:*?b0:`n3,s::
+	KeyWait s
+	SendInput {Backspace}
+	SendInput {#}{#}{Space}{%capSpacingDn%}
+	return
+	
+:*?b0:`n3,r::
+	KeyWait r
+	SendInput {Backspace}
+	SendInput {#}{#}{#}{Space}{%capSpacingDn%}
+	return
+	
+:*?b0:`n3,n::
+	KeyWait n
+	SendInput {Backspace}
+	SendInput {#}{#}{#}{#}{Space}{%capSpacingDn%}
+	return
+	
 ; ------------------- ={Spc} -------------------
 
 :*?b0:3g ::

@@ -662,7 +662,7 @@ NonVimTextWindowActive()
 {
 	; List of executable files (ahk_exe) that are text based (E.g., Microsoft Word) but do not
 	; themselves implement Vim behavior. These windows will use this program's Vim emulation.
-	textWinExecutables := ["notepad++.exe", "WINWORD.EXE"]
+	textWinExecutables := ["notepad++.exe", "WINWORD.EXE", "Typora.exe"]
 	
 	for index, executable in textWinExecutables
 	{
